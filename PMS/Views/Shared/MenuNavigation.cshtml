@@ -1,0 +1,29 @@
+﻿
+@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    if (User.IsInRole("Admin"))
+    {
+        @Html.Partial("AdminMenuNavigation")
+    }
+    else if (User.IsInRole("Manager"))
+    {
+        @Html.Partial("ManagerMenuNavigation")
+    }
+    else if (User.IsInRole("User"))
+    {
+        @Html.Partial("UserMenuNavigation")
+    }
+}
+
+else
+{
+    <div class="navbar-collapse collapse" style="margin-right:25px;">
+        <ul class="nav navbar-nav"></ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        </ul>
+    </div>
+}

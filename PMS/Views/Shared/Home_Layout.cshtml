@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @*@Styles.Render("~/Content/css")*@
+    @Scripts.Render("~/bundles/modernizr")
+
+    @*@Styles.Render("~/Content/Home_LayOutCss")*@
+    <link href="~/Content/bootstrap.css"  rel="stylesheet" />
+    <link href="~/Content/site.css" rel="stylesheet" />
+    <link href="~/Content/Css/Custom.css" rel="stylesheet" />
+    <link href="~/Content/Css/mymedia.css" rel="stylesheet" />
+    <link href="~/Content/Css/mystyle.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <script src="~/Scripts/toastr.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- / nav-Box: start \ -->
+        <div class="nav-Box">
+            <nav class="nav-Bar navbar navbar-expand-lg fixed-top" role="navigation">
+                <div class="navbar-logo">
+                    <a class="navbar-brand" href="javascript:void(0);" title="P.M.S">PMS</a>
+                </div>
+                <!-- Toggler Button -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <div class="toggle-button toggle_button">
+                        <ul>
+                            <li><span class="toggle-button-span1">1</span></li>
+                            <li><span class="toggle-button-span2">2</span></li>
+                            <li><span class="toggle-button-span3">3</span></li>
+                        </ul>
+                    </div>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav ml-lg-auto">
+                        <li class="nav-item">  <a href="@Url.Action("Register", "Home")" class="nav-link" value="Register">Register</a></li>
+                        <li class="nav-item">  <a href="@Url.Action("Login", "Home")" class="nav-link" value="Register">Log In</a></li>
+                    </ul>
+                </div>
+
+
+            </nav>
+        </div>
+        <div class="login-Box">
+            <div class="login-Bar">
+                <div class="login-form" id="loginForm">
+                    @RenderBody()
+                    </div>
+                </div>
+            </div>
+
+                    <footer class="footer-Box fixed-bottom">
+                        <div class="container">
+                            <div class="footer-Bar row">
+                                <div class="footer-txt w-100 d-block text-center">
+                                    <p>&copy; 2019 - PMS</p>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+
+                </div>
+
+                @Scripts.Render("~/bundles/CommanLayout")
+
+                @Scripts.Render("~/bundles/bootstrap")
+                @RenderSection("scripts", required: false)
+</body>
+</html>

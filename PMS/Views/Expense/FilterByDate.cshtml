@@ -1,0 +1,11 @@
+﻿@model PMS.Models.Expense.IndexViewsModel
+
+@{
+    ViewBag.Title = "Create New Expense";
+        Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+
+<h2>My Expense Tracker</h2>
+
+@Html.Partial("_ExpensePartial", Model)

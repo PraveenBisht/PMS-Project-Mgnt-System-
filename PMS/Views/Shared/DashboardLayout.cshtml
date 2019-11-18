@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>PMS</title>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <!-- fav-icon image/png -->
+    <link rel="icon" href="img/fav-icon.png" type="image/png" sizes="16x16">
+    <!-- font-awesome/4.7.0 -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- font-family: 'Roboto', sans-serif; -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
+    <!-- Custom bootstrap css for this website-->
+    <link rel="stylesheet" href="~/Template/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Template/vendor/datatables/css/dataTables.bootstrap4.min.css">
+    <link href="~/Content/ChatStyle.css" rel="stylesheet" />
+    <link href="~/Scripts/datetimepicker/jqueryui.css" rel="stylesheet" />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <!-- mystyle and mymeida css for this website-->
+    @Styles.Render("~/Content/Home_LayOutCss")
+    @*<script src="~/Template/vendor/jquery/js/jquery.min.js"></script>*@
+    @*<script src="~/Scripts/datetimepicker/jquery-1.12.4.js"></script>*@
+    <script src="~/Scripts/datetimepicker/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/datetimepicker/jqueryui.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+
+
+</head>
+<body id="goto_Top">
+    <div class="wrapper">
+        <!-- / head-Box: start \ -->
+        <div class="head-Box">
+            <div class="container-fluid">
+                <div class="head-Bar row">
+                    <div class="head-list col-sm-6 col-2">
+                        <div class="head-button">
+                            <div class="toggle-button toggle_button">
+                                <ul>
+                                    <li><span class="toggle-button-span1">1</span></li>
+                                    <li><span class="toggle-button-span2">2</span></li>
+                                    <li><span class="toggle-button-span3">3</span></li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="head-list col-sm-6 col-10">
+                        <div class="head-login">
+                            <ul>
+                                <li><span class="fa-span"><i class="fa fa-envelope" aria-hidden="true"></i></span><a href="javascript:void(0);" id="username"></a></li>
+                                <div class="head-line">
+                                    <span class="head-line-span"></span>
+                                </div>
+                                <li><span class="fa-span"><i class="fa fa-sign-out" aria-hidden="true"></i></span><a href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- \ head-Box: end / -->
+        <!-- / sidenav-Box: start \ -->
+        <div class="sidenav-Box">
+            <div class="dlogo-Bar">
+                <div class="dlogo-left">
+                    <a class="dlogo-link" href="javascript:void(0);" title="P.M.S">PMS</a>
+                </div>
+                <div class="dlogo-right">
+                    <div class="toggle-button toggle_button">
+                        <ul>
+                            <li><span class="toggle-button-span1">1</span></li>
+                            <li><span class="toggle-button-span2">2</span></li>
+                            <li><span class="toggle-button-span3">3</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="sidenav-Bar" id="sidenav_Bar">
+
+                @Html.Partial("MenuNavigation")
+
+            </div>
+        </div>
+        <!-- \ sidenav-Box: end / -->
+        <!-- / main-wrapper: start \ -->
+        <div class="main-wrapper">
+            <div class="main-part px-xl-3 px-lg-0">
+
+                @RenderBody()
+            </div>
+        </div>
+        <!-- \ main-wrapper: end / -->
+        <!-- / footersub-Box: start \ -->
+        <footer class="footersub-Box">
+            <div class="container">
+                <div class="footersub-Bar row">
+                    <div class="footersub-txt w-100 d-block text-center">
+                        <p>Copyright &copy; <a href="javascript:void(0)">P.M.S</a> Admin. All Rights Reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- \ footersub-Box: end / -->
+        <!-- / logout-Box: start \ -->
+        <div class="logout-Box">
+            <div class="logout-Bar">
+                <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="logout-head modal-header">
+                                <h5 class="logout-title" id="exampleModalLabel">Ready to Leave?</h5>
+                                <button class="logout-close close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="logout-body modal-body">
+                                <p><span class="logout-span"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>Select "Logout" below if you are ready to end your current session.</p>
+                            </div>
+                            <div class="logout-foot modal-footer">
+                                <div class="logout-center">
+                                    <button class="btn-global logout-cancel" type="button" data-dismiss="modal">Cancel</button>
+                                    <button class="btn-global logout-logout" type="button" id="Logout">Logout</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- \ logout-Box: end / -->
+        <!-- / scrolltop-Box: start \ -->
+        <div class="scrolltop-Box" id="scrolltop_Box">
+            <div class="scrolltop-Bar" id="scrolltop_Bar">
+                <ul>
+                    <li>
+                        <a href="#goto_Top"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- \ scrolltop-Box: end / -->
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            $('.loading').hide();
+            var UserName = sessionStorage.getItem('UserName');
+            var bearer = sessionStorage.getItem('access_token'); 
+            $('#username').text(UserName);
+            $('#Logout').click(function () {
+
+                $.ajax({
+                    type: "Post",
+                    url: "/api/Account/Logoff",
+                    contentType: "application/x-www-form-urlencoded",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        if (data.Status == '1') {
+                            sessionStorage.removeItem('access_token');
+                            sessionStorage.removeItem('UserName');
+                            sessionStorage.removeItem('RoleType')
+                            window.location.href = "/Home/login";
+                        }
+                    },
+                    failure: function (response) {
+                        toastr.error(response.responseText);
+                    },
+                    error: function (response) {
+                        toastr.error(response.responseText);
+                    }
+                });
+
+            });
+
+
+        });
+    </script>
+  
+    <script src="~/Template/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/Template/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Template/vendor/fancybox/js/jquery.fancybox.min.js"></script>
+    <!-- JavaScript File -->
+    <script src="~/Scripts/js/myscript.js"></script>
+
+
+</body>
+</html>
+
+
+
+
+
+

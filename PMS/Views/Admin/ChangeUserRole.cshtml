@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "ChangeUserRole";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+
+
+
+
+<div class="bread-Box">
+    <div class="container-fluid">
+        <div class="bread-Bar row">
+            <div class="bread-list col-12">
+                <div class="bread-content">
+                    <h2>Assign Manager</h2>
+                    <ul>
+                        <li>
+                            <a href="dashboard.html">Dashboard</a>
+                            <span class="bread-span"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                        </li>
+                        <li class="active">
+                            <a href="javascript:void(0);">AssignManager</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="myattendance-Part table-Box">
+    <div class="container-fluid">
+        <form class="form-group row" method="POST">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    User Name:
+                    <select id="ddlUser" title="Please select User" name="ddlUser" class="form-control">
+                        <option value=" ">Select UserName</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-12 mt-3">
+                <input type="button" id="btnAssign" class="btn btn-primary btn-round waves-effect waves-light" value="Assign Manager">
+            </div>
+        </form>
+        </div>
+    </div>
+
+        <script>
+
+            $(document).ready(function () {
+
+
+
+                var ddlusers = $("#ddlUser");
+                ddlusers.empty().append('<option selected="selected" value="0" disabled = "disabled">Loading.....</option>');
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/GetUserlist",
+                    data: '{}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        ddlusers.empty().append('<option selected="selected" value="0">Please select</option>');
+                        $.each(response, function () {
+                            ddlusers.append($("<option></option>").val(this['Value']).html(this['Text']));
+                        });
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+
+
+
+                $('#btnAssign').click(function () {
+
+                    var userId = $("#ddlUser :selected").val();
+                    var taskid = localStorage.getItem("TaskID");
+                    if (userId == '') {
+                        $("#ddlUser").focus();
+                        $("#ddlUser").after('<span class="error-div row">*Please select User Name!</span>');
+                        return false;
+                    }
+
+                    else if (userId != '') {
+
+                        var assignuserdetails = {
+                            "Userid": userId,
+                        };
+                        $.ajax({
+                            url: '/Admin/ChangeUserRolebyUserId',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: assignuserdetails,
+
+                            success: function (result, textStatus, xhr) {
+
+                                if (result.Status == '1') {
+                                    window.location.href = "/Admin/UserList";
+                                }
+                                else if (result.Status == '2') {
+                                    toastr.warning(result.Message);
+                                }
+                                else {
+
+                                    toastr.error(result.Message);
+
+                                }
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                console.log('Error in Operation');
+                            }
+                        });
+                    }
+                });
+            });
+
+
+
+
+        </script>

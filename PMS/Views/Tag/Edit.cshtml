@@ -1,0 +1,31 @@
+﻿@model PMS.Models.Tag.TagModel
+
+@{
+    ViewBag.Title = "Edit Tag";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<h2>Edit Tag</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary(true)
+<div class="form-group">
+    @Html.LabelFor(model => model.TagDescription)
+    @Html.EditorFor(model => model.TagDescription)
+    @Html.ValidationMessageFor(model => model.TagDescription)
+</div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-offset-0 col-md-12">
+                <input type="submit" class="btn btn-primary btn-round waves-effect waves-light" value="Save" />
+
+                @Html.ActionLink("All Tag", "Index", "Tag", null, new { @class = "btn btn-info" })
+            </div>
+        </div>
+    </div>
+
+
+}
+
+

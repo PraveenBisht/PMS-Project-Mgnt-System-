@@ -1,0 +1,1015 @@
+﻿
+@{
+    ViewBag.Title = "LeaveManage";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<h2>Leave Manage</h2>
+
+<script src="/Content/bootstrap_calendar/js/bootstrap_calendar.min.js"></script>
+<link href="/Content/bootstrap_calendar/css/bootstrap_calendar.css" rel="stylesheet" />
+
+
+<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+<script src="~/Content/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
+<script type="text/javascript" charset="utf8" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+
+<div id="calendar_test"></div>
+
+@*Initialize Datepicker.......*@
+<script src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
+<link href="~/Content/datepicker/css/datepicker.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(function () {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+
+</script>
+@*********************************@
+
+<br />
+<style>
+    .group-back {
+        background-color: white;
+        color: #000000;
+    }
+
+        .group-back:hover {
+            cursor: pointer;
+        }
+
+    table.dataTable td.group-back {
+        padding: 0 2px;
+    }
+
+    #example2, #example {
+        width: 100% !important;
+    }
+
+    .calendar .header {
+        background-color: #b0b1d0;
+    }
+
+    .calendar .week_days td {
+        background: #1dcead;
+    }
+
+    .panel-title {
+        color: blue;
+    }
+
+    .table td, th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+</style>
+<script>
+    var leaveTypes;
+    var Employes;
+    var approveMatrix;
+    function getLeaveApplication() {
+        var obj =
+        {
+            D: $("#applyleave_day").val(),
+            T: $("#applyleave_type").val(),
+            A: null,
+            H: $('input:radio[name="applyleave_daypart"]:checked').val()
+        };
+        return obj;
+    }
+    function insertLeaveApplication() {
+        var a = getLeaveApplication();
+        //alert(JSON.stringify(a));
+        $.ajax({
+            type: "POST",
+            url: "/api/LeavesTaken",
+            data: a,
+            success: function (data) {
+                toastr.success("Success");
+                refreshTable1();
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                toastr.error(errorThrown);
+            }
+        });
+    }
+    function createTable1(data) {
+        //if (JSON.stringify(data) == "[]") {
+        //    return;
+        //}
+
+        var oTable = $('#example').dataTable({
+            bProcessing: true,
+            iDisplayLength: 20,
+            aaData: data,
+            bDestroy: true,
+            aoColumns: [
+                { mData: "D", sTitle: "Date" },
+                { mData: "H", sTitle: "" },
+                { mData: "T", sTitle: "Type" },
+                { mData: "A", sTitle: "Approved By" },
+                {
+                    mData: null, bSortable: false, sTitle: 'Actions', fnRender: function (oObj) {
+                        id = oObj.aData["ID"];
+                        //return "<a onclick='alert(&#39;" + id + "&#39;)' href='#'>delete</a>";
+                        return "<button type='button' class='btn btn-default btn-xs' onclick='deleteLeaveApplication(" + id + ")' href='#'>delete</button>";
+                    }
+                }
+            ]
+        });
+    }
+    function deleteLeaveApplication(id) {
+        $.ajax({
+            type: "DELETE",
+            url: "/api/LeavesTaken/?id=" + id,
+            success: function (data) {
+                toastr.success("success");
+                refreshTable1();
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                toastr.error(errorThrown);
+            }
+        });
+    }
+    var notification = true;
+    function createTable2(data) {
+        var noOfAppliedLeave = 0;
+        var oTable2 = $('#example2').dataTable({
+            bProcessing: true,
+            iDisplayLength: 20,
+            bDestroy: true,
+            aaData: data,
+            aoColumns: [
+                { mData: "U", sTitle: "User" },
+                { mData: "D", sTitle: "Date" },
+                { mData: "T", sTitle: "Type" },
+                { mData: "S", sTitle: "Status" },
+                {
+                    mData: null, bSortable: false, sTitle: 'Actions', fnRender: function (oObj) {
+                        id = oObj.aData["ID"];
+                        if (oObj.aData["S"] == "Applied") {
+                            noOfAppliedLeave = noOfAppliedLeave + 1;
+                        }
+                        //return "<a onclick='alert(&#39;" + id + "&#39;)' href='#'>delete</a>";
+                        return "<button type='button' class='btn btn-primary' onclick='showModalApprove(" + id + ")' href='#'>edit</button>";
+                    }
+                }
+            ]
+        });
+        if (notification) {
+            if (noOfAppliedLeave > 0) {
+                console.log(noOfAppliedLeave);
+                toastr.info('You have ' + noOfAppliedLeave + ' Pending leave requests.', 'Information');
+            }
+            notification = false;
+        }
+    }
+    function showModalApprove(id) {
+        $('#button_savemodal').attr("onclick", "saveModalApprove(" + id + ")");
+        $.ajax({
+            type: "GET",
+            url: "/api/LeaveAllowance/" + id,
+            success: function (data) {
+                //alert(JSON.stringify(data));
+                var html = "Casual Taken : " + data.AT + "/" + data.AL;
+                html += " | All Taken : " + data.ST + "/" + data.SL;
+                $('#span_remaining_leaves').html(html);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                toastr.error(errorThrown);
+            }
+        });
+        $('#modal_approve').modal('show');
+    }
+    function saveModalApprove(id) {
+        var stat = $('#select_leavestatus').val();
+        $.ajax({
+            type: "POST",
+            url: "/api/approveleave/?id=" + id + "&status=" + stat,
+            success: function (data) {
+                toastr.success("success");
+                refreshTable2();
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                toastr.error(errorThrown);
+            }
+        });
+        $('#modal_approve').modal('hide');
+    }
+    $(function () {
+
+
+
+        refreshTable1();
+        refreshTable2();
+        refreshCalender();
+        ajaxGet("/api/UserDetails", makeUserTable);
+        ajaxGet("/api/LeaveType", makeLeaveType);
+        ajaxGet("/api/ApproverMatrix", makeApproverMatrixTable);
+        $("#btnNewType").click(function () {
+            var objType = { leave_type: $("#tbNewType").val() };
+            ajaxEdit("/api/leaveType", objType);
+        });
+        $("#btnEditType").click(function () {
+            var leavetypeid = $("#tbEditType").attr("data-id");
+            var objType = { leave_type: $("#tbEditType").val() };
+            ajaxAdd("api/leaveType/" + leavetypeid, objType);
+        });
+        ajaxGet("/api/LeaveAllowance", MakeleaveAllowancetable);
+        // makeSlider("slider-days", "tbDays")
+        var btnHeight = $('#tbDays').height(),
+            slideHeight = $('.slider').height(),
+            buffer = ((btnHeight - slideHeight) / 2);
+        $('.wrapper').height(btnHeight), // set span to button height
+            $('.slider').css({ 'margin-top': buffer });
+        $("#btnEditAllowance").click(function () { saveEditAllowance(); });
+        $("#btnNewAllowance").click(function () {
+            var year = 2000;
+            var till = 2050;
+            var options = "";
+            for (var y = year; y <= till; y++) {
+            
+                   $('#ddlYear').append(options += "<option value=" + y + ">" + y + "</option>");
+            }
+       
+            $('#tbNames').empty();
+            $.each(Employes, function (index, object) {
+
+                $('#tbNames').append('<option value="' + object.pk_user_id + '">' + object.user_firstname + '</option>');
+
+            });
+            $('#ddlLeaveType').empty();
+            $.each(leaveTypes, function (index, object) {
+                $('#ddlLeaveType').append('<option value="' + object.pk_leave_type_id + '">' + object.leave_type + '</option>');
+            });
+            $("#NewAllowance").modal("show")
+        });
+        //tbLeaveEntitled slider-LeaveEntitled tbLeaveTaken slider-LeaveTaken
+        //  makeSlider("slider-LeaveEntitled", "tbLeaveEntitled");
+        // makeSlider("slider-LeaveTaken", "tbLeaveTaken");
+        $("#btnAllowanceSave").click(function () {
+            var NewAllowance = { fk_user_id: $("#tbNames").val(), fk_leave_type_id: $("#ddlLeaveType").val(), allowance_year: $("#ddlYear").val(), allowance_entitlement: $("#tbLeaveEntitled").val(), allowance_taken: $("#tbLeaveTaken").val() };
+            ajaxAdd("/api/LeaveAllowance", NewAllowance);
+        });
+
+    });
+
+    function makeApproverMatrixTable(data) {
+        approveMatrix = data;
+        //var oTable = $('#ApprovalMatrixTable').dataTable({
+        //    "bProcessing": true,
+        //    "sDom": '<"top">rt<"bottom"p><"clear">',
+        //    "aaData": data,
+        //    "bDestroy": true,
+        //    "aoColumns": [
+        //        { "mData": "Requester" },
+        //        { "mData": "Approver" },
+        //        {
+        //            mData: null, bSortable: false, fnRender: function (oObj) {
+        //                id = oObj.aData["pk_approval_id"];
+        //                //return "<a onclick='alert(&#39;" + id + "&#39;)' href='#'>delete</a>";
+        //                return "<a data-id='" + id + "' onclick='deleteApproveMap(this)' class='btn btn-primary btn-xs'>Delete</a>";
+        //            }
+        //        }
+        //    ],
+        //});
+        $('#ApprovalMatrixTable').css("display", "none");
+
+    }
+    function deleteApproveMap(e) {
+        //alert(e.getAttribute("data-id"));
+        // ajaxDelete("/api/LeaveAllowance/" + e.getAttribute("data-id"));
+
+        if (confirm("You really want to delete selected row.")) {
+            ajaxDelete("/api/ApproverMatrix/" + e.getAttribute("data-id"));
+        }
+        $(document).ajaxComplete(function (event, XMLHttpRequest, ajaxOptions) {
+            if (typeof e.getAttribute("data-id") !== 'undefined' && ajaxOptions.url == '/api/ApproverMatrix/' + e.getAttribute("data-id")) {
+                ajaxGet("/api/ApproverMatrix", makeApproverMatrixTable);
+            }
+
+        });
+
+    }
+    function AddNewMatrix() {
+        var checked = $('input[name=Requesters]:checked').map(function (_, element) {
+            return $(element).val();
+        }).get();
+        ajaxEdit("/api/ApproverMatrix/" + $("#ddlApprover").val(), checked);
+        //console.log(checked);
+    }
+    function addApproverUser() {
+        console.log(Employes);
+        $('#ApproverMatrixUser').empty();
+        $('#ddlApprover').empty();
+        $.each(Employes, function (index, object) {
+            $('#ddlApprover').append('<option data-index="' + index + '" value="' + object.pk_user_id + '">' + object.user_firstname + '</option>');
+            $('#ApproverMatrixUser').append('<label class="control-label col-sm-2"  for="' + index + '"><input style="margin-right:5px;" type="checkbox" id="' + index + '" name="Requesters" value="' + object.pk_user_id + '" />' + object.user_firstname + '</label>');
+
+        });
+        var allCheckBox = $('#ApproverMatrixUser label');
+
+        $('#ddlApprover').change(function () {
+            allCheckBox.children().removeAttr("disabled");
+            allCheckBox.children().removeAttr("checked");
+            var ddlIndex = $(this).children("option").filter(":selected").attr("data-index");
+
+            allCheckBox.each(function () {
+                var chbIndex = $(this).attr("for");
+                if (ddlIndex == chbIndex) {
+                    $(this).children().attr("disabled", "disabled");
+                }
+            });
+            disableAlreadyMapped($(this).val());
+        });
+    }
+    function disableAlreadyMapped(selected) {
+        //approveMatrix
+        var allCheckBox = $('#ApproverMatrixUser label');
+
+        $.each(approveMatrix, function (index, object) {
+            if (selected == object.ApproverId) {
+                allCheckBox.each(function () {
+                    var chbValue = $(this).children().attr("value");
+                    if (chbValue == object.RequesterId) {
+                        $(this).children().prop("checked", "checked");
+                    }
+                });
+            }
+        });
+    }
+    function SortBy(prop) {
+        return function (a, b) {
+            if (a[prop] > b[prop]) {
+                return 1;
+            } else if (a[prop] < b[prop]) {
+                return -1;
+            }
+            return 0;
+        }
+    }
+    function saveEditAllowance() {
+        var allowanceObj = { allowance_entitlement: $("#tbDays").val() };
+        ajaxEdit("/api/LeaveAllowance/" + $("#tbDays").attr("data-id"), allowanceObj);
+        $("#modal_LeaveAllowance").modal("hide");
+    }
+    function makeSlider(SliderDiv, tbReference) {
+        $("#" + SliderDiv).slider({
+            value: 0,
+            min: 0,
+            max: 40,
+            step: 1,
+            slide: function (event, ui) {
+                $("#" + tbReference).text(ui.value);
+            }
+        });
+    }
+    var clickedAccordion;
+    function MakeleaveAllowancetable(data) {
+        var oTable = $('#LeaveAllowanceTable').dataTable({
+            "bProcessing": true,
+            "sDom": 'trip',
+            "aaData": data,
+            iDisplayLength: 30,
+            "aaSorting": [[1, "asc"]],
+            "bDestroy": true,//user_firstname user_lastname user_picture user_email user_isadmin user_isdeleted pk_user_id
+            "fnDrawCallback": function (oSettings) {
+                if (oSettings.aiDisplay.length == 0) {
+                    return;
+                }
+                var nTrs = $('#LeaveAllowanceTable tbody tr');
+                var iColspan = nTrs[0].getElementsByTagName('td').length;
+                var sLastGroup = "";
+                for (var i = 0; i < nTrs.length; i++) {
+                    var iDisplayIndex = oSettings._iDisplayStart + i;
+                    var sGroup = "+ " + oSettings.aoData[oSettings.aiDisplay[iDisplayIndex]]._aData.user_firstname;
+                    if (sGroup != sLastGroup) {
+                        var nGroup = document.createElement('tr');
+                        var nCell = document.createElement('td');
+                        nCell.colSpan = iColspan;
+                        nCell.className = "group-back";
+                        nCell.innerHTML = sGroup;
+                        nGroup.appendChild(nCell);
+                        nTrs[i].parentNode.insertBefore(nGroup, nTrs[i]);
+                        sLastGroup = sGroup;
+                    }
+                }
+                $(".group-back").parent().addClass("accordion");
+
+                //$("#LeaveAllowanceTable tr :not(.accordion)").hide();
+                $("#LeaveAllowanceTable tbody tr:not(.accordion)").hide();
+                $("#LeaveAllowanceTable tr.accordion").click(function () {
+                    $("#LeaveAllowanceTable tbody tr:not(.accordion)").hide();
+                    $(this).nextUntil(".accordion").toggle();
+                    $(this).html($(this).html().replace("+", "-"))
+                    if (clickedAccordion) {
+                        clickedAccordion.find("td").html(clickedAccordion.find("td").html().replace("-", "+"));
+                        clickedAccordion = $(this);
+                    }
+                    else clickedAccordion = $(this);
+                    //$(this).nextUntil(".accordion").css({ "color": "red", "border": "2px solid red" });
+                });
+            },
+            "aoColumns": [
+                { "mData": "pk_leave_allowance_id" },
+                { "mData": "user_firstname" },
+                { "mData": "allowance_year" },
+                { "mData": "leave_type" },
+                { "mData": "allowance_entitlement" },
+                { "mData": "allowance_taken" },
+
+                {
+                    mData: null, bSortable: false, sTitle: 'Actions', fnRender: function (oObj) {
+                        id = oObj.aData["pk_leave_allowance_id"];
+                        var lant = oObj.aData["allowance_entitlement"];
+                        //return "<a onclick='alert(&#39;" + id + "&#39;)' href='#'>delete</a>";
+                        return "<a data-id='" + id + "' data-lentitle='" + lant + "' class='btn btn-primary btn-xs leave-allowance'>Edit</a>";
+                    }
+                }
+            ],
+        });
+        $(".leave-allowance").click(function () {
+            var editId = $(this).attr("data-id");
+            var editVal = $(this).attr("data-lentitle");
+            $("#tbDays").text(editVal);
+            $("#tbDays").attr("data-id", editId);
+            $("#tbDays").val(editVal);
+            //$("#slider-days").slider({ value: editVal });
+            $("#modal_LeaveAllowance").modal("show");
+
+        });
+
+
+    }
+    function makeLeaveType(data) {
+        leaveTypes = data;
+        var oTable = $('#LeaveTypeTable').dataTable({
+            "sDom": "Trt",
+            "bProcessing": true,
+            "iDisplayLength": 20,
+            "aaData": data,
+            "bDestroy": true,
+            "aoColumns": [
+                { "mData": "leave_type" },
+                {
+                    mData: null, bSortable: false, sTitle: 'Actions', fnRender: function (oObj) {
+                        id = oObj.aData["pk_leave_type_id"];
+                        //return "<a onclick='alert(&#39;" + id + "&#39;)' href='#'>delete</a>";
+                        return "<a data-id='" + id + "' data-ltype='" + oObj.aData["leave_type"] + "' class='btn btn-primary leave-edit'>edit</a>";
+                    }
+                }
+            ],
+        });
+        $(".leave-edit").click(function () {
+            var editId = $(this).attr("data-id");
+            var editVal = $(this).attr("data-ltype");
+            $("#tbEditType").attr("data-id", editId);
+            //btnEditType
+            $("#tbEditType").val(editVal);
+            $("#modal_LeaveEdit").modal("show");
+
+        });
+    }
+    function makeUserTable(data) {
+
+        Employes = data;
+        Employes.sort(SortBy("user_firstname"));
+        var oTable = $('#usersTable').dataTable({
+            //"sDom": "Trt",
+            "bProcessing": true,
+            "iDisplayLength": 20,
+            "aaData": data,
+            "aaData": data,
+            "bDestroy": true,//user_firstname user_lastname user_picture user_email user_isadmin user_isdeleted pk_user_id
+            "aoColumns": [
+                { "mData": "pk_user_id" },
+                { "mData": "user_firstname" },
+                { "mData": "user_lastname" },
+                { "mData": "user_email" },
+                {
+                    "mData": "user_picture",
+                    mRender: function (data, type, row) {
+                        if (row.user_picture != null) {
+                            var url;
+                            if (row.user_picture.charAt(0) == "~") { url = row.user_picture.replace('~', '') }
+                            else url = row.user_picture;
+                            var dt = '<img class="userPic"  src="' + url + '">';
+                            return dt;
+                        }
+                        else {
+                            return '<img class="userPic"  src="/Images/NA.jpg">';
+                        }
+                    }
+                },
+                {
+                    "mData": "user_isadmin",
+                    mRender: function (data, type, row) {
+                        if (row.user_isadmin === true)
+                            return "Yes";
+                        else return "No";
+                    }
+                },
+                {
+                    "mData": "user_isdeleted",
+                    mRender: function (data, type, row) {
+                        if (row.user_isdeleted === true)
+                            return "Yes";
+                        else return "No";
+                    }
+                }
+            ],
+        });
+        addApproverUser();
+    }
+    function refreshTable1() {
+        $.ajax({
+            type: "GET",
+            url: '/api/leavestaken',
+            success: function (data) {
+                createTable1(data);
+            }
+        });
+    }
+    function refreshTable2() {
+        $.ajax({
+            type: "GET",
+            url: '/api/ApproveLeave',
+            success: function (data) {
+                console.log(data);
+                createTable2(data);
+            }
+        });
+    }
+    function refreshCalender() {
+        //var date1 = ["24/2/2014", 'octocat!', 'https://github.com/logos', 'red', 'new github logo <img src="http://git.io/Xmayvg" />'];
+        //var date2 = ["7/2/2014", 'On Leave', '#', '#51a351', 'Paula - Morning<br />Eileen - Evening'];
+        //var date3 = ["27/2/2014", "github drinkup", "https://github.com/blog/category/drinkup", "blue"];
+        //var dates = new Array();
+        //dates[0] = date1; dates[1] = date2; dates[2] = date3;
+        theMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        theDays = ["S", "M", "T", "W", "T", "F", "S"];
+        //$('#calendar_test').calendar({
+        //    months: theMonths,
+        //    days: theDays,
+        //    req_ajax: {
+        //        type: 'GET',
+        //        url: '/api/leave'
+        //    }
+        //    //events: dates
+        //});
+        //alert("here");
+        $.ajax({
+            type: "GET",
+            url: "/api/leave",
+            success: function (data) {
+                var t = new Array();
+                $.each(data, function (i, v) {
+                    var tt = [v[0], v[1], v[2], v[3]];
+                    t[i] = tt;
+                });
+                $('#calendar_test').calendar({
+                    months: theMonths,
+                    days: theDays,
+                    events: t
+                });
+            }
+        });
+    }
+    function ajaxEdit(apiUrl, dataObject) {
+        $.ajax({
+            //url: 'api/deliverable/' + rowValue[0],
+            url: apiUrl,
+            cache: false,
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(dataObject),
+            success: function (data) {
+                if (data == true) {
+                    toastr.success('Update Successful.', 'Success');
+                    ajaxGet("/api/LeaveType", makeLeaveType);
+                }
+                else toastr.error('Looks like something is wrong. Please contact us if you see this again.', 'Oops!');
+            },
+            error: function (data) {
+                toastr.error('Looks like something is wrong. Please contact us if you see this again.', 'Oops!');
+            }
+        });
+    }
+    function ajaxDelete(apiUrl) {
+        $.ajax({
+            url: apiUrl,
+            cache: false,
+            type: 'DELETE',
+            contentType: 'application/json; charset=utf-8',
+
+            success: function (data) {
+                if (data == true) toastr.success('Delete Sucessful.', 'Success');
+                else toastr.error('Looks like something is wrong. Please contact us if you see this again.', 'Oops!');
+            },
+            error: function (data) {
+                toastr.error('Looks like something is wrong. Please contact us if you see this again.', 'Oops!');
+            }
+        });
+    }
+    function ajaxGet(apiUrl, func) {
+        $.ajax({
+            type: "GET",
+            url: apiUrl,
+            success: function (data) {
+                func(data);
+            }
+        });
+    }
+    function ajaxAdd(apiUrl, dataObject) {
+        $.ajax({
+            url: apiUrl,
+            cache: false,
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(dataObject),
+            success: function (data) {
+                if (data == true) {
+                    toastr.success('Added Sucessful.', 'Success');
+                    //$('#deleverableModel').modal('hide');
+                }
+                else toastr.error('Looks like something is wrong. Please contact us if you see this again.', 'Oops!');
+            },
+            error: function (data) {
+                toastr.error('Looks like something is wrong. Please contact us if you see this again.', 'Oops!');
+            }
+        });
+    }
+</script>
+@if (@Session["displayMenu"].ToString() == "Manager")
+{
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                        Apply for leave
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse">
+                <style>
+                    label {
+                        font-weight: initial;
+                    }
+                </style>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <select class="form-control" id="applyleave_type">
+                                <option value="1">Casual</option>
+                                <option value="2">Medical</option>
+                                <option value="3">Adjustment</option>
+                                <option value="4">Carry Over</option>
+                                <option value="5">Childcare</option>
+                                <option value="6">Public holiday</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control datepicker" id="applyleave_day" placeholder="Date">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="radio" name="applyleave_daypart" checked="checked" id="option1" value="0">
+                            <label for="option1">Fullday</label>
+                            <input type="radio" name="applyleave_daypart" id="option2" value="1">
+                            <label for="option2">Morning</label>
+                            <input type="radio" name="applyleave_daypart" id="option3" value="2">
+                            <label for="option3">Afternoon</label>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" onclick="insertLeaveApplication()" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                    <hr />
+                    <table id="example"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-group" id="accordion2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion2" href="#collapse2">
+                        Approve Leave
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    <table id="example2"></table>
+                    <div class="modal fade" id="modal_approve" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">Approve Leave</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <select class="form-control" id="select_leavestatus">
+                                            <option value="0">Applied</option>
+                                            <option value="1">Approved</option>
+                                            <option value="2">Rejected</option>
+                                        </select>
+                                    </div>
+                                    <span id="span_remaining_leaves" class="label label-warning"></span>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" id="button_savemodal" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@if (@Session["displayMenu"].ToString() == "Admin")
+{
+    <div class="panel-group" id="accordion2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion2" href="#collapse2">
+                        Approve Leave
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    <table id="example2"></table>
+                    <div class="modal fade" id="modal_approve" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">Approve Leave</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <select class="form-control" id="select_leavestatus">
+                                            <option value="0">Applied</option>
+                                            <option value="1">Approved</option>
+                                            <option value="2">Rejected</option>
+                                        </select>
+                                    </div>
+                                    <span id="span_remaining_leaves" class="label label-warning"></span>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" id="button_savemodal" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-default" id="accordionAdmin">
+        <div>
+
+            <div id="collapseAdmin" class="panel-collapse collapse in">
+                <style>
+                    label {
+                        font-weight: initial;
+                    }
+                </style>
+                <div class="panel-body">
+                    <div class="panel-group" id="accordionForBody" style="margin-left: -15px;">
+
+                        <div id="MLT" class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordionForBody" href="#collapseLeaveType">
+                                        Manage Leave Type
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseLeaveType" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="input-group">
+                                                <input id="tbNewType" type="text" class="form-control">
+                                                <span class="input-group-btn">
+                                                    <button id="btnNewType" class="btn btn-default " type="button">Add New Leave Type</button>
+                                                </span>
+                                            </div><!-- /input-group -->
+                                        </div><!-- /.col-lg-6 -->
+                                        <!-- /.col-lg-6 -->
+                                    </div><!-- /.row -->
+                                    <div class="col-md-4">
+                                        <table id="LeaveTypeTable" class="col-md-3">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Leave Type</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordionForBody" href="#collapseLeaveAllowance">
+                                        Manage Leave Allowance
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseLeaveAllowance" class="panel-collapse collapse ">
+                                <div class="panel-body">
+                                    <table id="LeaveAllowanceTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Person</th>
+                                                <th>Year</th>
+                                                <th>Leave Type</th>
+                                                <th>Leave Entitlemnt</th>
+                                                <th>Leave taken</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    <br />
+                                    <input type="button" class="btn btn-primary btn-xs" id="btnNewAllowance" value="New" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordionForBody" href="#collapseManageApproverMatrix">
+                                        Manage Approver Matrix
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseManageApproverMatrix" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label for="ddlApprover" class="col-md-1 control-label" style="line-height:2em;">Approver:</label>
+                                        <div class="col-md-2">
+                                            <select id="ddlApprover" class="form-control">
+                                                <option>Option-1</option>
+                                                <option>Option-2</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div style="clear:both;" class="col-md-12">
+                                        <fieldset>
+                                            <legend style="font-size:14px;">Requester:</legend>
+                                            <div id="ApproverMatrixUser">
+                                                <label class="control-label" for="docs_1119">
+                                                    <input type="checkbox" id="docs_1119" name="docs" value="1119" />
+                                                    Subsection 1.1
+                                                </label>
+                                            </div>
+                                        </fieldset>
+                                        <button class="col-md-1 btn btn-primary" onclick="AddNewMatrix();">Update</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <table id="ApprovalMatrixTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Requester</th>
+                                                    <th>Approver</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="modal fade" id="modal_LeaveEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Leave Type</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <input id="tbEditType" type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button id="btnEditType" class="btn btn-default" type="button">Save</button>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_LeaveAllowance" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Leave Allowance</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group col-sm-12 ">
+                        <label for="slider-days" class="col-sm-4 control-label">Leave Allowance</label>
+
+                        <div class="col-sm-4">
+                            <input type="number" max="50" min="0" class="form-control" id="tbDays" />
+                        </div>
+                        <div class=" col-sm-3">
+                            <button id="btnEditAllowance" class="btn btn-default" type="button">Save</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-modal-sm" id="NewAllowance" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="form-horizontal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3 class="modal-title" id="H1">Add</h3>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="tbNames" class="col-sm-3 control-label">Name</label>
+                            <div class="col-sm-9">
+                                <select id="tbNames" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Year</label>
+                            <div class="col-sm-9">
+                                <select id="ddlYear" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ddlLeaveType" class="col-sm-3 control-label">Leave Type</label>
+                            <div class="col-sm-9">
+                                <select id="ddlLeaveType" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="slider-LeaveEntitled" class="col-sm-3 control-label">Leave Entitlemnt</label>
+                            <div class="col-sm-5">
+                                <input type="number" max="30" min="0" class="form-control" id="tbLeaveEntitled" />
+                            </div>
+                            @*<div class="wrapper"> <div id="slider-LeaveEntitled" class="col-sm-5 slider"></div></div>*@
+                        </div>
+                        <div class="form-group">
+                            <label for="slider-LeaveTaken" class="col-sm-3 control-label">Leave Taken</label>
+                            <div class="col-sm-5">
+                                <input type="number" max="30" min="0" class="form-control" id="tbLeaveTaken" />
+                            </div>
+                            @*<div class="wrapper"> <div id="slider-LeaveTaken" class="col-sm-5 slider"></div></div>*@
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnAllowanceSave" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+
+
+

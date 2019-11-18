@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "TaskDetails";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .column {
+        float: left;
+        width: 33.33%;
+        padding: 5px;
+    }
+
+    /* Clearfix (clear floats) */
+    .row::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+</style>
+<link href="~/Content/fancybox/css/jquery.fancybox.css" rel="stylesheet" />
+<link href="~/Content/fancybox/css/jquery.fancybox.min.css" rel="stylesheet" />
+<script src="~/Content/fancybox/js/jquery.fancybox.js"></script>
+<link href="~/Content/layout.css" rel="stylesheet" />
+
+<div class="bread-Box">
+    <div class="container-fluid">
+        <div class="bread-Bar row">
+            <div class="bread-list col-12">
+                <div class="bread-content">
+                    <h2>Task Details</h2>
+                    <ul>
+                        <li>
+                            <a href="dashboard.html">Dashboard</a>
+                            <span class="bread-span"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                        </li>
+                        <li class="active">
+                            <a href="javascript:void(0);">Task Details</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="myattendance-Part table-Box">
+    <div class="container-fluid">
+        <div class="assign-Box">
+            <div class="container">
+                <div class="assign-Bar row">
+                    <div class="assign-list col-md-6">
+                        <div class="assign-comman">
+                            <label>Task Name :-</label>
+                            <label class="label-edit" for="" id="taskname"></label>
+                        </div>
+                    </div>
+                    <div class="assign-list col-md-6">
+                        <div class="assign-comman">
+                            <label>Project Name :-</label>
+                            <label class="label-edit" for="" id="projectname"></label>
+                        </div>
+                    </div>
+                    <div class="assign-list col-md-6">
+                        <div class="assign-comman">
+                            <label>Device Type :-</label>
+                            <label class="label-edit" for="" id="devicetype"></label>
+                        </div>
+                    </div>
+
+                    <div class="assign-list col-md-4">
+                        <div class="assign-comman">
+                            <label>Created Date :-</label>
+                            <label class="label-edit" for="" id="createdDate"></label>
+                        </div>
+                    </div>
+                    <div class="assign-list col-md-4">
+                        <div class="assign-comman">
+                            <label>Status :-</label>
+                            <label class="label-edit" for="" id="status"></label>
+                        </div>
+                    </div>
+                    <div class="assign-list col-md-12">
+                        <div class="assign-comman">
+                            <label>Description :-</label>
+                            <label class="label-edit assign-description" for="" id="description"></label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="agallery-Box">
+            <div class="">
+                <div class="agallery-Bar row" id="show_images">
+
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+        <script>
+
+    var ID = localStorage.getItem("TaskID");
+    viewtask(ID);
+      function viewtask(ID) {
+        var url = '@Url.Content("~/")' + "Task/viewtaskbyId";
+          $.post(url, { taskId: ID }, function (data) {
+              console.log(data);
+            if (data.Status=='1') {
+                  $('#taskname').text(data.Taskdetails[0].TaskName);
+                 $('#projectname').text(data.Taskdetails[0].projectname);
+                 $('#devicetype').text(data.Taskdetails[0].Devicetype);
+                $('#description').text(data.Taskdetails[0].description);
+                $('#createdDate').text(data.Taskdetails[0].Createdon);
+                     if (data.Taskdetails[0].status == "1") {
+                $('#status').text("Open");
+              $('#Status').text("Open");
+                }
+                else if (data.Taskdetails[0].status == "2") {
+                    $('#status').text("Re-Open");
+                   $('#Status').text("Re-Open");
+                }
+                else {
+
+                    $('#status').text("Completed");
+                  $('#Status').text("Completed");
+                }
+              $.each(data.taskImage, function(){
+                  var  img = "http://52.49.109.172"+this.imageName;
+
+                      $('<div/>').addClass("agallery-list col-md-3").prepend($('<div/>').prepend($('<a/>').attr('href', "" + img + "").attr("data-fancybox","agallery").prepend($('<img />').attr('src', "" + img + "").width('183px').height('183px').css("margin-left", "14px").css("margin-bottom", "14px")))).appendTo($('#show_images'));            });
+            }
+            else {
+                alert("There is no data");
+            }
+        });
+    }
+
+
+        </script>

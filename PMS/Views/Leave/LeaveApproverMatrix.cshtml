@@ -1,0 +1,366 @@
+﻿
+@{
+    ViewBag.Title = "LeaveApproverMatrix";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<h2>Leave Approver Matrix</h2>
+
+<script src="/Content/bootstrap_calendar/js/bootstrap_calendar.min.js"></script>
+<link href="/Content/bootstrap_calendar/css/bootstrap_calendar.css" rel="stylesheet" />
+
+
+<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+<script src="~/Content/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
+<script type="text/javascript" charset="utf8" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+
+<div id="calendar_test"></div>
+
+@*Initialize Datepicker.......*@
+<script src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
+<link href="~/Content/datepicker/css/datepicker.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(function () {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+
+</script>
+@*********************************@
+
+<br />
+<style>
+    .group-back {
+        background-color: white;
+        color: #000000;
+    }
+
+        .group-back:hover {
+            cursor: pointer;
+        }
+
+    table.dataTable td.group-back {
+        padding: 0 2px;
+    }
+
+    #example2, #example {
+        width: 100% !important;
+    }
+
+    .calendar .header {
+        background-color: #b0b1d0;
+    }
+
+    .calendar .week_days td {
+        background: #1dcead;
+    }
+
+    .panel-title {
+        color: blue;
+    }
+
+    .table td, th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+</style>
+<script>
+
+    var Employes;
+    var approveMatrix;
+    var token = sessionStorage.getItem('access_token');
+    $(function () {
+       
+     
+        refreshCalender();
+        ajaxGet("/api/UserDetails", makeUserTable);
+        ajaxGet("/api/ApproverMatrix", makeApproverMatrixTable);
+            $('#tbNames').empty();
+            $.each(Employes, function (index, object) {
+
+                $('#tbNames').append('<option value="' + object.pk_user_id + '">' + object.user_firstname + '</option>');
+
+            });
+    });
+
+    function makeApproverMatrixTable(data) {
+        approveMatrix = data;
+        $('#ApprovalMatrixTable').css("display", "none");
+
+    }
+    function deleteApproveMap(e) {
+        if (confirm("You really want to delete selected row.")) {
+            ajaxDelete("/api/ApproverMatrix/" + e.getAttribute("data-id"));
+        }
+        $(document).ajaxComplete(function (event, XMLHttpRequest, ajaxOptions) {
+            if (typeof e.getAttribute("data-id") !== 'undefined' && ajaxOptions.url == '/api/ApproverMatrix/' + e.getAttribute("data-id")) {
+                ajaxGet("/api/ApproverMatrix", makeApproverMatrixTable);
+            }
+
+        });
+
+    }
+    function AddNewMatrix() {
+        var checked = $('input[name=Requesters]:checked').map(function (_, element) {
+            return $(element).val();
+        }).get();
+        ajaxEdit("/api/ApproverMatrix/" + $("#ddlApprover").val(), checked);
+        //console.log(checked);
+    }
+    function addApproverUser() {
+        console.log(Employes);
+        $('#ApproverMatrixUser').empty();
+        $('#ddlApprover').empty();
+        $.each(Employes, function (index, object) {
+            $('#ddlApprover').append('<option data-index="' + index + '" value="' + object.pk_user_id + '">' + object.user_firstname + '</option>');
+            $('#ApproverMatrixUser').append('<label class="control-label col-sm-2"  for="' + index + '"><input style="margin-right:5px;" type="checkbox" id="' + index + '" name="Requesters" value="' + object.pk_user_id + '" />' + object.user_firstname + '</label>');
+
+        });
+        var allCheckBox = $('#ApproverMatrixUser label');
+
+        $('#ddlApprover').change(function () {
+            allCheckBox.children().removeAttr("disabled");
+            allCheckBox.children().removeAttr("checked");
+            var ddlIndex = $(this).children("option").filter(":selected").attr("data-index");
+
+            allCheckBox.each(function () {
+                var chbIndex = $(this).attr("for");
+                if (ddlIndex == chbIndex) {
+                    $(this).children().attr("disabled", "disabled");
+                }
+            });
+            disableAlreadyMapped($(this).val());
+        });
+    }
+    function disableAlreadyMapped(selected) {
+        //approveMatrix
+        var allCheckBox = $('#ApproverMatrixUser label');
+
+        $.each(approveMatrix, function (index, object) {
+            if (selected == object.ApproverId) {
+                allCheckBox.each(function () {
+                    var chbValue = $(this).children().attr("value");
+                    if (chbValue == object.RequesterId) {
+                        $(this).children().prop("checked", "checked");
+                    }
+                });
+            }
+        });
+    }
+   
+    function makeUserTable(data) {
+
+        Employes = data;
+      
+        var oTable = $('#usersTable').dataTable({
+            //"sDom": "Trt",
+            "bProcessing": true,
+            "iDisplayLength": 20,
+            "aaData": data,
+            "aaData": data,
+            "bDestroy": true,//user_firstname user_lastname user_picture user_email user_isadmin user_isdeleted pk_user_id
+            "aoColumns": [
+                { "mData": "pk_user_id" },
+                { "mData": "user_firstname" },
+                { "mData": "user_lastname" },
+                { "mData": "user_email" },
+                {
+                    "mData": "user_picture",
+                    mRender: function (data, type, row) {
+                        if (row.user_picture != null) {
+                            var url;
+                            if (row.user_picture.charAt(0) == "~") { url = row.user_picture.replace('~', '') }
+                            else url = row.user_picture;
+                            var dt = '<img class="userPic"  src="' + url + '">';
+                            return dt;
+                        }
+                        else {
+                            return '<img class="userPic"  src="/Images/NA.jpg">';
+                        }
+                    }
+                },
+                {
+                    "mData": "user_isadmin",
+                    mRender: function (data, type, row) {
+                        if (row.user_isadmin === true)
+                            return "Yes";
+                        else return "No";
+                    }
+                },
+                {
+                    "mData": "user_isdeleted",
+                    mRender: function (data, type, row) {
+                        if (row.user_isdeleted === true)
+                            return "Yes";
+                        else return "No";
+                    }
+                }
+            ],
+        });
+        addApproverUser();
+    }
+
+    function refreshCalender() {
+
+        theMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        theDays = ["S", "M", "T", "W", "T", "F", "S"];
+       
+        $.ajax({
+            type: "GET",
+            url: "/api/leave",
+              contentType: "application/x-www-form-urlencoded",
+            headers: {
+                    'Authorization': "bearer  " +token
+                     },
+            success: function (data) {
+                var t = new Array();
+                $.each(data, function (i, v) {
+                    var tt = [v[0], v[1], v[2], v[3]];
+                    t[i] = tt;
+                });
+                $('#calendar_test').calendar({
+                    months: theMonths,
+                    days: theDays,
+                    events: t
+                });
+            }
+        });
+    }
+    function ajaxEdit(apiUrl, dataObject) {
+        $.ajax({
+            //url: 'api/deliverable/' + rowValue[0],
+            url: apiUrl,
+            cache: false,
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+          
+            headers: {
+                    'Authorization': "bearer  " +token
+                     },
+            data: JSON.stringify(dataObject),
+            success: function (data) {
+                if (data == true) {
+                    toastr.success('Update Successful.', 'Success');
+                    ajaxGet("/api/LeaveType", makeLeaveType);
+                }
+                else toastr.error('Looks like something is wrong. Please contact us if you see this again.', 'Oops!');
+            },
+            error: function (data) {
+                toastr.error('Looks like something is wrong. Please contact us if you see this again.', 'Oops!');
+            }
+        });
+    }
+    function ajaxDelete(apiUrl) {
+        $.ajax({
+            url: apiUrl,
+            cache: false,
+            type: 'DELETE',
+            contentType: 'application/json; charset=utf-8',
+          
+            headers: {
+                    'Authorization': "bearer  " +token
+                     },
+
+            success: function (data) {
+                if (data == true) toastr.success('Delete Sucessful.', 'Success');
+                else toastr.error('Looks like something is wrong. Please contact us if you see this again.', 'Oops!');
+            },
+            error: function (data) {
+                toastr.error('Looks like something is wrong. Please contact us if you see this again.', 'Oops!');
+            }
+        });
+    }
+    function ajaxGet(apiUrl, func) {
+        $.ajax({
+            type: "GET",
+            url: apiUrl,
+            contentType: 'application/json; charset=utf-8',
+            headers: {
+                    'Authorization': "bearer  " +token
+                     },
+
+            success: function (data) {
+                func(data);
+            }
+        });
+    }
+    function ajaxAdd(apiUrl, dataObject) {
+        $.ajax({
+            url: apiUrl,
+            cache: false,
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            headers: {
+                    'Authorization': "bearer  " +token
+                     },
+
+            data: JSON.stringify(dataObject),
+            success: function (data) {
+                if (data == true) {
+                    toastr.success('Added Sucessful.', 'Success');
+                    //$('#deleverableModel').modal('hide');
+                }
+                else toastr.error('Looks like something is wrong. Please contact us if you see this again.', 'Oops!');
+            },
+            error: function (data) {
+                toastr.error('Looks like something is wrong. Please contact us if you see this again.', 'Oops!');
+            }
+        });
+    }
+</script>
+
+<h3>
+        Manage Approver Matrix
+</h3>
+
+<div class="panel-body">
+    <div class="form-group">
+        <label for="ddlApprover" class="col-md-1 control-label" style="line-height:2em;">Approver:</label>
+        <div class="col-md-2">
+            <select id="ddlApprover" class="form-control">
+                <option>Option-1</option>
+                <option>Option-2</option>
+            </select>
+        </div>
+
+    </div>
+
+    <div style="clear:both;" class="col-md-12">
+        <fieldset>
+            <legend style="font-size:14px;">Requester:</legend>
+            <div id="ApproverMatrixUser">
+                <label class="control-label" for="docs_1119">
+                    <input type="checkbox" id="docs_1119" name="docs" value="1119" />
+                    Subsection 1.1
+                </label>
+            </div>
+        </fieldset>
+        <button class="col-md-1 btn btn-primary" onclick="AddNewMatrix();">Update</button>
+    </div>
+    <div class="col-md-4">
+        <table id="ApprovalMatrixTable">
+            <thead>
+                <tr>
+                    <th>Requester</th>
+                    <th>Approver</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

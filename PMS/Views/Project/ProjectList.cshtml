@@ -1,0 +1,142 @@
+﻿
+
+@{
+    ViewBag.Title = "ProjectList";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+
+<link rel="stylesheet" href="~/Template/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/Template/vendor/datatables/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/Scripts/datetimexdsoft/build/jquery.datetimepicker.min.css">
+
+<script src="~/Template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="~/Template/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/Scripts/datetimexdsoft/build/jquery.datetimepicker.full.min.js"></script>
+
+
+<div class="bread-Box">
+    <div class="container-fluid">
+        <div class="bread-Bar row">
+            <div class="bread-list col-12">
+                <div class="bread-content">
+                    <h2>Project List </h2>
+                    <ul>
+                        <li>
+                            <a href="dashboard.html">Dashboard</a>
+                            <span class="bread-span"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                        </li>
+                        <li class="active">
+                            <a href="javascript:void(0);">ProjectList</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="loading"></div>
+<div class="myattendance-Part table-Box" id="attandance">
+    <div class="container-fluid">
+        <div class="table-Bar row">
+            <div class="table-list col-12">
+                <div class="table-head d-none">
+                    <h6>Project List:</h6>
+                    <a href="javascript:void(0);">ProjectList</a>
+                </div>
+                <div class="table-comman">
+                    <div class="table-responsive">
+
+                        <table id="myTable" class="table-data table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>ProjectID</th>
+                                    <th>Project Name</th>
+                                    <th>Project Description</th>
+                                    <th>Created Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+
+    $(document).ready(function () {
+        var table;
+          $('.loading').hide();
+        $.ajax({
+            url: '/Project/ProjectListData',
+            method: 'post',
+            dataType: 'json',
+               beforeSend: function () {
+                $('.loading').show();
+            },
+            complete: function () {
+                $(".loading").hide();
+            },
+            success: function (data) {
+
+                table = $('#myTable').dataTable({
+                    processing: true,
+                    paging: true,
+                    sort: true,
+                    searching: true,
+                    lengthMenu: [[5, 10, 25, 50], [5, 10, 25, 50]],
+                    //scrollY: 200,
+                    data: data.result,
+                    bDestroy: true,
+                    columns: [
+                        { "data": "ProjectID", "autoWidth": true, "visible": false },
+                        { "data": "ProjectName", "autoWidth": true },
+
+                        { "data": "Projectdescription", "autoWidth": true },
+                        { "data": "createDate", "autoWidth": true },
+                        {
+                            "data": null, render: function (data, type, row) {
+
+                                return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.ProjectID + "'); >Delete</a>";
+
+
+                            }
+                        },
+                    ]
+                });
+            }
+        });
+    });
+
+</script>
+
+
+
+<script type="text/javascript">
+
+    function DeleteData(ID) {
+        if (confirm("Are you sure you want to delete ...?")) {
+            DeleteSheet(ID);
+        }
+        else {
+            return false;
+        }
+    }
+    function DeleteSheet(ID) {
+        var url = '@Url.Content("~/")' + "Project/Delete";
+        $.post(url, { ProjectID: ID }, function (data) {
+            if (data) {
+                oTable = $('#myTable').DataTable();
+                oTable.draw();
+            }
+            else {
+                alert("This Project cannot be deleted it is already in use!");
+            }
+        });
+    }
+</script>

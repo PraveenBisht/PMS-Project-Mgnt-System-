@@ -1,0 +1,1333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Discriminator" Type="nvarchar" MaxLength="128" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="DepartMentId" Type="int" />
+          <Property Name="Designation" Type="varchar" MaxLength="200" />
+          <Property Name="Address" Type="varchar" MaxLength="500" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="15" />
+          <Property Name="Qualification" Type="varchar" MaxLength="500" />
+          <Property Name="JoiningDate" Type="date" />
+          <Property Name="RegineDate" Type="date" />
+          <Property Name="ProfilePic" Type="varchar" MaxLength="100" />
+          <Property Name="Last_Online_Seen" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AssignTask">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="varchar" MaxLength="100" />
+          <Property Name="FromassignId" Type="varchar" MaxLength="500" />
+          <Property Name="ToAssignId" Type="varchar" MaxLength="100" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="800" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ComingTime" Type="datetime" />
+          <Property Name="DateOfDay" Type="datetime" />
+          <Property Name="LeaveTime" Type="datetime" />
+          <Property Name="EmployeeID" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ChangeIssueDetails">
+          <Key>
+            <PropertyRef Name="EfollowId" />
+          </Key>
+          <Property Name="EfollowId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="statusid" Type="int" />
+          <Property Name="Remark" Type="varchar" MaxLength="1000" />
+          <Property Name="Createdby" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="issueid" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ChatMessageDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="EmailID" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ChatPrivateMessageDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MasterEmailID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ChatToEmailID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="ChatDateTime" Type="datetime" />
+          <Property Name="IsRead" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="ChatPrivateMessageMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="EmailID" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ChatUserDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConnectionId" Type="nvarchar" MaxLength="100" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="EmailID" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Expense_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExpenseDate" Type="smalldatetime" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="TagID" Type="int" />
+          <Property Name="UserID" Type="varchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="Filedetails">
+          <Key>
+            <PropertyRef Name="imageid" />
+          </Key>
+          <Property Name="imageid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="varchar" MaxLength="500" />
+          <Property Name="Extension" Type="varchar" MaxLength="500" />
+          <Property Name="imageName" Type="varchar" MaxLength="100" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="Innovation_Management_User">
+          <Key>
+            <PropertyRef Name="pk_user_id" />
+          </Key>
+          <Property Name="pk_user_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="user_firstname" Type="nvarchar" MaxLength="255" />
+          <Property Name="user_lastname" Type="nvarchar" MaxLength="255" />
+          <Property Name="user_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="user_email" Type="nvarchar" MaxLength="50" />
+          <Property Name="user_picture" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Leave_Management_Approval_Matrix">
+          <Key>
+            <PropertyRef Name="pk_approval_id" />
+          </Key>
+          <Property Name="pk_approval_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fk_requestor_id" Type="nvarchar" MaxLength="128" />
+          <Property Name="fk_approver_id" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Leave_Management_Leave_Allowance">
+          <Key>
+            <PropertyRef Name="pk_leave_allowance_id" />
+          </Key>
+          <Property Name="pk_leave_allowance_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fk_user_id" Type="nvarchar" MaxLength="128" />
+          <Property Name="fk_leave_type_id" Type="int" />
+          <Property Name="allowance_year" Type="nvarchar" MaxLength="50" />
+          <Property Name="allowance_entitlement" Type="int" />
+          <Property Name="allowance_taken" Type="float" />
+        </EntityType>
+        <EntityType Name="Leave_Management_Leave_Taken">
+          <Key>
+            <PropertyRef Name="pk_leave_taken_id" />
+          </Key>
+          <Property Name="pk_leave_taken_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fk_user_id" Type="nvarchar" MaxLength="128" />
+          <Property Name="fk_leave_type" Type="int" />
+          <Property Name="leave_days" Type="date" />
+          <Property Name="LeaveDateFrom" Type="datetime" />
+          <Property Name="LeaveDateTo" Type="datetime" />
+          <Property Name="TotalLeave" Type="int" />
+          <Property Name="is_halfday" Type="bit" />
+          <Property Name="is_afternoon" Type="bit" />
+          <Property Name="leave_status" Type="int" />
+          <Property Name="fk_approved_user_id" Type="nvarchar" MaxLength="128" />
+          <Property Name="Remark" Type="varchar" MaxLength="800" />
+        </EntityType>
+        <EntityType Name="Leave_Management_Leave_Type">
+          <Key>
+            <PropertyRef Name="pk_leave_type_id" />
+          </Key>
+          <Property Name="pk_leave_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="leave_type" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="int" />
+          <Property Name="Details" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="DetailsURL" Type="nvarchar" MaxLength="500" />
+          <Property Name="SentTo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date" Type="date" />
+          <Property Name="IsRead" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="IsReminder" Type="bit" />
+          <Property Name="Code" Type="nvarchar" MaxLength="100" />
+          <Property Name="NotificationType" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ProjectMaster">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectName" Type="varchar" MaxLength="100" />
+          <Property Name="Projectdescription" Type="varchar" MaxLength="500" />
+          <Property Name="startingdate" Type="date" />
+          <Property Name="status" Type="bit" />
+          <Property Name="createdDate" Type="date" />
+        </EntityType>
+        <EntityType Name="Tag_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_Task">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
+          <Property Name="Createdon" Type="datetime" />
+          <Property Name="Createdby" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedTo" Type="varchar" MaxLength="100" />
+          <Property Name="SummaryName" Type="varchar" MaxLength="500" />
+          <Property Name="projectid" Type="int" />
+          <Property Name="logintype" Type="varchar" MaxLength="50" />
+          <Property Name="devicetype" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="varchar" MaxLength="50" />
+          <Property Name="RoleId" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expense_tbl_Tag_tbl">
+          <End Role="Tag_tbl" Type="Self.Tag_tbl" Multiplicity="0..1" />
+          <End Role="Expense_tbl" Type="Self.Expense_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Expense_tbl">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Approval_Matrix_Innovation_Management_User2">
+          <End Role="Innovation_Management_User" Type="Self.Innovation_Management_User" Multiplicity="0..1" />
+          <End Role="Leave_Management_Approval_Matrix" Type="Self.Leave_Management_Approval_Matrix" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Innovation_Management_User">
+              <PropertyRef Name="pk_user_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Approval_Matrix">
+              <PropertyRef Name="fk_requestor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Approval_Matrix_Innovation_Management_User3">
+          <End Role="Innovation_Management_User" Type="Self.Innovation_Management_User" Multiplicity="0..1" />
+          <End Role="Leave_Management_Approval_Matrix" Type="Self.Leave_Management_Approval_Matrix" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Innovation_Management_User">
+              <PropertyRef Name="pk_user_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Approval_Matrix">
+              <PropertyRef Name="fk_approver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Leave_Allowance_Innovation_Management_User">
+          <End Role="Innovation_Management_User" Type="Self.Innovation_Management_User" Multiplicity="0..1" />
+          <End Role="Leave_Management_Leave_Allowance" Type="Self.Leave_Management_Leave_Allowance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Innovation_Management_User">
+              <PropertyRef Name="pk_user_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Leave_Allowance">
+              <PropertyRef Name="fk_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Leave_Allowance_Leave_Management_Leave_Type">
+          <End Role="Leave_Management_Leave_Type" Type="Self.Leave_Management_Leave_Type" Multiplicity="0..1" />
+          <End Role="Leave_Management_Leave_Allowance" Type="Self.Leave_Management_Leave_Allowance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Leave_Management_Leave_Type">
+              <PropertyRef Name="pk_leave_type_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Leave_Allowance">
+              <PropertyRef Name="fk_leave_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Leave_Taken_Innovation_Management_User">
+          <End Role="Innovation_Management_User" Type="Self.Innovation_Management_User" Multiplicity="0..1" />
+          <End Role="Leave_Management_Leave_Taken" Type="Self.Leave_Management_Leave_Taken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Innovation_Management_User">
+              <PropertyRef Name="pk_user_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Leave_Taken">
+              <PropertyRef Name="fk_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Leave_Taken_Innovation_Management_User1">
+          <End Role="Innovation_Management_User" Type="Self.Innovation_Management_User" Multiplicity="0..1" />
+          <End Role="Leave_Management_Leave_Taken" Type="Self.Leave_Management_Leave_Taken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Innovation_Management_User">
+              <PropertyRef Name="pk_user_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Leave_Taken">
+              <PropertyRef Name="fk_approved_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Leave_Taken_Leave_Management_Leave_Type">
+          <End Role="Leave_Management_Leave_Type" Type="Self.Leave_Management_Leave_Type" Multiplicity="0..1" />
+          <End Role="Leave_Management_Leave_Taken" Type="Self.Leave_Management_Leave_Taken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Leave_Management_Leave_Type">
+              <PropertyRef Name="pk_leave_type_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Leave_Taken">
+              <PropertyRef Name="fk_leave_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Update_Chat_Message_IsRead_Status" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FromEmailId" Type="varchar" Mode="In" />
+          <Parameter Name="ToEmailId" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="PMSModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssignTask" EntityType="Self.AssignTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChangeIssueDetails" EntityType="Self.ChangeIssueDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChatMessageDetail" EntityType="Self.ChatMessageDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChatPrivateMessageDetails" EntityType="Self.ChatPrivateMessageDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChatPrivateMessageMaster" EntityType="Self.ChatPrivateMessageMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChatUserDetail" EntityType="Self.ChatUserDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Expense_tbl" EntityType="Self.Expense_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Filedetails" EntityType="Self.Filedetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Innovation_Management_User" EntityType="Self.Innovation_Management_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Leave_Management_Approval_Matrix" EntityType="Self.Leave_Management_Approval_Matrix" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Leave_Management_Leave_Allowance" EntityType="Self.Leave_Management_Leave_Allowance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Leave_Management_Leave_Taken" EntityType="Self.Leave_Management_Leave_Taken" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Leave_Management_Leave_Type" EntityType="Self.Leave_Management_Leave_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectMaster" EntityType="Self.ProjectMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tag_tbl" EntityType="Self.Tag_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Task" EntityType="Self.tbl_Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expense_tbl_Tag_tbl" Association="Self.FK_Expense_tbl_Tag_tbl">
+            <End Role="Tag_tbl" EntitySet="Tag_tbl" />
+            <End Role="Expense_tbl" EntitySet="Expense_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Approval_Matrix_Innovation_Management_User2" Association="Self.FK_Leave_Management_Approval_Matrix_Innovation_Management_User2">
+            <End Role="Innovation_Management_User" EntitySet="Innovation_Management_User" />
+            <End Role="Leave_Management_Approval_Matrix" EntitySet="Leave_Management_Approval_Matrix" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Approval_Matrix_Innovation_Management_User3" Association="Self.FK_Leave_Management_Approval_Matrix_Innovation_Management_User3">
+            <End Role="Innovation_Management_User" EntitySet="Innovation_Management_User" />
+            <End Role="Leave_Management_Approval_Matrix" EntitySet="Leave_Management_Approval_Matrix" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Leave_Allowance_Innovation_Management_User" Association="Self.FK_Leave_Management_Leave_Allowance_Innovation_Management_User">
+            <End Role="Innovation_Management_User" EntitySet="Innovation_Management_User" />
+            <End Role="Leave_Management_Leave_Allowance" EntitySet="Leave_Management_Leave_Allowance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Leave_Allowance_Leave_Management_Leave_Type" Association="Self.FK_Leave_Management_Leave_Allowance_Leave_Management_Leave_Type">
+            <End Role="Leave_Management_Leave_Type" EntitySet="Leave_Management_Leave_Type" />
+            <End Role="Leave_Management_Leave_Allowance" EntitySet="Leave_Management_Leave_Allowance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Leave_Taken_Innovation_Management_User" Association="Self.FK_Leave_Management_Leave_Taken_Innovation_Management_User">
+            <End Role="Innovation_Management_User" EntitySet="Innovation_Management_User" />
+            <End Role="Leave_Management_Leave_Taken" EntitySet="Leave_Management_Leave_Taken" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Leave_Taken_Innovation_Management_User1" Association="Self.FK_Leave_Management_Leave_Taken_Innovation_Management_User1">
+            <End Role="Innovation_Management_User" EntitySet="Innovation_Management_User" />
+            <End Role="Leave_Management_Leave_Taken" EntitySet="Leave_Management_Leave_Taken" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Leave_Taken_Leave_Management_Leave_Type" Association="Self.FK_Leave_Management_Leave_Taken_Leave_Management_Leave_Type">
+            <End Role="Leave_Management_Leave_Type" EntitySet="Leave_Management_Leave_Type" />
+            <End Role="Leave_Management_Leave_Taken" EntitySet="Leave_Management_Leave_Taken" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <Property Name="DepartMentId" Type="Int32" />
+          <Property Name="Designation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Qualification" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="JoiningDate" Type="DateTime" Precision="0" />
+          <Property Name="RegineDate" Type="DateTime" Precision="0" />
+          <Property Name="ProfilePic" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Last_Online_Seen" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="AssignTask">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ToAssignId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TaskId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FromassignId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ComingTime" Type="DateTime" Precision="3" />
+          <Property Name="DateOfDay" Type="DateTime" Precision="3" />
+          <Property Name="LeaveTime" Type="DateTime" Precision="3" />
+          <Property Name="EmployeeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ChangeIssueDetail">
+          <Key>
+            <PropertyRef Name="EfollowId" />
+          </Key>
+          <Property Name="EfollowId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="statusid" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Createdby" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="issueid" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ChatMessageDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ChatPrivateMessageDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MasterEmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ChatToEmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ChatDateTime" Type="DateTime" Precision="3" />
+          <Property Name="IsRead" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ChatPrivateMessageMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ChatUserDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConnectionId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Expense_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExpenseDate" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TagID" Type="Int32" />
+          <Property Name="UserID" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tag_tbl" Relationship="Self.FK_Expense_tbl_Tag_tbl" FromRole="Expense_tbl" ToRole="Tag_tbl" />
+        </EntityType>
+        <EntityType Name="Filedetail">
+          <Key>
+            <PropertyRef Name="imageid" />
+          </Key>
+          <Property Name="imageid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Extension" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="imageName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Innovation_Management_User">
+          <Key>
+            <PropertyRef Name="pk_user_id" />
+          </Key>
+          <Property Name="pk_user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="user_firstname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="user_lastname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Leave_Management_Approval_Matrix" Relationship="Self.FK_Leave_Management_Approval_Matrix_Innovation_Management_User2" FromRole="Innovation_Management_User" ToRole="Leave_Management_Approval_Matrix" />
+          <NavigationProperty Name="Leave_Management_Approval_Matrix1" Relationship="Self.FK_Leave_Management_Approval_Matrix_Innovation_Management_User3" FromRole="Innovation_Management_User" ToRole="Leave_Management_Approval_Matrix" />
+          <NavigationProperty Name="Leave_Management_Leave_Allowance" Relationship="Self.FK_Leave_Management_Leave_Allowance_Innovation_Management_User" FromRole="Innovation_Management_User" ToRole="Leave_Management_Leave_Allowance" />
+          <NavigationProperty Name="Leave_Management_Leave_Taken" Relationship="Self.FK_Leave_Management_Leave_Taken_Innovation_Management_User" FromRole="Innovation_Management_User" ToRole="Leave_Management_Leave_Taken" />
+          <NavigationProperty Name="Leave_Management_Leave_Taken1" Relationship="Self.FK_Leave_Management_Leave_Taken_Innovation_Management_User1" FromRole="Innovation_Management_User" ToRole="Leave_Management_Leave_Taken" />
+        </EntityType>
+        <EntityType Name="Leave_Management_Approval_Matrix">
+          <Key>
+            <PropertyRef Name="pk_approval_id" />
+          </Key>
+          <Property Name="pk_approval_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fk_requestor_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="fk_approver_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Innovation_Management_User" Relationship="Self.FK_Leave_Management_Approval_Matrix_Innovation_Management_User2" FromRole="Leave_Management_Approval_Matrix" ToRole="Innovation_Management_User" />
+          <NavigationProperty Name="Innovation_Management_User1" Relationship="Self.FK_Leave_Management_Approval_Matrix_Innovation_Management_User3" FromRole="Leave_Management_Approval_Matrix" ToRole="Innovation_Management_User" />
+        </EntityType>
+        <EntityType Name="Leave_Management_Leave_Allowance">
+          <Key>
+            <PropertyRef Name="pk_leave_allowance_id" />
+          </Key>
+          <Property Name="pk_leave_allowance_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fk_user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="fk_leave_type_id" Type="Int32" />
+          <Property Name="allowance_year" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="allowance_entitlement" Type="Int32" />
+          <Property Name="allowance_taken" Type="Double" />
+          <NavigationProperty Name="Innovation_Management_User" Relationship="Self.FK_Leave_Management_Leave_Allowance_Innovation_Management_User" FromRole="Leave_Management_Leave_Allowance" ToRole="Innovation_Management_User" />
+          <NavigationProperty Name="Leave_Management_Leave_Type" Relationship="Self.FK_Leave_Management_Leave_Allowance_Leave_Management_Leave_Type" FromRole="Leave_Management_Leave_Allowance" ToRole="Leave_Management_Leave_Type" />
+        </EntityType>
+        <EntityType Name="Leave_Management_Leave_Taken">
+          <Key>
+            <PropertyRef Name="pk_leave_taken_id" />
+          </Key>
+          <Property Name="pk_leave_taken_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fk_user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="fk_leave_type" Type="Int32" />
+          <Property Name="leave_days" Type="DateTime" Precision="0" />
+          <Property Name="is_halfday" Type="Boolean" />
+          <Property Name="is_afternoon" Type="Boolean" />
+          <Property Name="leave_status" Type="Int32" />
+          <Property Name="fk_approved_user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Innovation_Management_User" Relationship="Self.FK_Leave_Management_Leave_Taken_Innovation_Management_User" FromRole="Leave_Management_Leave_Taken" ToRole="Innovation_Management_User" />
+          <NavigationProperty Name="Innovation_Management_User1" Relationship="Self.FK_Leave_Management_Leave_Taken_Innovation_Management_User1" FromRole="Leave_Management_Leave_Taken" ToRole="Innovation_Management_User" />
+          <NavigationProperty Name="Leave_Management_Leave_Type" Relationship="Self.FK_Leave_Management_Leave_Taken_Leave_Management_Leave_Type" FromRole="Leave_Management_Leave_Taken" ToRole="Leave_Management_Leave_Type" />
+          <Property Name="LeaveDateFrom" Type="DateTime" Precision="3" />
+          <Property Name="LeaveDateTo" Type="DateTime" Precision="3" />
+          <Property Name="TotalLeave" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Leave_Management_Leave_Type">
+          <Key>
+            <PropertyRef Name="pk_leave_type_id" />
+          </Key>
+          <Property Name="pk_leave_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="leave_type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Leave_Management_Leave_Allowance" Relationship="Self.FK_Leave_Management_Leave_Allowance_Leave_Management_Leave_Type" FromRole="Leave_Management_Leave_Type" ToRole="Leave_Management_Leave_Allowance" />
+          <NavigationProperty Name="Leave_Management_Leave_Taken" Relationship="Self.FK_Leave_Management_Leave_Taken_Leave_Management_Leave_Type" FromRole="Leave_Management_Leave_Type" ToRole="Leave_Management_Leave_Taken" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="Details" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DetailsURL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SentTo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="IsRead" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="IsReminder" Type="Boolean" />
+          <Property Name="Code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NotificationType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Tag_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Expense_tbl" Relationship="Self.FK_Expense_tbl_Tag_tbl" FromRole="Tag_tbl" ToRole="Expense_tbl" />
+        </EntityType>
+        <EntityType Name="tbl_Task">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Createdon" Type="DateTime" Precision="3" />
+          <Property Name="Createdby" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SummaryName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="projectid" Type="Int32" />
+          <Property Name="logintype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="devicetype" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedTo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoleId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expense_tbl_Tag_tbl">
+          <End Role="Tag_tbl" Type="Self.Tag_tbl" Multiplicity="0..1" />
+          <End Role="Expense_tbl" Type="Self.Expense_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Expense_tbl">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Approval_Matrix_Innovation_Management_User2">
+          <End Role="Innovation_Management_User" Type="Self.Innovation_Management_User" Multiplicity="0..1" />
+          <End Role="Leave_Management_Approval_Matrix" Type="Self.Leave_Management_Approval_Matrix" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Innovation_Management_User">
+              <PropertyRef Name="pk_user_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Approval_Matrix">
+              <PropertyRef Name="fk_requestor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Approval_Matrix_Innovation_Management_User3">
+          <End Role="Innovation_Management_User" Type="Self.Innovation_Management_User" Multiplicity="0..1" />
+          <End Role="Leave_Management_Approval_Matrix" Type="Self.Leave_Management_Approval_Matrix" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Innovation_Management_User">
+              <PropertyRef Name="pk_user_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Approval_Matrix">
+              <PropertyRef Name="fk_approver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Leave_Allowance_Innovation_Management_User">
+          <End Role="Innovation_Management_User" Type="Self.Innovation_Management_User" Multiplicity="0..1" />
+          <End Role="Leave_Management_Leave_Allowance" Type="Self.Leave_Management_Leave_Allowance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Innovation_Management_User">
+              <PropertyRef Name="pk_user_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Leave_Allowance">
+              <PropertyRef Name="fk_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Leave_Taken_Innovation_Management_User">
+          <End Role="Innovation_Management_User" Type="Self.Innovation_Management_User" Multiplicity="0..1" />
+          <End Role="Leave_Management_Leave_Taken" Type="Self.Leave_Management_Leave_Taken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Innovation_Management_User">
+              <PropertyRef Name="pk_user_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Leave_Taken">
+              <PropertyRef Name="fk_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Leave_Taken_Innovation_Management_User1">
+          <End Role="Innovation_Management_User" Type="Self.Innovation_Management_User" Multiplicity="0..1" />
+          <End Role="Leave_Management_Leave_Taken" Type="Self.Leave_Management_Leave_Taken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Innovation_Management_User">
+              <PropertyRef Name="pk_user_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Leave_Taken">
+              <PropertyRef Name="fk_approved_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Leave_Allowance_Leave_Management_Leave_Type">
+          <End Role="Leave_Management_Leave_Type" Type="Self.Leave_Management_Leave_Type" Multiplicity="0..1" />
+          <End Role="Leave_Management_Leave_Allowance" Type="Self.Leave_Management_Leave_Allowance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Leave_Management_Leave_Type">
+              <PropertyRef Name="pk_leave_type_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Leave_Allowance">
+              <PropertyRef Name="fk_leave_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Management_Leave_Taken_Leave_Management_Leave_Type">
+          <End Role="Leave_Management_Leave_Type" Type="Self.Leave_Management_Leave_Type" Multiplicity="0..1" />
+          <End Role="Leave_Management_Leave_Taken" Type="Self.Leave_Management_Leave_Taken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Leave_Management_Leave_Type">
+              <PropertyRef Name="pk_leave_type_id" />
+            </Principal>
+            <Dependent Role="Leave_Management_Leave_Taken">
+              <PropertyRef Name="fk_leave_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="PMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="AssignTasks" EntityType="Self.AssignTask" />
+          <EntitySet Name="Attendances" EntityType="Self.Attendance" />
+          <EntitySet Name="ChangeIssueDetails" EntityType="Self.ChangeIssueDetail" />
+          <EntitySet Name="ChatMessageDetails" EntityType="Self.ChatMessageDetail" />
+          <EntitySet Name="ChatPrivateMessageDetails" EntityType="Self.ChatPrivateMessageDetail" />
+          <EntitySet Name="ChatPrivateMessageMasters" EntityType="Self.ChatPrivateMessageMaster" />
+          <EntitySet Name="ChatUserDetails" EntityType="Self.ChatUserDetail" />
+          <EntitySet Name="Expense_tbl" EntityType="Self.Expense_tbl" />
+          <EntitySet Name="Filedetails" EntityType="Self.Filedetail" />
+          <EntitySet Name="Innovation_Management_User" EntityType="Self.Innovation_Management_User" />
+          <EntitySet Name="Leave_Management_Approval_Matrix" EntityType="Self.Leave_Management_Approval_Matrix" />
+          <EntitySet Name="Leave_Management_Leave_Allowance" EntityType="Self.Leave_Management_Leave_Allowance" />
+          <EntitySet Name="Leave_Management_Leave_Taken" EntityType="Self.Leave_Management_Leave_Taken" />
+          <EntitySet Name="Leave_Management_Leave_Type" EntityType="Self.Leave_Management_Leave_Type" />
+          <EntitySet Name="Notifications" EntityType="Self.Notification" />
+          <EntitySet Name="Tag_tbl" EntityType="Self.Tag_tbl" />
+          <EntitySet Name="tbl_Task" EntityType="Self.tbl_Task" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expense_tbl_Tag_tbl" Association="Self.FK_Expense_tbl_Tag_tbl">
+            <End Role="Tag_tbl" EntitySet="Tag_tbl" />
+            <End Role="Expense_tbl" EntitySet="Expense_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Approval_Matrix_Innovation_Management_User2" Association="Self.FK_Leave_Management_Approval_Matrix_Innovation_Management_User2">
+            <End Role="Innovation_Management_User" EntitySet="Innovation_Management_User" />
+            <End Role="Leave_Management_Approval_Matrix" EntitySet="Leave_Management_Approval_Matrix" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Approval_Matrix_Innovation_Management_User3" Association="Self.FK_Leave_Management_Approval_Matrix_Innovation_Management_User3">
+            <End Role="Innovation_Management_User" EntitySet="Innovation_Management_User" />
+            <End Role="Leave_Management_Approval_Matrix" EntitySet="Leave_Management_Approval_Matrix" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Leave_Allowance_Innovation_Management_User" Association="Self.FK_Leave_Management_Leave_Allowance_Innovation_Management_User">
+            <End Role="Innovation_Management_User" EntitySet="Innovation_Management_User" />
+            <End Role="Leave_Management_Leave_Allowance" EntitySet="Leave_Management_Leave_Allowance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Leave_Taken_Innovation_Management_User" Association="Self.FK_Leave_Management_Leave_Taken_Innovation_Management_User">
+            <End Role="Innovation_Management_User" EntitySet="Innovation_Management_User" />
+            <End Role="Leave_Management_Leave_Taken" EntitySet="Leave_Management_Leave_Taken" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Leave_Taken_Innovation_Management_User1" Association="Self.FK_Leave_Management_Leave_Taken_Innovation_Management_User1">
+            <End Role="Innovation_Management_User" EntitySet="Innovation_Management_User" />
+            <End Role="Leave_Management_Leave_Taken" EntitySet="Leave_Management_Leave_Taken" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Leave_Allowance_Leave_Management_Leave_Type" Association="Self.FK_Leave_Management_Leave_Allowance_Leave_Management_Leave_Type">
+            <End Role="Leave_Management_Leave_Type" EntitySet="Leave_Management_Leave_Type" />
+            <End Role="Leave_Management_Leave_Allowance" EntitySet="Leave_Management_Leave_Allowance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Management_Leave_Taken_Leave_Management_Leave_Type" Association="Self.FK_Leave_Management_Leave_Taken_Leave_Management_Leave_Type">
+            <End Role="Leave_Management_Leave_Type" EntitySet="Leave_Management_Leave_Type" />
+            <End Role="Leave_Management_Leave_Taken" EntitySet="Leave_Management_Leave_Taken" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="C__MigrationHistory" EntityType="PMSModel.C__MigrationHistory" />
+          <EntitySet Name="Departments" EntityType="PMSModel.Department" />
+          <EntitySet Name="ProjectMasters" EntityType="PMSModel.ProjectMaster" />
+          <FunctionImport Name="Update_Chat_Message_IsRead_Status">
+            <Parameter Name="FromEmailId" Mode="In" Type="String" />
+            <Parameter Name="ToEmailId" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ProjectMaster">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Projectdescription" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="startingdate" Type="DateTime" Precision="0" />
+          <Property Name="status" Type="Boolean" />
+          <Property Name="createdDate" Type="DateTime" Precision="0" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PMSModelStoreContainer" CdmEntityContainer="PMSEntities">
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="PMSModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="PMSModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="PMSModel.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="PMSModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Last_Online_Seen" ColumnName="Last_Online_Seen" />
+                <ScalarProperty Name="ProfilePic" ColumnName="ProfilePic" />
+                <ScalarProperty Name="RegineDate" ColumnName="RegineDate" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="Qualification" ColumnName="Qualification" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="DepartMentId" ColumnName="DepartMentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssignTasks">
+            <EntityTypeMapping TypeName="PMSModel.AssignTask">
+              <MappingFragment StoreEntitySet="AssignTask">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ToAssignId" ColumnName="ToAssignId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="FromassignId" ColumnName="FromassignId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attendances">
+            <EntityTypeMapping TypeName="PMSModel.Attendance">
+              <MappingFragment StoreEntitySet="Attendance">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ComingTime" ColumnName="ComingTime" />
+                <ScalarProperty Name="DateOfDay" ColumnName="DateOfDay" />
+                <ScalarProperty Name="LeaveTime" ColumnName="LeaveTime" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChangeIssueDetails">
+            <EntityTypeMapping TypeName="PMSModel.ChangeIssueDetail">
+              <MappingFragment StoreEntitySet="ChangeIssueDetails">
+                <ScalarProperty Name="EfollowId" ColumnName="EfollowId" />
+                <ScalarProperty Name="statusid" ColumnName="statusid" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Createdby" ColumnName="Createdby" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="issueid" ColumnName="issueid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChatMessageDetails">
+            <EntityTypeMapping TypeName="PMSModel.ChatMessageDetail">
+              <MappingFragment StoreEntitySet="ChatMessageDetail">
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChatPrivateMessageDetails">
+            <EntityTypeMapping TypeName="PMSModel.ChatPrivateMessageDetail">
+              <MappingFragment StoreEntitySet="ChatPrivateMessageDetails">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="ChatDateTime" ColumnName="ChatDateTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MasterEmailID" ColumnName="MasterEmailID" />
+                <ScalarProperty Name="ChatToEmailID" ColumnName="ChatToEmailID" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChatPrivateMessageMasters">
+            <EntityTypeMapping TypeName="PMSModel.ChatPrivateMessageMaster">
+              <MappingFragment StoreEntitySet="ChatPrivateMessageMaster">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChatUserDetails">
+            <EntityTypeMapping TypeName="PMSModel.ChatUserDetail">
+              <MappingFragment StoreEntitySet="ChatUserDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ConnectionId" ColumnName="ConnectionId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Expense_tbl">
+            <EntityTypeMapping TypeName="PMSModel.Expense_tbl">
+              <MappingFragment StoreEntitySet="Expense_tbl">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ExpenseDate" ColumnName="ExpenseDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Filedetails">
+            <EntityTypeMapping TypeName="PMSModel.Filedetail">
+              <MappingFragment StoreEntitySet="Filedetails">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="imageid" ColumnName="imageid" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="imageName" ColumnName="imageName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Innovation_Management_User">
+            <EntityTypeMapping TypeName="PMSModel.Innovation_Management_User">
+              <MappingFragment StoreEntitySet="Innovation_Management_User">
+                <ScalarProperty Name="pk_user_id" ColumnName="pk_user_id" />
+                <ScalarProperty Name="user_firstname" ColumnName="user_firstname" />
+                <ScalarProperty Name="user_lastname" ColumnName="user_lastname" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="user_email" ColumnName="user_email" />
+                <ScalarProperty Name="user_picture" ColumnName="user_picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leave_Management_Approval_Matrix">
+            <EntityTypeMapping TypeName="PMSModel.Leave_Management_Approval_Matrix">
+              <MappingFragment StoreEntitySet="Leave_Management_Approval_Matrix">
+                <ScalarProperty Name="pk_approval_id" ColumnName="pk_approval_id" />
+                <ScalarProperty Name="fk_requestor_id" ColumnName="fk_requestor_id" />
+                <ScalarProperty Name="fk_approver_id" ColumnName="fk_approver_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leave_Management_Leave_Allowance">
+            <EntityTypeMapping TypeName="PMSModel.Leave_Management_Leave_Allowance">
+              <MappingFragment StoreEntitySet="Leave_Management_Leave_Allowance">
+                <ScalarProperty Name="pk_leave_allowance_id" ColumnName="pk_leave_allowance_id" />
+                <ScalarProperty Name="fk_user_id" ColumnName="fk_user_id" />
+                <ScalarProperty Name="fk_leave_type_id" ColumnName="fk_leave_type_id" />
+                <ScalarProperty Name="allowance_year" ColumnName="allowance_year" />
+                <ScalarProperty Name="allowance_entitlement" ColumnName="allowance_entitlement" />
+                <ScalarProperty Name="allowance_taken" ColumnName="allowance_taken" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leave_Management_Leave_Taken">
+            <EntityTypeMapping TypeName="PMSModel.Leave_Management_Leave_Taken">
+              <MappingFragment StoreEntitySet="Leave_Management_Leave_Taken">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="TotalLeave" ColumnName="TotalLeave" />
+                <ScalarProperty Name="LeaveDateTo" ColumnName="LeaveDateTo" />
+                <ScalarProperty Name="LeaveDateFrom" ColumnName="LeaveDateFrom" />
+                <ScalarProperty Name="pk_leave_taken_id" ColumnName="pk_leave_taken_id" />
+                <ScalarProperty Name="fk_user_id" ColumnName="fk_user_id" />
+                <ScalarProperty Name="fk_leave_type" ColumnName="fk_leave_type" />
+                <ScalarProperty Name="leave_days" ColumnName="leave_days" />
+                <ScalarProperty Name="is_halfday" ColumnName="is_halfday" />
+                <ScalarProperty Name="is_afternoon" ColumnName="is_afternoon" />
+                <ScalarProperty Name="leave_status" ColumnName="leave_status" />
+                <ScalarProperty Name="fk_approved_user_id" ColumnName="fk_approved_user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leave_Management_Leave_Type">
+            <EntityTypeMapping TypeName="PMSModel.Leave_Management_Leave_Type">
+              <MappingFragment StoreEntitySet="Leave_Management_Leave_Type">
+                <ScalarProperty Name="pk_leave_type_id" ColumnName="pk_leave_type_id" />
+                <ScalarProperty Name="leave_type" ColumnName="leave_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="PMSModel.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="DetailsURL" ColumnName="DetailsURL" />
+                <ScalarProperty Name="SentTo" ColumnName="SentTo" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsReminder" ColumnName="IsReminder" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="NotificationType" ColumnName="NotificationType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tag_tbl">
+            <EntityTypeMapping TypeName="PMSModel.Tag_tbl">
+              <MappingFragment StoreEntitySet="Tag_tbl">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Task">
+            <EntityTypeMapping TypeName="PMSModel.tbl_Task">
+              <MappingFragment StoreEntitySet="tbl_Task">
+                <ScalarProperty Name="CreatedTo" ColumnName="CreatedTo" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Createdon" ColumnName="Createdon" />
+                <ScalarProperty Name="Createdby" ColumnName="Createdby" />
+                <ScalarProperty Name="SummaryName" ColumnName="SummaryName" />
+                <ScalarProperty Name="projectid" ColumnName="projectid" />
+                <ScalarProperty Name="logintype" ColumnName="logintype" />
+                <ScalarProperty Name="devicetype" ColumnName="devicetype" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="PMSModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="PMSModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="PMSModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="PMSModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectMasters">
+            <EntityTypeMapping TypeName="PMSModel.ProjectMaster">
+              <MappingFragment StoreEntitySet="ProjectMaster">
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="startingdate" ColumnName="startingdate" />
+                <ScalarProperty Name="Projectdescription" ColumnName="Projectdescription" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Update_Chat_Message_IsRead_Status" FunctionName="PMSModel.Store.Update_Chat_Message_IsRead_Status" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

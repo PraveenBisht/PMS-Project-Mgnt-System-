@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/Home_Layout.cshtml";
+}
+<!--<h2>Register User</h2>-->
+<h4>Register User</h4>
+<form class="form" method="POST">
+    <div class="line-Box">
+        <div class="line-Bar"></div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <label class="control-label">Name</label>
+            <input class="form-control" id="txtName" name="Name" type="text">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <label class="control-label">Email</label>
+            <input class="form-control" id="emailId" name="Email" type="text">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <label class="control-label">Password</label>
+            <input class="form-control" id="txtPassword" name="Password" type="password">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <label class="control-label">Confirm password</label>
+            <input class="form-control" id="ConfirmPassword" name="ConfirmPassword" type="password">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <label class="control-label">Mobile Number</label>
+            <input class="form-control" id="txtmobileno" name="mobileno" type="text">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <label class="control-label">Address</label>
+            <input class="form-control" id="txtaddress" name="address" type="text">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-register d-block text-center">
+                <input type="button" id="btnRegister" class="btn Button-primary float-none" value="Register">
+            </div>
+        </div>
+    </div>
+</form>
+<span id="errermessage" style="color:red;"></span>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#btnRegister').click(function () {
+            $(".error-div").remove();
+            var name = $('#txtName').val();
+            var emailId = $('#emailId').val();
+            var Password = $('#txtPassword').val();
+
+            var mobileno = $('#txtmobileno').val();
+            var qualification = $('#txtqualification').val();
+            var address = $('#txtaddress').val();
+
+            var confirmPassword = $('#ConfirmPassword').val();
+            var emailRegex = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+            if (emailId == '') {
+                $("#emailId").focus();
+                $("#emailId").after('<span class="error-div row">*Please enter the EmailId!</span>');
+                return false;
+            } else if (!emailRegex.test(emailId)) {
+                $("#emailId").focus();
+                $("#emailId").after('<span class="error-div row">*Please enter the valid Email!</span>');
+                return false;
+            } else if (Password == '') {
+                $("#Password").focus();
+                $("#Password").after('<span class="error-div row">*Enter the Password!</span>');
+                return false;
+            }
+            else if ($(emailId != '' && Password != '')) {
+                var Userdata = {
+                    Name: name,
+                    Email: emailId,
+                    Password: Password,
+                    ConfirmPassword: confirmPassword,
+                    MobileNumber: mobileno,
+                    Address: address
+
+                };
+                debugger
+                $.ajax({
+                    type: "POST",
+                    url: "/api/Account/Register",
+                    data: Userdata,
+                    contentType: "application/x-www-form-urlencoded",
+                    dataType: "json",
+                    beforeSend: function () {
+                        $('.loading').show();
+                    },
+                    complete: function () {
+                        $('.loading').hide();
+                    },
+                    success: function (data) {
+                        if (data.Status == '1') {
+                            toastr.success(data.Message);
+                            window.location.href = "/Home/Login";
+                        }
+                        else {
+                              toastr.error("Registration Failed");
+                        }
+                    },
+                    failure: function (response) {
+                        toastr.error(response.responseText);
+                    },
+                    error: function (response) {
+                        toastr.error(response.responseText);
+                    }
+
+                });
+
+
+            }
+        });
+    });
+
+</script>
+
+

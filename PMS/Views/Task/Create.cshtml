@@ -1,0 +1,84 @@
+﻿@model PMS.Models.TaskViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Task", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="bread-Box">
+        <div class="container-fluid">
+            <div class="bread-Bar row">
+                <div class="bread-list col-12">
+                    <div class="bread-content">
+                        <h2>Create Task </h2>
+                        <ul>
+                            <li>
+                                <a href="dashboard.html">Dashboard</a>
+                                <span class="bread-span"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                            </li>
+                            <li class="active">
+                                <a href="javascript:void(0);">CreateTask</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="myattendance-Part table-Box">
+        <div class="container-fluid">
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.Label("Task Name", new { @class = "manadatory" })
+                        @Html.TextBoxFor(model => model.TaskName, new { @class = "form-control", @maxlength = "90" })
+                        @Html.ValidationMessageFor(model => model.TaskName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.description, new { @class = "manadatory" })
+                        @Html.TextAreaFor(model => model.description, new { @class = "form-control", @maxlength = "500", style = " rows=10, columns=40" })
+                        @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Devicetype</label>
+                        <select class="form-control" id="Devicetype" name="Devicetype">
+                            <option>Select Device Type</option>
+                            <option>Mobile</option>
+                            <option>Web</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="password">Project Name</label>
+                        @Html.DropDownListFor(model => model.projectList, ViewBag.projectlist as SelectList, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.Label("Attech File")
+                        <input type="file" name="postedFiles" multiple="multiple" />
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-offset-0 col-md-12">
+                                <input type="submit" value="Save" class="btn btn-success" />
+                                @Html.ActionLink("All Task", "ProjectList", "Project", null, new { @class = "btn btn-info" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+

@@ -1,0 +1,214 @@
+﻿
+@model IEnumerable<PMS.Models.AttendanceModel>
+@{
+    ViewBag.Title = "AttendanceTable";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+    <!--Get number of days of current month-->
+    var DaysInmonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+     List<AspNetUser> Employees = TempData["EmployeesNames"] as List<AspNetUser>;
+       var CurrentName = "";
+}
+<style>
+    .table {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .table td, th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:hover {
+            background-color: #ddd;
+        }
+
+        .table th {
+            text-align: left;
+            background-color: #3b455a;
+            color: white;
+        }
+</style>
+
+<h4>Attandance Sheet Current Month</h4>
+
+
+
+@*@using (Html.BeginForm("AttendanceTable", "Attandance", FormMethod.Post, new { id = "demoForm", name = "demoForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-2">
+                    Attendance Month:
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" id="MonthName" name="MonthName" onchange="SelectedIndexChanged()">
+
+                        <option value="1">Jan</option>
+                        <option value="2">Feb</option>
+                        <option value="3">March</option>
+                        <option value="4">Apr</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">Aug</option>
+                        <option value="9">Sep</option>
+                        <option value="10">Oct</option>
+                        <option value="11">Nov</option>
+                        <option value="12">Dec</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    }*@
+<br />
+<div style="overflow: auto;height: 500px; width: 100%;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>EmpName</th>
+                <!--Loop all the days of month and print it-->
+                @for (var numb = 1; numb <= DaysInmonth; numb++)
+                {
+                    <th>@numb</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody>
+            <!--Loop model-->
+            @foreach (var emp in Model)
+            {
+                if (CurrentName != emp.EmployeeID)
+                {
+                    // Set Name
+                    CurrentName = emp.EmployeeID;
+            <tr>
+               
+                <!--print employee name one time only at the start of row-->
+                <td>
+                    @DispayEmployee(emp.EmployeeID.ToString())
+
+                </td>
+
+
+                <!--loop all days of month-->
+                @for (var numb = 1; numb <= DaysInmonth; numb++)
+                {
+                    <td>
+                        @{
+                            var intime = "";
+                            var outtime = "";
+                            var lateTime = "";
+                            var Workinghour = "";
+                            var attandacestat = "";
+                            var DD = "";
+
+                            var GetThatDayValue = Model.Where(a => a.DateOfDay.Value.Day == numb && a.EmployeeID == emp.EmployeeID && a.DateOfDay.Value == emp.DateOfDay).FirstOrDefault();
+
+                            DD = GetThatDayValue != null ? "Date:" + GetThatDayValue.DateOfDay.Value.ToString("dd/MM/yyyy") : "";
+
+                            if (GetThatDayValue != null)
+                            {
+                                if (GetThatDayValue.AttandanceStatus == "P")
+                                {
+                                    attandacestat = "P";
+                                    intime = GetThatDayValue != null ? "InTime:" + GetThatDayValue.ComingTime.Value.ToString("hh:mm:ss") : "";
+
+                                    outtime = GetThatDayValue != null ? (GetThatDayValue.LeaveTime != null ? "OutTime:" + GetThatDayValue.LeaveTime.Value.ToString("hh:mm:ss") : "") : "";
+                                    lateTime = GetThatDayValue != null ? "LateTime:" + GetThatDayValue.LateTime : "";
+                                    Workinghour = GetThatDayValue != null ? "Working Hours:" + GetThatDayValue.WorkingHours : "";
+                                }
+                                else
+                                {
+                                    attandacestat = "L";
+                                }
+                            }
+                            <text>
+
+                                @if (@attandacestat == "P")
+                                {
+                                    <span style="color:blue;">
+                                        @DD
+                                    </span>
+                                    <span style="color:orange;">
+                                        @intime
+                                    </span>
+                                    <span style="color:green;">
+                                        @outtime
+                                    </span>
+                                    <span style="color:red;">
+                                        @lateTime
+                                    </span>
+                                    <span style="color:red;">
+                                        @Workinghour
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span style="color:red;">
+                                        @attandacestat
+                                    </span>
+                                }
+
+
+                            </text>
+
+                        }
+                    </td>
+                            }
+
+            </tr>
+                                }
+                            }
+
+        </tbody>
+    </table>
+</div>
+@helper  DispayEmployee(string userID)
+{
+
+
+    List<AspNetUser> Employees = TempData["EmployeesNames"] as List<AspNetUser>;
+    string username = "";
+
+    foreach (var E in Employees)
+    {
+
+        if (E.Id == userID)
+        {
+            username = E.Name;
+
+        }
+
+    }
+
+
+    <span>
+        @username
+
+    </span>
+
+
+}
+<script type="text/javascript">
+    function SelectedIndexChanged() {
+        //Form post
+        document.demoForm.submit();
+    }
+</script>
+
+
+

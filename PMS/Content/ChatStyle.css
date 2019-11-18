@@ -1,0 +1,225 @@
+﻿body {
+    padding: 0px;
+    margin: 0px;
+}
+
+#header {
+    padding: 20px;
+    background-color: #d7e5e4;
+    border-bottom: #5f9482 solid 2px;
+    color: #1e4638;
+    font-size: 24px;
+}
+
+.users {
+    float: right;
+    width: 176px;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.userName {
+    font-weight: bold;
+}
+
+.submitButton {
+    background-color: #d7e5e4;
+    border: #5f9482 solid 1px;
+    padding: 4px;
+    cursor: pointer;
+}
+
+    .submitButton:hover {
+        background-color: #e1e1e1;
+    }
+
+
+.disconnect {
+    position: absolute;
+    margin: 10px;
+    background-color: #ffcbcb;
+    padding: 4px;
+    border: solid 1px red;
+}
+
+
+
+.header {
+    cursor: move;
+    background-color: #5b8658;
+    border-bottom: #441722 solid 1px;
+    color: #76d079;
+}
+
+    .selText {
+        color: white;
+        padding: 4px;
+    }
+
+.messageArea {
+    width: 100%;
+    overflow-y: scroll;
+    height: 470px;
+    /*border-bottom: #5f9482 solid 1px;*/
+}
+
+    .messageArea .message {
+        padding: 4px;
+        background-color: #f8f9fa;
+    }
+
+         .messageArea .Usermessage {
+            padding: 4px;
+            background-color: lightyellow;
+        }
+
+   .buttonBar {
+        margin-left: 4px;
+        width: 108px;
+        color: green;
+    }
+
+         .buttonBar .msgText {
+            width: 172px;
+        }
+
+        .buttonBar .button {
+            margin-left: 4px;
+            width: 55px;
+        }
+
+
+
+
+.chatRoom .content .users {
+    float: right;
+    width: 239px;
+    height: 300px;
+}
+
+.l_c_h {
+    width: 222px;
+    position: fixed;
+    bottom: 0;
+    right: 0px;
+    background: #ece7ec;
+    border-radius: 3px;
+    z-index: 5000;
+    display: block;
+}
+
+    .l_c_h .c_h {
+        cursor: pointer;
+        border-radius: 0px;
+        /*background:#c61432;*/
+        background: #232c2d;
+        line-height: 34px;
+    }
+
+    .l_c_h .left_c {
+        color: #ebebeb;
+        width: 150px;
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .l_c_h .right_c {
+        text-align: center;
+        /*background:#DE4A4A;*/
+        background: #ff8f32;
+        line-height: 36px;
+    }
+
+        .l_c_h .right_c a {
+            color: #ebebeb;
+            border-radius: 3px;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+            cursor: pointer !important;
+            font-size: 16px;
+            line-height: normal !important;
+            margin-top: 0 !important;
+            padding: 1px 0px !important;
+            text-align: center !important;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+.clear {
+    clear: both;
+}
+
+.chat_container {
+    display: none;
+    padding: 5px 26px;
+}
+
+    .chat_container .no_provider {
+        text-align: left;
+        color: #5E5652;
+        font-size: 12px;
+        width: 300px;
+        padding: 5px;
+        font-family: Arial, Helvetica, sans-serif;
+        margin-left: 5px;
+    }
+
+    .chat_container .footer_c {
+        text-align: left;
+        color: #5E5652;
+        font-size: 12px;
+        margin-left: 10px;
+        margin-bottom: 10px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+        .chat_container .footer_c a {
+            text-decoration: underline;
+            color: #777;
+            font-size: 11px;
+        }
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.left_icons {
+    width: 35px;
+    height: auto;
+    text-align: center;
+    color: #999;
+    /*background:#DE4A4A;*/
+    background: #ff8f32;
+    font-size: 15px;
+}
+
+    .left_icons a {
+        color: #fff;
+        font-weight: normal;
+    }
+
+.center_icons {
+    text-align: center;
+    padding: 2px 0px 0px 5px;
+}
+
+.logout img {
+    margin-top: 8px;
+}
+
+
+.Open-chat-box-wrapper {
+    width: 400px;
+    height: 390px;
+    top: 50%;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ece7ec;
+    border-radius: 3px;
+    z-index: 5000;
+    display: block;
+}

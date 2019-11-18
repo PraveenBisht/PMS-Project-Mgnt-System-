@@ -1,0 +1,53 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Calendar</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script src="/Content/bootstrap_calendar/js/bootstrap_calendar.min.js"></script>
+    <link href="/Content/bootstrap_calendar/css/bootstrap_calendar.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="calendar_test"></div>
+    <script>
+        $(function () {
+
+            var theMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            var theDays = ["S", "M", "T", "W", "T", "F", "S"];
+
+            $.ajax({
+                type: "GET",
+                url: "/api/leave",
+                success: function (data) {
+
+                    var t = new Array();
+                    $.each(data, function (i, v) {
+                        var tt = [v[0], v[1], v[2], v[3]];
+                        t[i] = tt;
+                    });
+                    $('#calendar_test').calendar({
+                        months: theMonths,
+                        days: theDays,
+                        events: t
+                    });
+                }
+            });
+        });
+    </script>
+    <div>
+    </div>
+</body>
+</html>
+

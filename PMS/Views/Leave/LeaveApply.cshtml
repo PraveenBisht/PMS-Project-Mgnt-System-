@@ -1,0 +1,678 @@
+﻿
+@{
+    ViewBag.Title = "LeaveApply";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<h2>Leave Apply</h2>
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/Content/bootstrap_calendar/js/bootstrap_calendar.min.js"></script>
+<link href="~/Content/bootstrap_calendar/css/bootstrap_calendar.css" rel="stylesheet" />
+<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+<script src="~/Content/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/toastr.min.js"></script>
+<link rel="stylesheet" href="~/Scripts/datetimexdsoft/build/jquery.datetimepicker.min.css">
+<script src="~//Scripts/datetimexdsoft/build/jquery.datetimepicker.full.min.js"></script>
+<div id="calendar_test"></div>
+<script type="text/javascript">
+    window.onload = function () {
+        CKEDITOR.replace('editor1');
+    };
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+</script>
+
+<br />
+<style>
+    .group-back {
+        background-color: white;
+        color: #000000;
+    }
+
+        .group-back:hover {
+            cursor: pointer;
+        }
+
+    table.dataTable td.group-back {
+        padding: 0 2px;
+    }
+
+    #example2, #ShortLeavedt {
+        width: 100% !important;
+    }
+
+    .calendar .header {
+        padding: 10px 0 10px 0;
+        background-color: #b0b1d0;
+    }
+
+    .calendar .week_days td {
+        background: #1dcead;
+        color: #000;
+    }
+
+    .table td, th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+</style>
+<script>
+    var leave_type = localStorage.getItem('leave_type');
+    var token = sessionStorage.getItem('access_token');
+    var RoleType = sessionStorage.getItem('RoleType');
+    function getLeaveApplication() {
+        var obj =
+        {
+            day_type: $("input[name='applyleave_daypart']:checked").val() == undefined ? "" : $("input[name='applyleave_daypart']:checked").val(),
+            LeaveDateFrom: $('#applyleave_day').val(),
+            LeaveDateTo: $('#applyleave_dayTo').val() == "" ? $('#applyleave_day').val() : $('#applyleave_dayTo').val(),
+            TotalLeave: $('#TotalTime').val() != "" ? $('#TotalTime').val().split(":")[0] : $('#TotalDays').val() != "" ? $('#TotalDays').val() : "0",
+            fk_leave_type: $("#applyleave_type :selected").val(),
+            LeaveTimeFrom: $('#TimeFrom').val(),
+            LeaveTimeTo: $('#TimeTo').val(),
+            fk_approved_user_id: $("#ddlManager :selected").val(),
+            Remark: CKEDITOR.instances["editor1"].getData()
+        };
+        return obj;
+    }
+
+    function ShortLeave(data) {
+        var oTable = $('#ShortLeavedt').dataTable({
+            bProcessing: true,
+            iDisplayLength: 20,
+            aaData: data,
+            bDestroy: true,
+            aoColumns: [
+                { mData: "pk_leave_taken_id", sTitle: "LeaveId", visible: false },
+                { mData: "LeaveDateFrom", sTitle: "Leave Date" },
+                { mData: "LeaveTimeFrom", sTitle: "Time From" },
+                { mData: "LeaveTimeTo", sTitle: "Time To" },
+                { mData: "TotalLeave", sTitle: "Duration(In Hrs.)" },
+                { mData: "fk_user_id", sTitle: "Manager Name" },
+                { mData: "leave_status1", sTitle: "Status" },
+                {
+                    "data": null, render: function (data, type, row) {
+                            return "<span class='span-action'><a href='#' class='span-action-delete' title='Delete'  onclick=deleteLeaveApplication('" + row.pk_leave_taken_id + "'); ><i class='fa fa-trash' aria-hidden='true'></i></a></span>";
+                    },
+                }
+            ]
+        });
+    }
+    function Halfdaydt(data) {
+        var oTable = $('#Halfdaydt').dataTable({
+            bProcessing: true,
+            iDisplayLength: 20,
+            aaData: data,
+            bDestroy: true,
+            aoColumns: [
+                { mData: "pk_leave_taken_id", sTitle: "LeaveId", visible: false },
+                { mData: "LeaveDateFrom", sTitle: "Date" },
+                { mData: "is_halfday", sTitle: "Day Type" },
+                { mData: "fk_user_id", sTitle: "Manager Name" },
+                { mData: "leave_status1", sTitle: "Status" },
+                {
+                    "data": null, render: function (data, type, row) {
+                        return "<span class='span-action'><a href='#' class='span-action-delete' title='Delete'  onclick=deleteLeaveApplication('" + row.pk_leave_taken_id + "'); ><i class='fa fa-trash' aria-hidden='true'></i></a></span>";
+
+                    },
+                }
+            ]
+        });
+    }
+    function OtherLeavedt(data) {
+        var oTable = $('#OtherLeavedt').dataTable({
+            bProcessing: true,
+            iDisplayLength: 20,
+            aaData: data,
+            bDestroy: true,
+            aoColumns: [
+                { mData: "pk_leave_taken_id", sTitle: "LeaveId", visible: false },
+                { mData: "LeaveDateFrom", sTitle: "Date From" },
+                { mData: "LeaveDateTo", sTitle: "Date To" },
+                { mData: "TotalLeave", sTitle: "Duration(In Days)" },
+                { mData: "leave_type", sTitle: "Leave Type" },
+                { mData: "fk_user_id", sTitle: "Manager Name" },
+                { mData: "leave_status1", sTitle: "Status" },
+                {
+                    "data": null, render: function (data, type, row) {
+
+                        return "<span class='span-action'><a href='#' class='span-action-delete' title='Delete'  onclick=deleteLeaveApplication('" + row.pk_leave_taken_id + "'); ><i class='fa fa-trash' aria-hidden='true'></i></a></span>";
+
+                    },
+                }
+            ]
+        });
+    }
+
+
+    function deleteLeaveApplication(id) {
+        event.preventDefault();
+        $.ajax({
+            type: "DELETE",
+            url: "/api/LeavesTaken/?id=" + id,
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                'Authorization': "bearer  " + token
+            },
+            success: function (data) {
+                if($('#ShortLeave').css('display') != 'none'){
+                    $('#ShortLeavedt').DataTable().clear().draw();
+                    ShortLeaveList();
+                }
+                if($('#Halfday').css('display') != 'none'){
+                    $('#Halfdaydt').DataTable().clear().draw();
+                    HalfDayLIst();
+                }
+                if($('#OtherLeave').css('display') != 'none'){
+                    $('#OtherLeavedt').DataTable().clear().draw();
+                    OtherLeaveList();
+                }
+                toastr.success("successfully Deleted!");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                toastr.error(errorThrown);
+            }
+        });
+    }
+
+
+    $(function () {
+        ShortLeaveList();
+
+        refreshTable2();
+        refreshCalender();
+        var btnHeight = $('#tbDays').height(),
+            slideHeight = $('.slider').height(),
+            buffer = ((btnHeight - slideHeight) / 2);
+        $('.wrapper').height(btnHeight),
+            $('.slider').css({ 'margin-top': buffer });
+
+    });
+
+    function deleteApproveMap(e) {
+        if (confirm("You really want to delete selected row.")) {
+            ajaxDelete("/api/ApproverMatrix/" + e.getAttribute("data-id"));
+        }
+        $(document).ajaxComplete(function (event, XMLHttpRequest, ajaxOptions) {
+            if (typeof e.getAttribute("data-id") !== 'undefined' && ajaxOptions.url == '/api/ApproverMatrix/' + e.getAttribute("data-id")) {
+                ajaxGet("/api/ApproverMatrix", makeApproverMatrixTable);
+            }
+
+        });
+
+    }
+
+    function SortBy(prop) {
+        return function (a, b) {
+            if (a[prop] > b[prop]) {
+                return 1;
+            } else if (a[prop] < b[prop]) {
+                return -1;
+            }
+            return 0;
+        }
+    }
+    function ShortLeaveList() {
+        $.ajax({
+            type: "POST",
+            // url: '/api/leavestaken',
+            url: '/api/Leave/LeaveListWeb',
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                'Authorization': "bearer  " + token
+            },
+            data: { leave_status: "1"},
+            success: function (data) {
+                ShortLeave(data.result);
+            }
+        });
+    }
+    function HalfDayLIst() {
+        $.ajax({
+            type: "POST",
+            url: '/api/Leave/LeaveListWeb',
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                'Authorization': "bearer  " + token
+            },
+            data: { leave_status: "2"},
+            success: function (data) {
+                Halfdaydt(data.result);
+            }
+        });
+    }
+    function OtherLeaveList() {
+        $.ajax({
+            type: "POST",
+            url: '/api/Leave/LeaveListWeb',
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                'Authorization': "bearer  " + token
+            },
+            data: { leave_status: "3" },
+            success: function (data) {
+                OtherLeavedt(data.result);
+            }
+        });
+    }
+    function refreshTable2() {
+        $.ajax({
+            type: "GET",
+            url: '/api/ApproveLeave',
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                'Authorization': "bearer  " + token
+            },
+            //data: ProductData,
+            success: function (data) {
+
+            }
+        });
+    }
+
+    function refreshCalender() {
+
+        theMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        theDays = ["S", "M", "T", "W", "T", "F", "S"];
+
+        $.ajax({
+            type: "GET",
+            url: "/api/leave",
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                'Authorization': "bearer  " + token
+            },
+            success: function (data) {
+                var t = new Array();
+                $.each(data, function (i, v) {
+                    var tt = [v[0], v[1], v[2], v[3]];
+                    t[i] = tt;
+                });
+                $('#calendar_test').calendar({
+                    months: theMonths,
+                    days: theDays,
+                    events: t
+                });
+            }
+        });
+    }
+    var radioValue;
+    $(document).ready(function () {
+        //$('#applyleave_day').datetimepicker({ format: 'd/m/Y' });
+        //$('#applyleave_dayTo').datetimepicker({ format: 'd/m/Y' });
+        $('#TimeFrom').change(function () {
+            TimeValidation();
+        });
+        $('#TimeTo').change(function () {
+            TimeValidation();
+        });
+        $('#applyleave_day').datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+        });
+        $('#applyleave_dayTo').datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+        });
+        $('#applyleave_day').datepicker().bind("change", function () {
+            var minValue = $(this).val();
+            minValue = $.datepicker.parseDate("yy-mm-dd", minValue);
+            $('#applyleave_dayTo').datepicker("option", "minDate", minValue);
+            calculate();
+            $(".error-div").remove();
+        });
+        $('#applyleave_dayTo').datepicker().bind("change", function () {
+            var maxValue = $(this).val();
+            maxValue = $.datepicker.parseDate("yy-mm-dd", maxValue);
+            $('#applyleave_day').datepicker("option", "maxDate", maxValue);
+            calculate();
+        });
+
+        function calculate() {
+
+            var d1 = $('#applyleave_day').datepicker('getDate');
+            var d2 = $('#applyleave_dayTo').datepicker('getDate');
+            var oneDay = 24 * 60 * 60 * 1000;
+            var diff = 0;
+            if (d1 && d2) {
+                diff = Math.round(Math.abs((d2.getTime() - d1.getTime()) / (oneDay)));
+            }
+            $('#TotalDays').val(diff + 1);
+            //$('#minim').val(d1)
+        }
+        $('#TimeFrom').datetimepicker({ datepicker: false, format: 'H:i' });
+        $('#TimeTo').datetimepicker({ datepicker: false, format: 'H:i' });
+
+
+        function TimeValidation() {
+            function toSeconds(time_str) {
+                var parts = time_str.split(':');
+                return parts[0] * 3600 + parts[1] * 60;
+            }
+            var start = $('#TimeFrom').val();
+            var end = $('#TimeTo').val();
+            if (start && end) {
+                var starttimeval = start.split("/");
+                var startdt = new Date(starttimeval[2], starttimeval[1] - 1, starttimeval[0], starttimeval[3], starttimeval[4]);
+
+                var endtimeval = end.split("/");
+                var enddt = new Date(endtimeval[2], endtimeval[1] - 1, endtimeval[0], endtimeval[3], endtimeval[4]);
+
+                if (start < end) {
+                    var difference = Math.abs(toSeconds(start) - toSeconds(end));
+                    if (difference > 7200) {
+                        $('#TimeTo').val('');
+                        $('#TotalTime').val('');
+                        alert("Short Leave Could't take more then 2 Hrs."); return true;
+                    }
+                    else {
+                        var result = [
+                            Math.floor(difference / 3600),
+                            Math.floor((difference % 3600) / 60)
+                            //,difference % 60
+                        ];
+                        result = result.map(function (v) {
+                            return v < 10 ? '0' + v : v;
+                        }).join(':');
+
+                        $('#TotalTime').val(result);
+                    }
+                } else {
+                    $('#TimeTo').val('');
+                    $('#TotalTime').val('');
+                    alert("From time must less then To time.."); return true;
+                }
+            }
+        }
+
+        var applyleave_type = $('#applyleave_type');
+        $.ajax({
+            url: '/api/Leave/LeaveType',
+            type: 'GET',
+            dataType: 'json',
+            success: function (d) {
+                $.each(d.result, function (i, Leavetype) {
+                    applyleave_type.append($("<option></option>").val(Leavetype.Id).html(Leavetype.Name));
+                });
+
+            },
+            error: function () { }
+        });
+        var ddlManager = $('#ddlManager');
+        $.ajax({
+            url: '/api/Leave/ManagerList',
+            type: 'GET',
+            dataType: 'json',
+            success: function (d) {
+                $(".error-div").remove();
+                $.each(d.result, function (i, ManagerList) {
+                    ddlManager.append($("<option></option>").val(ManagerList.Id).html(ManagerList.Name));
+                });
+
+            },
+            error: function () { }
+        });
+        $("#applyleave_type").change(function () {
+            $(".error-div").remove();
+            var ddlLeaveType = parseInt($("#applyleave_type :selected").val());
+
+            if (ddlLeaveType == 1) {
+                $('#divDayTo').css("display", "none");
+                $('#applyleave_dayTo').css("display", "none"); $('#applyleave_dayTo').val('');
+                $('#divTime').css("display", "block");
+                $('#divHalfDay').css("display", "none");
+
+                $('#applyleave_day').val('');
+                $('#applyleave_dayTo').val('');
+                $('#TimeFrom').val('');
+                $('#TimeTo').val('');
+                $('#TotalTime').val('');
+                $('#TotalDays').val('');
+                $("input:radio").attr("checked", false);
+                $('TimeFrom').datepicker('setDate', null);
+            }
+            else if (ddlLeaveType == 2) {
+                $('#divDayTo').css("display", "none");
+                $('#applyleave_dayTo').css("display", "none"); $('#applyleave_dayTo').val('');
+                $('#divTime').css("display", "none");
+                $('#divHalfDay').css("display", "block");
+
+                $('#applyleave_day').val('');
+                $('#applyleave_dayTo').val('');
+                $('#TimeFrom').val('');
+                $('#TimeTo').val('');
+                $('#TotalTime').val('');
+                $('#TotalDays').val('');
+                $("input:radio").attr("checked", false);
+                $('TimeFrom').datepicker('setDate', null);
+            }
+            else if (ddlLeaveType >= 3) {
+                $('#divDayTo').css("display", "block"); $('#applyleave_dayTo').val('');
+                $('#applyleave_dayTo').css("display", "block"); $('#applyleave_dayTo').val('');
+                $('#divTime').css("display", "none");
+                $('#divHalfDay').css("display", "none");
+
+                $('#applyleave_day').val('');
+                $('#applyleave_dayTo').val('');
+                $('#TimeFrom').val('');
+                $('#TimeTo').val('');
+                $('#TotalTime').val('');
+                $('#TotalDays').val('');
+                $("input:radio").attr("checked", false);
+                $('TimeFrom').datepicker('setDate', null);
+            }
+            else { }
+        });
+        $("#ddlManager").change(function () {
+            $(".error-div").remove();
+        });
+
+    });
+
+    function insertLeaveApplication() {
+        var leave_type = $("#applyleave_type :selected").text();
+        var Manager = $("#ddlManager :selected").text();
+        var applyleaveDay = $("#applyleave_day").val();
+        var a = getLeaveApplication();
+        $(".error-div").remove();
+        if (leave_type == '--Select Leave Type--') {
+            $("#applyleave_type").focus();
+            $("#applyleave_type").after('<span class="error-div" style="color: #ff0202;">*Please Select Leave Type!</span>');
+            return false;
+        }
+        else if (applyleaveDay == '') {
+            $("#applyleave_day").focus();
+            $("#applyleave_day").after('<span class="error-div" style="color: #ff0202;">&nbsp*Please Select Date!</span>');
+            return false;
+        }
+        else if (Manager == '--Select Manager--') {
+            $("#ddlManager").focus();
+            $("#ddlManager").after('<span class="error-div" style="color: #ff0202;">*Please Select Manager Name!</span>');
+            return false;
+        }
+        else if (CKEDITOR.instances["editor1"].getData() == '') {
+            $("#editor1").focus();
+            $("#Aftereditor").after('<span class="error-div" style="color: #ff0202;">*Message Box is Empty!</span>');
+            return false;
+        }
+        else { }
+        $.ajax({
+            type: "POST",
+            //url: "/api/LeavesTaken",
+            url: "/api/Leave/ApplyLeave",
+            data: a,
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                'Authorization': "bearer  " + token
+            },
+            success: function (data) {
+                $('#applyleave_day').val('');
+                $('#applyleave_dayTo').val('');
+                $('#TimeFrom').val('');
+                $('#TimeTo').val('');
+                $('#TotalTime').val('');
+                $('#TotalDays').val('');
+                $("input:radio").attr("checked", false);
+                $('select option:selected').removeAttr('selected');
+
+
+                CKEDITOR.instances["editor1"].setData("");
+                if (parseInt($("#applyleave_type :selected").val()) == 1) {
+                    ShortLeaveList();
+                }
+                else if (parseInt($("#applyleave_type :selected").val()) == 2) {
+                    HalfDayLIst();
+                }
+                else {
+                    OtherLeaveList();
+                }
+                $('#applyleave_type').prop('selectedIndex', "");
+                $('#ddlManager').prop('selectedIndex',"");
+                toastr.success("Successfully Submitted.");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                toastr.error(errorThrown);
+            }
+        });
+    }
+
+
+</script>
+<script>
+    function openLeave(LeaveName) {
+        var i;
+        var x = document.getElementsByClassName("LV");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        document.getElementById(LeaveName).style.display = "block";
+        if (LeaveName == "ShortLeave") {
+            ShortLeaveList();
+        }
+        else if (LeaveName == "Halfday") {
+            HalfDayLIst();
+        }
+        else if (LeaveName == "OtherLeave") {
+            OtherLeaveList();
+        }
+        else { }
+
+    }
+</script>
+
+<div class="panel-body">
+    <div class="row">
+        <div class="col-md-3">
+            <select id="applyleave_type" name="applyleave_type" class="form-control">
+                <option id="Leavetype" value=" ">--Select Leave Type--</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <div style="float:left;">
+                <label>Date From</label>&nbsp;
+            </div>
+            <input class="form-control datapiker" id="applyleave_day" placeholder="Date">
+        </div>
+        <div id="divDayTo" class="col-md-2" style="display:none;">
+            <div style="float:left;">
+                <label>To</label>&nbsp;
+            </div>
+            <input class="form-control datapiker" id="applyleave_dayTo" placeholder="Date">
+            <div style="float:left;">
+                <label>Total Days</label>&nbsp;
+            </div>
+            <input class="form-control datapiker" id="TotalDays" placeholder="Total Days">
+
+        </div>
+
+
+        <div class="col-md-4" id="divTime" style="display:none;">
+            <div class="col-md-8">
+                <div style="float:left;">
+                    <label>Time From</label>&nbsp;
+                </div>
+                <input type="text" class="form-control datapiker" id="TimeFrom" style="width: 110px;float:right;" placeholder="TimeFrom">
+
+            </div>
+            <div class="col-md-8">
+                <div style="float:left;">
+                    <label>Time To</label>&nbsp;
+                </div>
+                <input type="text" class="form-control datapiker" id="TimeTo" style="width: 110px;float:right;" placeholder="TimeTo">
+            </div>
+            <div class="col-md-8">
+                <div style="float:left;">
+                    <label>Total Time</label>&nbsp;
+                </div>
+                <input type="text" class="form-control datapiker" id="TotalTime" style="width: 110px;float:right;" placeholder="Total Time">
+            </div>
+        </div>
+        <div id="divHalfDay" class="col-md-3" style="display:none;">
+            <input type="radio" name="applyleave_daypart" id="option2" value="1">
+            <label for="option2">First Half</label>
+            <input type="radio" name="applyleave_daypart" id="option3" value="2">
+            <label for="option3">Second Half</label>
+        </div>
+
+        <div class="col-md-3">
+            <select id="ddlManager" name="ddlManager" class="form-control">
+                <option id="Manager" value=" ">--Select Manager--</option>
+            </select>
+
+        </div>
+        <hr />
+
+    </div>
+    <br />
+    <div class="col-md-12">
+        <textarea id="editor1" name="editor1"></textarea>
+        <div id="Aftereditor"></div>
+    </div>
+    <div class="col-md-12">
+        <button type="button" onclick="insertLeaveApplication()" class="btn btn-primary">Submit</button>
+    </div>
+    <hr />
+
+    <div class="w3-bar w3-black">
+        <button class="success" onclick="openLeave('ShortLeave')">Short Leave</button>
+        <button class="success" onclick="openLeave('Halfday')">Halfday</button>
+        <button class="success" onclick="openLeave('OtherLeave')">Other Leave</button>
+    </div>
+
+    <div id="ShortLeave" class="LV">
+        <h2>Short Leave</h2>
+        <table id="ShortLeavedt"></table>
+    </div>
+
+    <div id="Halfday" class="LV" style="display:none">
+        <h2>Halfday Leave</h2>
+        <table id="Halfdaydt"></table>
+    </div>
+
+    <div id="OtherLeave" class="LV" style="display:none">
+        <h2>Other Leave</h2>
+        <table id="OtherLeavedt"></table>
+    </div>
+    <span id="massage" .error></span>
+    <span id="massage" style="color:red;"></span>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+
+</div>
+
+
+
+
+
+
+

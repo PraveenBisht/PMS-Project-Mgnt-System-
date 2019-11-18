@@ -1,0 +1,625 @@
+﻿
+@using PMS.Models;
+@using System;
+@using System.Globalization;
+
+
+@model AttendanceViewModel
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+
+<div class="bread-Box">
+    <div class="container-fluid">
+        <div class="bread-Bar row">
+            <div class="bread-list col-12">
+                <div class="bread-content">
+                    <h2>Dashboard</h2>
+                    <ul>
+                        <li class="active"><a href="dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    @if ((@Session["displayMenu"].ToString() == "Admin") || (@Session["displayMenu"].ToString() == "Manager"))
+    {
+
+        <!-- \ bread-Box: end / -->
+        <!-- / dashtabel-Box: start \ -->
+        <div class="dashtabel-Box">
+            <div class="container-fluid">
+                <div class="row dashtabel-Bar">
+
+                    <div class="dashtabel-list col-xl-12 col-md-6">
+                        <div class="comman-part">
+                            <div style="margin-left:20px;">
+                                <div>
+                                    <p id="date" style="color:black;font-size:xx-large;"></p>
+                                    <p id="demo" style="color:black;font-size:xx-large;"></p>
+                                </div>
+
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    if (Model.isLeave == true)
+                                    {
+
+                                        <div class="form-group">
+
+                                            <div class="well well-lg" style="color:green;font-size:x-large;">
+
+                                                Thank you so much to login and log out  !
+                                            </div>
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        if (Model.iscoming == true)
+                                        {
+                                            <p class="lead" style="color:red;font-size:large;">Sing out and have a good leaving ! </p>
+                                            <div class="form-group">
+
+                                                <input type="submit" value="Clock Out" class="btn btn-danger btn-lg" />
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <p class="lead" style="color:green;font-size:large;">Sign in your coming now and i hope you come in right time </p>
+
+                                            <div class="form-group">
+
+                                                <input type="submit" value="Clock In" class="btn btn-success btn-lg" />
+
+                                            </div>
+
+
+                                        }
+
+
+                                    }
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row dashtabel-Bar">
+
+                    <div class="dashtabel-list col-xl-3 col-md-6">
+                        <div class="employeelist comman-part">
+                            <div class="comman-head">
+                                <div class="comman-head-left">
+                                    <div class="comman-head-txt">
+                                        <span class="fa-span"><i class="fa fa-user-o" aria-hidden="true"></i></span>
+                                        <div class="comman-head-vline">
+                                            <cite class="comman-head-cite"></cite>
+                                        </div>
+                                        <p class="comman-head-name" id=""> Employee List</p>
+                                    </div>
+                                </div>
+                                <div class="comman-head-right">
+                                    <div class="comman-head-txt">
+                                        <p class="comman-head-count" id=""> 20</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comman-body">
+                                <div class="comman-body-center">
+                                    <div class="comman-body-txt">
+                                        <a href="/Admin/UserList" class="global-btn comman-body-read">View More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashtabel-list col-xl-3 col-md-6">
+                        <div class="totalproject comman-part">
+                            <div class="comman-head">
+                                <div class="comman-head-left">
+                                    <div class="comman-head-txt">
+                                        <span class="fa-span"><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i></span>
+                                        <div class="comman-head-vline">
+                                            <cite class="comman-head-cite"></cite>
+                                        </div>
+                                        <p class="comman-head-name" id=""> Total Project</p>
+                                    </div>
+                                </div>
+                                <div class="comman-head-right">
+                                    <div class="comman-head-txt">
+                                        <p class="comman-head-count" id=""> 15</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comman-body">
+                                <div class="comman-body-center">
+                                    <div class="comman-body-txt">
+                                        <a href="/Project/ProjectList" class="global-btn comman-body-read">View More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashtabel-list col-xl-3 col-md-6">
+                        <div class="totaltask comman-part">
+                            <div class="comman-head">
+                                <div class="comman-head-left">
+                                    <div class="comman-head-txt">
+                                        <span class="fa-span"><i class="fa fa-files-o" aria-hidden="true"></i></span>
+                                        <div class="comman-head-vline">
+                                            <cite class="comman-head-cite"></cite>
+                                        </div>
+                                        <p class="comman-head-name" id=""> Total Task</p>
+                                    </div>
+                                </div>
+                                <div class="comman-head-right">
+                                    <div class="comman-head-txt">
+                                        <p class="comman-head-count" id=""> @ViewBag.TotalTask</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comman-body">
+                                <div class="comman-body-center">
+                                    <div class="comman-body-txt">
+                                        <a href="/User/UserAssignTask" class="global-btn comman-body-read">View More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashtabel-list col-xl-3 col-md-6">
+                        <div class="totalopen comman-part">
+                            <div class="comman-head">
+                                <div class="comman-head-left">
+                                    <div class="comman-head-txt">
+                                        <span class="fa-span"><i class="fa fa fa-file-o" aria-hidden="true"></i></span>
+                                        <div class="comman-head-vline">
+                                            <cite class="comman-head-cite"></cite>
+                                        </div>
+                                        <p class="comman-head-name" id=""> Total Open Task</p>
+                                    </div>
+                                </div>
+                                <div class="comman-head-right">
+                                    <div class="comman-head-txt">
+                                        <p class="comman-head-count" id=""> @ViewBag.TotalOpenTask</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comman-body">
+                                <div class="comman-body-center">
+                                    <div class="comman-body-txt">
+                                        <a href="/User/OpenTask" class="global-btn comman-body-read">View More</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashtabel-list col-xl-3 col-md-6">
+                        <div class="totalreopen comman-part">
+                            <div class="comman-head">
+                                <div class="comman-head-left">
+                                    <div class="comman-head-txt">
+                                        <span class="fa-span"><i class="fa fa-file-code-o" aria-hidden="true"></i></span>
+                                        <div class="comman-head-vline">
+                                            <cite class="comman-head-cite"></cite>
+                                        </div>
+                                        <p class="comman-head-name" id=""> Total Re-open Task</p>
+                                    </div>
+                                </div>
+                                <div class="comman-head-right">
+                                    <div class="comman-head-txt">
+                                        <p class="comman-head-count" id=""> @ViewBag.TotalReOpenTask</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comman-body">
+                                <div class="comman-body-center">
+                                    <div class="comman-body-txt">
+                                        <a href="/User/ReOpenTask" class="global-btn comman-body-read">View More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashtabel-list col-xl-3 col-md-6">
+                        <div class="totalcomplete comman-part">
+                            <div class="comman-head">
+                                <div class="comman-head-left">
+                                    <div class="comman-head-txt">
+                                        <span class="fa-span"><i class="fa fa-file-archive-o" aria-hidden="true"></i></span>
+                                        <div class="comman-head-vline">
+                                            <cite class="comman-head-cite"></cite>
+                                        </div>
+                                        <p class="comman-head-name" id=""> Total Completed Task</p>
+                                    </div>
+                                </div>
+                                <div class="comman-head-right">
+                                    <div class="comman-head-txt">
+                                        <p class="comman-head-count" id=""> @ViewBag.TotalcompletTask</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comman-body">
+                                <div class="comman-body-center">
+                                    <div class="comman-body-txt">
+                                        <a href="/User/CompletedTask" class="global-btn comman-body-read">View More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- \ dashtabel-Box: end / -->
+        <!-- / chart-Box: start \ -->
+        <div class="chart-Box">
+            <div class="container-fluid">
+                <div class="row chart-Bar">
+                    <!-- chart-part -->
+                    <div class="chart-list col-xl-8 mb-3 mb-xl-0">
+                        <div class="chart-part">
+                            <div class="chart-head">
+                                <div class="chart-head-center">
+                                    <h3>Overview all the details</h3>
+                                </div>
+                            </div>
+                            <div class="chart-content">
+                                <div class="chart-area">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="myAreaChart" style="display: block; width: 1208px; height: 320px;" width="1208" height="320" class="chartjs-render-monitor"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- pie-part -->
+                    <div class="chart-list col-xl-4">
+                        <div class="pie-part">
+                            <div class="chart-head">
+                                <div class="chart-head-center">
+                                    <h3>Overview all the details</h3>
+                                </div>
+                            </div>
+                            <div class="pie-content">
+                                <div class="pie-chart">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="myPieChart" width="568" height="245" class="chartjs-render-monitor" style="display: block; width: 568px; height: 245px;"></canvas>
+                                </div>
+                                <div class="pie-item">
+                                    <ul>
+                                        <li>
+                                            <span class="pie-item-span"></span>
+                                            <p>Direct</p>
+                                        </li>
+                                        <li>
+                                            <span class="pie-item-span"></span>
+                                            <p>Social</p>
+                                        </li>
+                                        <li>
+                                            <span class="pie-item-span"></span>
+                                            <p>Referral</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- \ chart-Box: end / -->
+    }
+    else if (@Session["displayMenu"].ToString() == "User")
+
+    {
+
+        <!-- / dashtabel-Box: start \ -->
+        <div class="dashtabel-Box">
+            <div class="container-fluid">
+                <div class="row dashtabel-Bar">
+
+                    <div class="dashtabel-list col-xl-12  col-md-6">
+                        <div class="comman-part">
+                            <div style="margin-left:20px;">
+                                <div>
+                                    <p id="date" style="color:black;font-size:xx-large;"></p>
+                                    <p id="demo" style="color:black;font-size:xx-large;"></p>
+                                </div>
+
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    if (Model.isLeave == true)
+                                    {
+
+                                        <div class="form-group">
+
+                                            <div class="well well-lg" style="color:green;font-size:x-large;">
+
+                                                Thank you so much to login and log out  !
+                                            </div>
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        if (Model.iscoming == true)
+                                        {
+                                            <p class="lead" style="color:red;font-size:large;">Sing out and have a good leaving ! </p>
+                                            <div class="form-group">
+
+                                                <input type="submit" value="Clock Out" class="btn btn-danger btn-lg" />
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <p class="lead" style="color:green;font-size:large;">Sign in your comming now and i hope you come in right time </p>
+
+                                            <div class="form-group">
+
+                                                <input type="submit" value="Clock In" class="btn btn-success btn-lg" />
+
+                                            </div>
+
+
+                                        }
+
+
+                                    }
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row dashtabel-Bar">
+             
+     
+                    <div class="dashtabel-list col-xl-3 col-md-6">
+                        <div class="totaltask comman-part">
+                            <div class="comman-head">
+                                <div class="comman-head-left">
+                                    <div class="comman-head-txt">
+                                        <span class="fa-span"><i class="fa fa-files-o" aria-hidden="true"></i></span>
+                                        <div class="comman-head-vline">
+                                            <cite class="comman-head-cite"></cite>
+                                        </div>
+                                        <p class="comman-head-name" id=""> Total Task</p>
+                                    </div>
+                                </div>
+                                <div class="comman-head-right">
+                                    <div class="comman-head-txt">
+                                        <p class="comman-head-count">@ViewBag.TotalTask</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comman-body">
+                                <div class="comman-body-center">
+                                    <div class="comman-body-txt">
+                                        <a href="/User/UserAssignTask" class="global-btn comman-body-read">View More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashtabel-list col-xl-3 col-md-6">
+                        <div class="totalopen comman-part">
+                            <div class="comman-head">
+                                <div class="comman-head-left">
+                                    <div class="comman-head-txt">
+                                        <span class="fa-span"><i class="fa fa fa-file-o" aria-hidden="true"></i></span>
+                                        <div class="comman-head-vline">
+                                            <cite class="comman-head-cite"></cite>
+                                        </div>
+                                        <p class="comman-head-name" id=""> Total Open Task</p>
+                                    </div>
+                                </div>
+                                <div class="comman-head-right">
+                                    <div class="comman-head-txt">
+                                        <p class="comman-head-count" > @ViewBag.TotalOpenTask</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comman-body">
+                                <div class="comman-body-center">
+                                    <div class="comman-body-txt">
+                                        <a href="/User/OpenTask" class="global-btn comman-body-read">View More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashtabel-list col-xl-3 col-md-6">
+                        <div class="totalreopen comman-part">
+                            <div class="comman-head">
+                                <div class="comman-head-left">
+                                    <div class="comman-head-txt">
+                                        <span class="fa-span"><i class="fa fa-file-code-o" aria-hidden="true"></i></span>
+                                        <div class="comman-head-vline">
+                                            <cite class="comman-head-cite"></cite>
+                                        </div>
+                                        <p class="comman-head-name" id=""> Total Re-open Task</p>
+                                    </div>
+                                </div>
+                                <div class="comman-head-right">
+                                    <div class="comman-head-txt">
+                                        <p class="comman-head-count"> @ViewBag.TotalReOpenTask</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comman-body">
+                                <div class="comman-body-center">
+                                    <div class="comman-body-txt">
+                                        <a href="/User/ReOpenTask" class="global-btn comman-body-read">View More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashtabel-list col-xl-3 col-md-6">
+                        <div class="totalcomplete comman-part">
+                            <div class="comman-head">
+                                <div class="comman-head-left">
+                                    <div class="comman-head-txt">
+                                        <span class="fa-span"><i class="fa fa-file-archive-o" aria-hidden="true"></i></span>
+                                        <div class="comman-head-vline">
+                                            <cite class="comman-head-cite"></cite>
+                                        </div>
+                                        <p class="comman-head-name" id=""> Total Completed Task</p>
+                                    </div>
+                                </div>
+                                <div class="comman-head-right">
+                                    <div class="comman-head-txt">
+                                        <p class="comman-head-count"> @ViewBag.TotalcompletTask</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comman-body">
+                                <div class="comman-body-center">
+                                    <div class="comman-body-txt">
+                                        <a href="/User/CompletedTask" class="global-btn comman-body-read">View More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- \ dashtabel-Box: end / -->
+        <!-- / chart-Box: start \ -->
+        @*<div class="chart-Box">
+            <div class="container-fluid">
+                <div class="row chart-Bar">
+                    <!-- chart-part -->
+                    <div class="chart-list col-xl-8 mb-3 mb-xl-0">
+                        <div class="chart-part">
+                            <div class="chart-head">
+                                <div class="chart-head-center">
+                                    <h3>Overview all the details</h3>
+                                </div>
+                            </div>
+                            <div class="chart-content">
+                                <div class="chart-area">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="myAreaChart" style="display: block; width: 1208px; height: 320px;" width="1208" height="320" class="chartjs-render-monitor"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- pie-part -->
+                    <div class="chart-list col-xl-4">
+                        <div class="pie-part">
+                            <div class="chart-head">
+                                <div class="chart-head-center">
+                                    <h3>Overview all the details</h3>
+                                </div>
+                            </div>
+                            <div class="pie-content">
+                                <div class="pie-chart">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="myPieChart" width="568" height="245" class="chartjs-render-monitor" style="display: block; width: 568px; height: 245px;"></canvas>
+                                </div>
+                                <div class="pie-item">
+                                    <ul>
+                                        <li>
+                                            <span class="pie-item-span"></span>
+                                            <p>Direct</p>
+                                        </li>
+                                        <li>
+                                            <span class="pie-item-span"></span>
+                                            <p>Social</p>
+                                        </li>
+                                        <li>
+                                            <span class="pie-item-span"></span>
+                                            <p>Referral</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+        <!-- \ chart-Box: end / -->
+
+
+    }
+
+    <script>
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+
+
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        today = dd + '/' + mm + '/' + yyyy;
+
+        var myVar = setInterval(myTimer, 1000);
+
+        function myTimer() {
+            var d = new Date();
+            document.getElementById("demo").innerHTML = today + " " + d.toLocaleTimeString();
+        }
+        //MarkAutomaticAttandance();
+        function MarkAutomaticAttandance() {
+            $.ajax({
+                type: "Get",
+                url: "/WebDevloper/MarkAutomaticAttandance",
+                success: function (data) {
+                }
+            })
+        }
+
+    </script>
+
+
+

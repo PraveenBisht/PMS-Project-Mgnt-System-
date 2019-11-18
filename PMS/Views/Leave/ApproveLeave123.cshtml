@@ -1,0 +1,275 @@
+﻿
+@{
+    ViewBag.Title = "ApproveLeave";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<h2>Approve Leave</h2>
+
+
+<script src="/Content/bootstrap_calendar/js/bootstrap_calendar.min.js"></script>
+<link href="/Content/bootstrap_calendar/css/bootstrap_calendar.css" rel="stylesheet" />
+
+
+<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+<script src="~/Content/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
+<script type="text/javascript" charset="utf8" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+
+<div id="calendar_test"></div>
+
+@*Initialize Datepicker.......*@
+<script src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
+<link href="~/Content/datepicker/css/datepicker.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(function () {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+
+</script>
+@*********************************@
+
+<br />
+<style>
+    .group-back {
+        background-color: white;
+        color: #000000;
+    }
+
+        .group-back:hover {
+            cursor: pointer;
+        }
+
+    table.dataTable td.group-back {
+        padding: 0 2px;
+    }
+
+    #example2, #example {
+        width: 100% !important;
+    }
+
+    .calendar .header {
+        background-color: #b0b1d0;
+    }
+
+    .calendar .week_days td {
+        background: #1dcead;
+    }
+
+    .panel-title {
+        color: blue;
+    }
+
+    .table td, th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+</style>
+<script>
+    var leaveTypes;
+    var Employes;
+    var token = localStorage.getItem('access_token');
+
+    function createTable1(data) {
+        var oTable = $('#example').dataTable({
+            bProcessing: true,
+            iDisplayLength: 20,
+            aaData: data,
+            bDestroy: true,
+            aoColumns: [
+                { mData: "D", sTitle: "Date" },
+                { mData: "H", sTitle: "" },
+                { mData: "T", sTitle: "Type" },
+                { mData: "A", sTitle: "Approved By" },
+                {
+                    mData: null, bSortable: false, sTitle: 'Actions', fnRender: function (oObj) {
+                        id = oObj.aData["ID"];
+                        //return "<a onclick='alert(&#39;" + id + "&#39;)' href='#'>delete</a>";
+                        return "<button type='button' class='btn btn-default' onclick='deleteLeaveApplication(" + id + ")' href='#'>delete</button>";
+                    }
+                }
+            ]
+        });
+    }
+  
+    var notification = true;
+    function createTable2(data) {
+        var noOfAppliedLeave = 0;
+        var oTable2 = $('#example2').dataTable({
+            bProcessing: true,
+            iDisplayLength: 20,
+            bDestroy: true,
+            aaData: data,
+            aoColumns: [
+                { mData: "U", sTitle: "User" },
+                { mData: "D", sTitle: "Date" },
+                { mData: "T", sTitle: "Type" },
+                { mData: "S", sTitle: "Status" },
+
+                  {
+                      "data": null, render: function (data, type, row) {
+
+                        if (row.S == "Applied") {
+                            noOfAppliedLeave = noOfAppliedLeave + 1;
+                        }
+                      
+                        return "<span class='span-action'><a href='#' class='span-action-edit' title='edit'  onclick=showModalApprove('" + row.ID  + "'); ><i class='fa fa-edit' aria-hidden='true'></i></a></span>";
+
+                            
+                        },
+                }
+            ]
+        });
+        if (notification) {
+            if (noOfAppliedLeave > 0) {
+                console.log(noOfAppliedLeave);
+                toastr.info('You have ' + noOfAppliedLeave + ' Pending leave requests.', 'Information');
+            }
+            notification = false;
+        }
+    }
+    function showModalApprove(id) {
+        $('#button_savemodal').attr("onclick", "saveModalApprove(" + id + ")");
+        $.ajax({
+            type: "GET",
+            url: "/api/LeaveAllowance/" + id,
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                    'Authorization': "bearer  " +token
+                     },
+            success: function (data) {
+                //alert(JSON.stringify(data));
+                var html = "Casual Taken : " + data.AT + "/" + data.AL;
+                html += " | All Taken : " + data.ST + "/" + data.SL;
+                $('#span_remaining_leaves').html(html);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                toastr.error(errorThrown);
+            }
+        });
+        $('#modal_approve').modal('show');
+    }
+    function saveModalApprove(id) {
+        var stat = $('#select_leavestatus').val();
+        $.ajax({
+            type: "POST",
+            url: "/api/approveleave/?id=" + id + "&status=" + stat,
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                    'Authorization': "bearer  " +token
+                     },
+            success: function (data) {
+                toastr.success("success");
+                refreshTable2();
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                toastr.error(errorThrown);
+            }
+        });
+        $('#modal_approve').modal('hide');
+    }
+    $(function () {
+        refreshTable1();
+        refreshTable2();
+        refreshCalender();
+    });
+
+  
+   
+    function refreshTable1() {
+        $.ajax({
+            type: "GET",
+            url: '/api/leavestaken',
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                    'Authorization': "bearer  " +token
+                     },
+            success: function (data) {
+                createTable1(data);
+            }
+        });
+    }
+    function refreshTable2() {
+        $.ajax({
+            type: "GET",
+            url: '/api/ApproveLeave',
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                    'Authorization': "bearer  " +token
+                     },
+            success: function (data) {
+                console.log(data);
+                createTable2(data);
+            }
+        });
+    }
+    function refreshCalender() {
+      
+        theMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        theDays = ["S", "M", "T", "W", "T", "F", "S"];
+        $.ajax({
+            type: "GET",
+            url: "/api/leave",
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                    'Authorization': "bearer  " +token
+                     },
+            success: function (data) {
+                var t = new Array();
+                $.each(data, function (i, v) {
+                    var tt = [v[0], v[1], v[2], v[3]];
+                    t[i] = tt;
+                });
+                $('#calendar_test').calendar({
+                    months: theMonths,
+                    days: theDays,
+                    events: t
+                });
+            }
+        });
+    }
+   
+</script>
+
+<h4>
+        Approve Leave
+</h4>
+<div class="panel-body">
+
+    <table id="example2"></table>
+    <div class="modal fade" id="modal_approve" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Approve Leave</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <select class="form-control" id="select_leavestatus">
+                            <option value="0">Applied</option>
+                            <option value="1">Approved</option>
+                            <option value="2">Rejected</option>
+                        </select>
+                    </div>
+                    <span id="span_remaining_leaves" class="label label-warning"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="button_savemodal" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "ReOpenTask";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Template/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/Template/vendor/datatables/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/Scripts/datetimexdsoft/build/jquery.datetimepicker.min.css">
+
+<script src="~/Template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="~/Template/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="~//Scripts/datetimexdsoft/build/jquery.datetimepicker.full.min.js"></script>
+
+<div class="bread-Box">
+    <div class="container-fluid">
+        <div class="bread-Bar row">
+            <div class="bread-list col-12">
+                <div class="bread-content">
+                    <h2>Re-Open Task List </h2>
+                    <ul>
+                        <li>
+                            <a href="dashboard.html">Dashboard</a>
+                            <span class="bread-span"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                        </li>
+                        <li class="active">
+                            <a href="javascript:void(0);">ReOpenTask</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="loading"></div>
+<div class="myattendance-Part table-Box" id="attandance">
+    <div class="container-fluid">
+        <div class="table-Bar row">
+            <div class="table-list col-12">
+                <div class="table-head d-none">
+                    <h6>Re-Open Task List:</h6>
+                    <a href="javascript:void(0);">ReOpenTask</a>
+                </div>
+                <div class="table-comman">
+                    <div class="table-responsive">
+
+                        <table id="myTable" class="table-data table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>TaskId</th>
+                                    <th>TaskName</th>
+                                    <th>projectname</th>
+                                    <th>Assign To</th>
+                                    <th>Assign From</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        $('.loading').hide();
+        var table;
+        $.ajax({
+            url: '/User/UserReOpenTaskList',
+            method: 'post',
+            dataType: 'json',
+            beforeSend: function () {
+                $('.loading').show();
+            },
+            complete: function () {
+                $(".loading").hide();
+            },
+            success: function (data) {
+                console.log(data);
+                table = $('#myTable').dataTable({
+                    processing: true,
+                    paging: true,
+                    sort: true,
+                    searching: true,
+                    lengthMenu: [[5, 10, 25, 50], [5, 10, 25, 50]],
+                    //scrollY: 200,
+                    data: data.result,
+                    bDestroy: true,
+                    columns: [
+                        { "data": "taskId", "autoWidth": true, "visible": false },
+                        { "data": "TaskName", "autoWidth": true },
+                        { "data": "projectname", "autoWidth": true },
+                        { "data": "AssignTouserName", "autoWidth": true },
+                        { "data": "AssignFromUserName", "autoWidth": true },
+
+                        {
+                            "data": "status", "autoWidth": true, render: function (data, type, row) {
+                                if (row.status == "1") {
+                                    return "Open";
+                                }
+                                else if (row.status == "2") {
+                                    return "Re-open";
+                                }
+                                else {
+                                    return "Completed";
+                                }
+
+
+
+                            }
+                        },
+                        {
+                            "data": null, render: function (data, type, row) {
+
+                                return "<a href='#' class='btn btn-primary'  onclick=viewtask('" + row.taskId + "'); >View</a>";
+
+
+                            }
+                        },
+                    ]
+                });
+            }
+        });
+    });
+
+</script>
+
+
+
+<script type="text/javascript">
+
+    function viewtask(ID) {
+        localStorage.setItem("TaskID", ID);
+        window.location.href = "/AssignTask/AssignTaskDetails";
+    }
+
+
+</script>
+
+
+

@@ -1,0 +1,329 @@
+﻿
+@{
+    ViewBag.Title = "AssignTaskDetails";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .column {
+        float: left;
+        width: 33.33%;
+        padding: 5px;
+    }
+
+    /* Clearfix (clear floats) */
+    .row::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+</style>
+<link href="~/Content/fancybox/css/jquery.fancybox.css" rel="stylesheet" />
+<link href="~/Content/fancybox/css/jquery.fancybox.min.css" rel="stylesheet" />
+<script src="~/Content/fancybox/js/jquery.fancybox.js"></script>
+<link href="~/Content/layout.css" rel="stylesheet" />
+
+<div class="bread-Box">
+    <div class="container-fluid">
+        <div class="bread-Bar row">
+            <div class="bread-list col-12">
+                <div class="bread-content">
+                    <h2>Assign Task Details</h2>
+                    <ul>
+                        <li>
+                            <a href="dashboard.html">Dashboard</a>
+                            <span class="bread-span"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                        </li>
+                        <li class="active">
+                            <a href="javascript:void(0);">TaskDetails</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="myattendance-Part table-Box">
+    <div class="container-fluid">
+        <!-- assign-Box -->
+        <div class="assign-Box">
+            <div class="container">
+                <div class="assign-Bar row">
+                    <div class="assign-list col-md-6">
+                        <div class="assign-comman">
+                            <label>Task Name :-</label>
+                            <label class="label-edit" for="" id="taskname"></label>
+                        </div>
+                    </div>
+                    <div class="assign-list col-md-6">
+                        <div class="assign-comman">
+                            <label>Project Name :-</label>
+                            <label class="label-edit" for="" id="projectname"></label>
+                        </div>
+                    </div>
+                    <div class="assign-list col-md-6">
+                        <div class="assign-comman">
+                            <label>Device Type :-</label>
+                            <label class="label-edit" for="" id="devicetype"></label>
+                        </div>
+                    </div>
+
+                    <div class="assign-list col-md-4">
+                        <div class="assign-comman">
+                            <label>Created Date :-</label>
+                            <label class="label-edit" for="" id="createdDate"></label>
+                        </div>
+                    </div>
+                    <div class="assign-list col-md-4">
+                        <div class="assign-comman">
+                            <label>Status :-</label>
+                            <label class="label-edit" for="" id="status"></label>
+                        </div>
+                    </div>
+                    <div class="assign-list col-md-12">
+                        <div class="assign-comman">
+                            <label>Description :-</label>
+                            <label class="label-edit assign-description" for="" id="description"></label>
+                        </div>
+                    </div>
+                    <div class="assign-list col-md-6">
+                        <div class="assign-comman">
+                            <label>From Assign :-</label>
+                            <label class="label-edit" for="" id="fromassignusername"></label>
+                        </div>
+                    </div>
+                    <div class="assign-list col-md-6">
+                        <div class="assign-comman">
+                            <label>To Assign :-</label>
+                            <label class="label-edit" for="" id="toassignusername"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- assign-Box -->
+        <!-- agallery-Box -->
+        <div class="agallery-Box">
+            <div class="">
+                <div class="agallery-Bar row" id="show_images">
+
+                </div>
+            </div>
+        </div>
+        <!-- agallery-Box -->
+        <!-- aselect-Box -->
+        <form class="form-group row" method="POST">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Current Status:</label>
+                    <select id="ddlStatus" title="Please select Stutus" class="form-control">
+                        <option id="status" value="">Please select Stutus</option>
+                        <option value="1">Open</option>
+                        <option value="2">Re-open</option>
+                        <option value="3">Completed</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- aselect-Box -->
+            <!-- aremark-Box -->
+            <div class="col-lg-8">
+                <div class="aremark-Box">
+                    <div class="container">
+                        <div class="aremark-Bar row">
+                            <div class="aremark-list col-md-10">
+                                <div class="aremark-comman">
+                                    <label>Remark :-</label>
+                                    <textarea class="aremark-description" id="remarktxt" name="textarea" placeholder="Type your text..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- aremark-Box -->
+                <!-- abutton-Box -->
+                <div class="abutton-Box">
+                    <div class="container">
+                        <div class="abutton-Bar row">
+                            <div class="abutton-list col-md-12">
+                                <div class="abutton-comman">
+                                    <ul>
+                                        <li><button class="btn btn-primary" type="submit" id="btnStatuschange">Submit</button></li>
+                                        <li><a href="/AssignTask/AssignTasklist" class="btn btn-primary">Back</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </form>
+        <!-- abutton-Box -->
+        <!-- task table list atable-Box -->
+        <div class="row">
+            <div class="col-lg-12">
+
+                <label class="label-text">Task Follow List :</label>
+                <div class="panel-body">
+
+                    <table id="TaskFollowTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>SNo.</th>
+                                <th>Remark</th>
+                                <th>Status</th>
+                                <th>Created By</th>
+                                <th>Created Date</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </div>
+        <!-- task table list atable-Box -->
+
+
+        <script>
+
+    var ID = localStorage.getItem("TaskID");
+    viewtask(ID);
+      function viewtask(ID) {
+        var url = '@Url.Content("~/")' + "AssignTask/viewAssigntaskbyId";
+          $.post(url, { taskId: ID }, function (data) {
+              console.log(data);
+            if (data.Status=='1') {
+                  $('#taskname').text(data.Taskdetails[0].TaskName);
+                 $('#projectname').text(data.Taskdetails[0].projectname);
+                 $('#devicetype').text(data.Taskdetails[0].Devicetype);
+                $('#description').text(data.Taskdetails[0].description);
+                $('#createdDate').text(data.Taskdetails[0].Createdon);
+                $('#toassignusername').text(data.Taskdetails[0].AssignTouserName);
+                $('#fromassignusername').text(data.Taskdetails[0].AssignFromUserName);
+
+                if (data.Taskdetails[0].status == "1") {
+                $('#status').text("Open");
+              $('#Status').text("Open");
+                }
+                else if (data.Taskdetails[0].status == "2") {
+                    $('#status').text("Re-Open");
+                   $('#Status').text("Re-Open");
+                }
+                else {
+
+                    $('#status').text("Completed");
+                  $('#Status').text("Completed");
+                }
+
+              $.each(data.taskImage, function(){
+                  var  img = "http://52.49.109.172"+this.imageName;
+
+                 // $('<img />').attr('src', "" + img + "").width('183px').height('183px').css("margin-left","14px").css("margin-bottom","14px").appendTo($('#show_images'));
+
+                  $('<div/>').addClass("agallery-list col-md-3").prepend($('<div/>').prepend($('<a/>').attr('href', "" + img + "").attr("data-fancybox","agallery").prepend($('<img />').attr('src', "" + img + "").width('183px').height('183px').css("margin-left", "14px").css("margin-bottom", "14px")))).appendTo($('#show_images'));
+              });
+            }
+            else {
+                alert("There is no data");
+            }
+        });
+    }
+
+           $('#btnStatuschange').click(function () {
+
+               var status = $("#ddlStatus :selected").val();
+                var remark =$("#remarktxt").val();
+               var taskid = localStorage.getItem("TaskID");
+
+            if (status == '') {
+                $("#ddlStatus").focus();
+                $("#ddlStatus").after('<span class="error-div row">*Please select Status!</span>');
+                return false;
+            }
+
+            else if (status != '') {
+
+                var ChangeTaskstatus = {
+                    "taskId": taskid,
+                    "Status": status,
+                     "Remark": remark
+
+                };
+                $.ajax({
+                    url: '/AssignTask/ChangeStatusbyUserId',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: ChangeTaskstatus,
+                    success: function (result, textStatus, xhr) {
+
+                        if (result.Status == "1") {
+                            window.location.href = "/User/UserAssignTask";
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log('Error in Operation');
+                    }
+                });
+            }
+           });
+
+        </script>
+        <script>
+
+            $(document).ready(function () {
+
+                var taskid = localStorage.getItem("TaskID");
+                var table;
+
+                var Followedtask = {
+                    "TaskId": taskid,
+                };
+
+                $.ajax({
+                    url: '/assigntask/taskfollowlist',
+                    data: Followedtask,
+                    method: 'post',
+                    datatype: 'json',
+                    success: function (data) {
+                        var tblEmployee = $("#TaskFollowTable");
+                        var count = 0;
+                        $.each(data.TaskFollowList, function (index, item) {
+                            var status;
+                            if (item.Statusid == "1") {
+                                status = "Open";
+                            }
+                            else if (item.Statusid == "2") {
+                                status = "ReOpen";
+                            }
+                            else {
+                                status = "Completed";
+                            }
+                            var sno = index + 1;
+                            var tr = $("<tr></tr>");
+                            tr.html(("<td>" + sno + "</td>")
+                                + " " + ("<td>" + item.Remark + "</td>")
+                                + " " + ("<td>" + status + "</td>")
+                                + " " + ("<td>" + item.Createdby + "</td>")
+                                + " " + ("<td>" + item.CreatedOn + "</td>")
+                            );
+                            tblEmployee.append(tr);
+                        });
+
+                    }
+
+
+                });
+
+            });
+
+
+        </script>

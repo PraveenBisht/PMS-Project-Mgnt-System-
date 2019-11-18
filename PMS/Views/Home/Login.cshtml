@@ -1,0 +1,209 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/Home_Layout.cshtml";
+
+}
+
+
+<div class="modal" id="ForgetPasswordModel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body text-center ">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="pt-4">
+                    <div class="loading"></div>
+                    <h3 class="right-title py-3">Forgot Password?</h3>
+                    <p class="right-description pb-3">Enter your email to send your password to Email</p>
+                    <form class="form-group" method="POST">
+                        <div class="col-12 mb-3">
+                            <input type="email" id="forgetEmailId" placeholder=" Enter your Email Id" name="forgetEmailId" required>
+                        </div>
+                        <div class="col-lg-12 mt-3">
+                            <input type="button" id="btnforgetpass" class="btn-primary" value="Submit">
+                        </div>
+                        <span id="massageforget" style="color:red;"></span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="loading"></div>
+<h4>Login to your Account</h4>
+<form class="form" method="POST">
+    <input name="__RequestVerificationToken" type="hidden" value="">
+    <div class="line-Box">
+        <div class="line-Bar"></div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <label class="control-label" for="Email">Email</label>
+            <input class="form-control" data-val="true" data-val-required="The Email field is required." id="emailId" name="Email" type="text" value="" />
+            <span class="field-validation-valid text-danger" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <label class="control-label" for="Password">Password</label>
+            <input class="form-control" data-val="true" data-val-required="The Password field is required." id="Password" name="Password" type="password" />
+            <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-6">
+            <input type="button" id="btnLogin" class="btn Button-primary" value="Login" />
+        </div>
+    </div>
+</form>
+<div class="line-Box">
+    <div class="line-Bar"></div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <div>
+            <a href="/Home/Register">Register new user</a>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="login-forget">
+            <input type="button" id="btnforget" class="btn btn-link" value="Forgot password?" />
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('.loading').hide();
+
+        $('#btnforgetpass').click(function () {
+            $(".error-div").remove();
+            var Emailid = $('#forgetEmailId').val();
+            var emailRegex = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+            if (Emailid == '') {
+                $("#forgetEmailId").focus();
+                $("#forgetEmailId").after('<span class="error-div row">*Please Enter EmailId.</span>');
+                return false;
+            }
+            else if (!emailRegex.test(Emailid)) {
+                $("#forgetEmailId").focus();
+                $("#forgetEmailId").after('<span class="error-div row">*Please enter the valid Email!</span>');
+                return false;
+            }
+            else if ($(Emailid != '')) {
+                var UserforgetpassEmail = {
+                    "Email": Emailid,
+                };
+
+                $.ajax({
+                    url: '/api/Account/ForgotPassword',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: UserforgetpassEmail,
+                    beforeSend: function () {
+                        $('.loading').show();
+                    },
+
+                    success: function (result, textStatus, xhr) {
+                        console.log(result);
+                        if (result.Status == '1') {
+                            $('#ForgetPasswordModel').modal('hide')
+                            toastr.success(result.Message);
+                            $('.loading').hide();
+
+                        }
+                        else if (result.Status == '2') {
+                            $("#forgetEmailId").val(' ');
+                            $("#forgetEmailId").focus();
+                            toastr.warning(result.Message);
+                            $('.loading').hide();
+                        }
+                        else {
+
+                            $('#ForgetPasswordModel').modal('hide')
+                            toastr.error(result.Message);
+                            $('.loading').hide();
+                        }
+
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+
+                        console.log('Error in Operation');
+                    }
+                });
+
+            }
+        });
+
+        $('#btnLogin').click(function () {
+            $(".error-div").remove();
+            var emailId = $('#emailId').val();
+            var Password = $('#Password').val();
+            var emailRegex = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+            if (emailId == '') {
+                $("#emailId").focus();
+                $("#emailId").after('<span class="error-div row">*Please enter the EmailId!</span>');
+                return false;
+            } else if (!emailRegex.test(emailId)) {
+                $("#emailId").focus();
+                $("#emailId").after('<span class="error-div row">*Please enter the valid Email!</span>');
+                return false;
+            } else if (Password == '') {
+                $("#Password").focus();
+                $("#Password").after('<span class="error-div row">*Enter the Password!</span>');
+                return false;
+            }
+            else if ($(emailId != '' && Password != '')) {
+
+                var bearer = "";
+
+                var user = {
+                    grant_type: 'password',
+                    username: emailId,
+                    password: Password
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/token",
+                    data: user,
+                    contentType: "application/x-www-form-urlencoded",
+                    dataType: "json",
+                    beforeSend: function () {
+                        $('.loading').show();
+                    },
+                    success: function (data) {
+                        bearer = JSON.parse(JSON.stringify(data));
+                        var UserName = bearer.EmailId;
+                        sessionStorage.setItem('UserName', data.EmailId);
+                        sessionStorage.setItem('access_token', bearer.access_token);
+                        sessionStorage.setItem('RoleType', data.Role);
+                        window.location.href = "/WebDevloper/Dashboard";
+                        $('.loading').hide();
+                    },
+                    failure: function (response) {
+                        //toastr.error(response.responseText);
+                        toastr.error(response.responseJSON.error_description);
+                        $('.loading').hide();
+                    },
+                    error: function (response) {
+                        //toastr.error(response.responseText);
+                        toastr.error(response.responseJSON.error_description);
+                        $('.loading').hide();
+                    }
+
+                });
+
+
+            }
+        });
+        $('#btnforget').click(function () {
+            $('#ForgetPasswordModel').modal('show')
+        });
+
+    });
+
+</script>

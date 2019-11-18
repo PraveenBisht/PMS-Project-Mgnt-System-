@@ -1,0 +1,558 @@
+﻿
+@{
+    ViewBag.Title = "UserList";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<!-- Custom bootstrap css for this website-->
+<link rel="stylesheet" href="~/Template/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/Template/vendor/datatables/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/Scripts/datetimexdsoft/build/jquery.datetimepicker.min.css">
+
+<script src="~/Template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="~/Template/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="~//Scripts/datetimexdsoft/build/jquery.datetimepicker.full.min.js"></script>
+
+<!-- Data Table javascript-->
+<div class="bread-Box">
+    <div class="container-fluid">
+        <div class="bread-Bar row">
+            <div class="bread-list col-12">
+                <div class="bread-content">
+                    <h2>Employee List</h2>
+                    <ul>
+                        <li>
+                            <a href="dashboard.html">Dashboard</a>
+                            <span class="bread-span"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                        </li>
+                        <li class="active">
+                            <a href="javascript:void(0);">Employee List</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="myattendance-Part table-Box">
+    <div class="container-fluid">
+        <div class="table-Bar row">
+            <div class="table-list col-12">
+                <div class="table-head d-none">
+                    <h6>Employee List:</h6>
+                    <a href="javascript:void(0);">Manage List</a>
+                </div>
+                <div class="table-comman">
+                    <div class="table-responsive">
+                        <table class="table-data table table-bordered" id="myTable" width="100%" cellspacing="0">
+
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Emplyoee Id</th>
+                                    <th>Name</th>
+                                    <th>EmailId</th>
+                                    <th>Department</th>
+                                    <th>Designation</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- / (employee = emp) emplistedit-Box: start \ -->
+<div class="emplistedit-Box">
+    <div class="emplistedit-Bar">
+        <div class="modal fade" id="emplisteditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="emplistedit-head modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Employee Details.</h5>
+                        <button type="button" class="emplistedit-close close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="emplistedit-body modal-body">
+                        <div class="loading"></div>
+                        <form>
+                            <div class="form-group emplistedit-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="emplistedit_cost" class="label-name">Employee ID</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <input type="text" class="label-value form-control" id="emplistedit_EmpId" readonly="readonly">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistedit-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="emplistedit_name" class="label-name">Name</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <input type="text" class="label-value form-control" id="emp_name">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group emplistedit-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="emplistedit_email" class="label-name">Email</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <input type="text" class="label-value form-control" id="emplistedit_email">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistedit-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="emplistedit_email" class="label-name">Mobile No.</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <input type="text" class="label-value form-control" id="emplistedit_mobileno">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistedit-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="emplistedit_department" class="label-name">Department</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <select id="ddlemp_Department" title="Please select User" name="ddlemp_Department" class="label-value form-control">
+                                                <option value=" ">Select Department</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistedit-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="emplistedit_designation" class="label-name">Designation</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <input type="text" class="label-value form-control" id="emp_Designation">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistedit-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="emplistedit_designation" class="label-name">JoiningDate</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <input type="text" class="label-value form-control" id="emp_JoiningDate">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistedit-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="emplistedit_designation" class="label-name">Qualification</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <input type="text" class="label-value form-control" id="emp_Qualification">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </form>
+                    </div>
+                    <div class="emplistedit-foot modal-footer">
+                        <div class="emplistedit-foot-left">
+                            <button type="button" class="btn btn-global emplistedit-back" data-dismiss="modal">Back</button>
+                        </div>
+                        <div class="emplistedit-foot-right">
+                            <button type="button" class="btn btn-global emplistedit-cancel" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-global emplistedit-save" id="btnEditEmoployee">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- \ (employee = emp) emplistedit-Box: end / -->
+<!-- / (employee = emp) emplistview-Box: start \ -->
+<div class="emplistview-Box">
+    <div class="emplistview-Bar">
+        <div class="modal fade" id="emplistviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="emplistview-head modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">To View Employee Details.</h5>
+                        <button type="button" class="emplistview-close close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="emplistview-body modal-body">
+                        <form>
+                            <div class="form-group emplistview-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="" class="label-name">Name</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <label id="employee_name" class="label-value"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistview-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="" class="label-name">Employee ID</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <label id="employee_Id" class="label-value"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistview-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="" class="label-name">Email</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <label id="employee_EmailId" class="label-value"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistview-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="" class="label-name">Mobile Number</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <label id="employee_mobilenumber" class="label-value"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistview-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="" class="label-name">Address</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <label id="employee_address" class="label-value"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistview-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="" class="label-name">Department</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <label id="employee_Department" class="label-value"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistview-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="" class="label-name">Designation</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <label id="employee_Designation" class="label-value"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistview-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="" class="label-name">Joining Date</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <label id="employee_JoiningDate" class="label-value"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group emplistview-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="" class="label-name">Qualification</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <label id="employee_Qualification" class="label-value"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group emplistview-list">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 px-0">
+                                            <label for="" class="label-name">Profile Pic</label>
+                                        </div>
+                                        <div class="col-sm-8 px-0">
+                                            <img id="employee_profile"  title="profile" style="max-width: 40%;height: auto;" src="~/Content/img/avatar-4.svg">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="emplistview-foot modal-footer">
+                        <div class="emplistview-foot-left">
+                            <button type="button" class="btn btn-global emplistview-back" data-dismiss="modal">Back</button>
+                        </div>
+                        <div class="emplistview-foot-right">
+                            <button type="button" class="btn btn-global emplistview-cancel" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- \ (employee = emp) emplistview-Box: end / -->
+
+
+
+<script>
+
+
+
+    $(document).ready(function () {
+        var table;
+
+        $.ajax({
+            url: '/Admin/GetAllUserlist',
+            method: 'post',
+            dataType: 'json',
+            success: function (data) {
+
+                table = $('#myTable').dataTable({
+                    processing: true,
+                    paging: true,
+                    sort: true,
+                    searching: true,
+                    lengthMenu: [[5, 10, 25, 50], [5, 10, 25, 50]],
+                    //scrollY: 200,
+                    data: data.Result,
+                    bDestroy: true,
+                    columns: [
+                        { "data": "id", "autoWidth": true, "visible": false },
+                        { "data": "EmplyoeeId", "autoWidth": true },
+                        { "data": "Name", "autoWidth": true },
+                        { "data": "Email", "autoWidth": true },
+                        { "data": "DepartmentName", "autoWidth": true },
+                        { "data": "designation", "autoWidth": true },
+
+                        {
+                            "data": null, render: function (data, type, row) {
+
+                                return "<span class='span-action'><a href='#' class='span-action-view'  onclick=ViewEmployee('" + row.id + "'); ><i class='fa fa-eye' aria-hidden='true'></i></a>&nbsp&nbsp<a href='#' class='span-action-edit' title='Edit'  onclick=EditEmployee('" + row.id + "'); ><i class='fa fa-pencil-square-o' aria-hidden='true'></i></a></span>";
+
+                            },
+                        },
+
+
+                    ]
+                });
+            }
+        });
+    });
+    function viewtask(ID) {
+        localStorage.setItem("UserId", ID);
+        window.location.href = "/Admin/UserLeaveList";
+    }
+
+    var ddldeparment = $("#ddlemp_Department");
+
+    $.ajax({
+        type: "POST",
+        url: "/Admin/GetDepartmentlist",
+        data: '{}',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+
+            $.each(response, function () {
+                ddldeparment.append($("<option></option>").val(this['Value']).html(this['Text']));
+            });
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+
+    function EditEmployee(ID) {
+        $.ajax({
+            url: "/Admin/GetUserdetailsByuserId",
+            method: 'Post',
+            data: {
+                userId: ID,
+            },
+            dataType: 'json',
+
+            success: function (data) {
+                console.log(data);
+                if (data.Status == '1') {
+                    $("#emp_name").val(data.Result.Name);
+                    if (data.Result.DepartmentName != "") {
+                        $("#ddlemp_Department").append($("<option selected='selected'></option>").val(data.Result.DepartmentName).html(data.Result.DepartmentName));
+                    }
+                    else {
+                           $("#ddlemp_Department").append($("<option selected='selected'></option>").val("0").html("Please Select Department!"));
+          
+                    }
+                    $("#emp_Designation").val(data.Result.designation);
+                    $("#emp_JoiningDate").val(data.Result.joiningDate);
+                    $("#emp_Qualification").val(data.Result.qualification);
+                    $("#emplistedit_EmpId").val(data.Result.EmplyoeeId);
+                    $("#emplistedit_email").val(data.Result.Email);
+                    $("#emplistedit_mobileno").val(data.Result.mobilenumber);
+                    $("#emplisteditModal").modal('show');
+                }
+            }
+        });
+
+    }
+
+    function ViewEmployee(ID) {
+        $.ajax({
+            url: "/Admin/GetUserdetailsByuserId",
+            method: 'Post',
+            data: {
+                userId: ID,
+            },
+            dataType: 'json',
+
+            success: function (data) {
+                console.log(data);
+                if (data.Status == '1') {
+
+                    $("#employee_Id").text(data.Result.EmplyoeeId);
+                    $("#employee_EmailId").text(data.Result.Email);
+                    $("#employee_name").text(data.Result.Name);
+                    $("#employee_Department").text(data.Result.DepartmentName);
+                    $("#employee_Designation").text(data.Result.designation);
+                    $("#employee_JoiningDate").text(data.Result.joiningDate);
+                    $("#employee_Qualification").text(data.Result.qualification);
+                    $("#employee_mobilenumber").text(data.Result.mobilenumber);
+                    $("#employee_address").text(data.Result.address);
+                    $("#employee_profile").text(data.Result.profilePic);
+                if (data.Result.profilePic != 'NA') {
+                     $('##employee_profile').attr('src', r.result.ProfilePicture);
+                     
+                 }
+
+                    $("#emplistviewModal").modal('show');
+                }
+            }
+        });
+
+    }
+
+
+    $('#btnEditEmoployee').click(function () {
+
+        var name = $('#emp_name').val();
+        var DepartmentId = $("#ddlemp_Department :selected").val();
+        var Designation = $("#emp_Designation").val();
+        var JoiningDate = $("#emp_JoiningDate").val
+        var Qualification = $("#emp_Qualification").val();
+        var mobilenumber = $('#emplistedit_mobileno').val();
+        var EmailId = $("#emplistedit_email").val();
+
+        var EmployeeDetails = {
+            "Name": name,
+            "DepartmentId": DepartmentId,
+            "designation": Designation,
+            "joiningDate": JoiningDate,
+            "qualification": Qualification,
+            "mobilenumber": mobilenumber,
+            "Email": EmailId,
+        };
+        $.ajax({
+            url: '/Admin/EditEmployee',
+            type: 'POST',
+            dataType: 'json',
+            data: EmployeeDetails,
+            beforeSend: function () {
+                $('.loading').show();
+            },
+            complete: function () {
+                $('.loading').hide();
+            },
+            success: function (result, textStatus, xhr) {
+
+                if (result.Status == '1') {
+                    toastr.success("Employee Updated Successfully.")
+                    $("#emplisteditModal").modal('hide');
+
+                }
+                else {
+                    toastr.error(result.Message)
+                    $('.loading').hide();
+
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Operation');
+                $('.loading').hide();
+            }
+        });
+
+
+
+    });
+
+
+
+
+
+</script>
+
+
+
+
+

@@ -1,0 +1,125 @@
+Get   api/Common/ProjectList 
+Poat   api/Common/EmployeeList
+
+Poat
+api/MobileTask/ReassignTask
+TaskId, CreatedTo, Createdon, description,  and postedFiles{sdss,sddsds}
+
+
+http://192.168.0.112/api/MobileTask/CreateTask
+Header Param: Authorization, 
+Content-Type:application/json
+
+in body pard send Json.
+
+body Param: details,postedFiles
+projectid,CreatedTo, TaskName, Createdon, description,Devicetype,postedFiles
+===
+Method: Get
+http://192.168.0.112/api/Common/ProjectList 
+Header Param: Authorization
+===
+Method: Get
+http://192.168.0.112/api/Common/EmployeeList
+Header Param: Authorization
+===
+
+===
+Method: Post
+http://localhost:44384/api/Account/Register
+Email :praveen13@gmail.com,Name praveen13,Password Zxc@123###,ConfirmPassword Zxc@123###
+===
+Method: Get
+http://localhost:44384/api/Account/UserInfo
+Send in Headers: Key:"Authorization" Value:"bearer Uj7q_v1D13jW_qYhZapqo5a5aB00BH3Gg4iNAAQlOXZmtXcGclYPJAp_1mVqMPXkEaJ6nJda9i1wl5xhqcqP4vhJVMX5LXy1_pF44iIda8OdcUSWndtT6ziRa3LvT2p7mbrKOEQ9gTttRZs3DSp6c3vtIetP7Vc9y4C1rmT7rpRWoPN9ru1ehC7-ZCZrR6kLdZvSNcsO3YyMuvEgxbfJbZIbx6-2HX54vAOblvrGrkeKiQdVKrXe_7xGoznoFKVflUGNtRcAuWOjuD2qKetmapO0IMjNfaalHJnyqYEXepUtlANZE5Ea8xGXsOa40XIzHHWsLub6-_pRs8jKufoJN8a7MEe28fb5DpvYPWWo_7eWcG_c6cyTBk9k29tVW2fQ6pJUZNpgJ7JiPX0cuCgxfgunbPgFf5Yw-F7yffskSx5RqfzI9f35fmq4wwQVbcZObxqLs-7bYozl8IPJA2T1wqVzOy1LEVfKAyHOn4bfiwg"
+===
+Attendance Management
+RemainingDays,TotalPresent,TotalAbsent,TodaysLogInTime
+
+Task Management
+AllTask, OperTask, Re-OpenTask, CompletedTask
+
+Leave Management
+ApprovedLeave, PendingLeave, RejectLeave
+
+
+
+===
+Method: Post
+http://192.168.0.109/api/Account/Register
+Param: Name,Email,Password,ConfirmPassword
+
+responce:
+1.
+{
+    "Status": "2",
+    "Message": "The Name field is required."
+}
+2.
+{
+    "Status": "3",
+    "Message": "The Email field is required."
+}
+3.
+{
+    "Status": "4",
+    "Message": "The Password field is required."
+}
+4.
+{
+    "Status": "5",
+    "Message": "The password and confirmation password do not match."
+}
+5.
+{
+    "Status": "6",
+    "Message": "Name praveen12 is already taken."
+}
+6.
+{
+    "Status": "6",
+    "Message": "Email 'praveen12@gmail.com' is already taken."
+}
+7.
+{
+    "Status": "1",
+    "Message": "You have registered successfully."
+}
+===
+Method: Post
+http://192.168.0.112/api/Users/UserAssignTaskList
+Header Param: Authorization
+body Param: pageNumber, _pageSize
+{
+    "result": [
+        {
+            "id": 1,
+            "taskId": "5899750f-8461-4e36-8394-e37045390ee5",
+            "description": "hejkhjfhjk fwefef fwfgwer fwdfe ",
+            "createdby": "Admin",
+            "TaskName": "rammm",
+            "projectname": "xbond",
+            "Createdon": "09-Aug-2019 04:45",
+            "status": "Completed",
+            "AssignTouserName": "atul",
+            "AssignFromUserName": "Sitaram Thakur",
+            "Devicetype": "Mobile"
+        },
+        {
+            "id": 2,
+            "taskId": "18cc678d-05b5-469a-b4d5-311655ba6562",
+            "description": "ssss",
+            "createdby": "Admin",
+            "TaskName": "sss",
+            "projectname": "xbond",
+            "Createdon": "19-Aug-2019 05:03",
+            "status": "Open",
+            "AssignTouserName": "atul",
+            "AssignFromUserName": "Sitaram Thakur",
+            "Devicetype": "Mobile"
+        }
+    ],
+    "Message": "AssignTaskListData",
+    "Status": "1"
+}
+===

@@ -1,0 +1,36 @@
+﻿@model PMS.Models.Expense.IndexViewsModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<h2>Details Expense</h2>
+
+<fieldset>
+    <legend>ExpenseModel</legend>
+     @Html.HiddenFor(model => model.ExpenseModelEntry.ID)
+    <div class="display-label">ExpenseDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ExpenseModelEntry.ExpenseDate)
+    </div>
+
+    <div class="display-label">Amount</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ExpenseModelEntry.Amount)
+    </div>
+
+    <div class="display-label">Description</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ExpenseModelEntry.Description)
+    </div>
+
+    <div class="display-label">Tag</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ExpenseModelEntry.Tag)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

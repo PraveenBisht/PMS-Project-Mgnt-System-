@@ -1,0 +1,582 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "AllLeaves";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<h2>All Employees Leave.</h2>
+<script src="~/ckeditor/ckeditor.js"></script>
+@*<script src="~/Content/bootstrap_calendar/js/bootstrap_calendar.min.js"></script>
+    <link href="~/Content/bootstrap_calendar/css/bootstrap_calendar.css" rel="stylesheet" />*@
+<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+<script src="~/Content/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/toastr.min.js"></script>
+@*<link rel="stylesheet" href="~/Scripts/datetimexdsoft/build/jquery.datetimepicker.min.css">
+    <script src="~//Scripts/datetimexdsoft/build/jquery.datetimepicker.full.min.js"></script>*@
+<div id="calendar_test"></div>
+<style type="text/css">
+    .cke_top {
+        display: none;
+    }
+</style>
+<script type="text/javascript">
+    window.onload = function () {
+        CKEDITOR.replace('editor1');
+
+    };
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+</script>
+
+<br />
+<style>
+    .group-back {
+        background-color: white;
+        color: #000000;
+    }
+
+        .group-back:hover {
+            cursor: pointer;
+        }
+
+    table.dataTable td.group-back {
+        padding: 0 2px;
+    }
+
+    #example2, #ShortLeavedt {
+        width: 100% !important;
+    }
+
+    .table td, th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+</style>
+<script>
+    function ViewDetail(pk_leave_taken_id) {
+
+        var ViewDetailData = {
+            "LeaveId": pk_leave_taken_id
+        };
+        var time;
+        $.ajax({
+            url: '/api/Leave/FindLeaveByIdWeb',
+            type: 'POST',
+            dataType: 'json',
+            data: ViewDetailData,
+            headers: {
+                'Authorization': "bearer  " + token
+            },
+            success: function (r, textStatus, xhr) {
+                //console.log(r)
+                if (r.Status == '1') {
+                    if (r.result[0].leave_type == 'Short Leave') {
+                        $('#divShortLeave').show();
+                        $('#divHalfdayLeave').hide();
+                        $('#divFullDayLv').hide();
+                    }
+                    else if (r.result[0].leave_type == 'Half Day') {
+                        $('#divHalfdayLeave').show();
+                        $('#divFullDayLv').hide();
+                        $('#divShortLeave').hide();
+                    }
+                    else {
+                        $('#divFullDayLv').show();
+                        $('#divShortLeave').hide();
+                        $('#divHalfdayLeave').hide();
+                    }
+                    $('#TaskId').val(r.result[0].pk_leave_taken_id);
+                    $('#lblLeaveType').text(r.result[0].is_halfday);
+                    $('#lblUserName').text(r.result[0].UserName);
+                    $('#lblLeaveDateFrom').text(r.result[0].LeaveDateFrom);
+                    $('#lblLeaveDateTo').text(r.result[0].LeaveDateTo);
+                    $('#lblLeaveTimeFrom').text(r.result[0].LeaveTimeFrom);
+                    $('#lblLeaveTimeTo').text(r.result[0].LeaveTimeTo);
+                    $('#lblTotalLeave').text(r.result[0].TotalLeave);
+                    $('#lblManagerName').text(r.result[0].ManagerName);
+                    $('#lblStatus').text(r.result[0].leave_status1);
+                    var editor = CKEDITOR.instances['editor1'];
+                    editor.insertHtml(r.result[0].Remark);
+                }
+                else {
+                    $("#massageotp").text(r.Message);
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Operation');
+            }
+        });
+    }
+    $(document).ready(function () {
+
+        $('#myModal').on('hidden.bs.modal', function (e) {
+            $(this)
+                .find("select").val('').end()
+                .find("input[type=file]").val(null).end()
+                .find("input[type=checkbox], input[type=radio]").prop("checked", "")
+                .end();
+            CKEDITOR.instances['editor1'].setData('');
+        })
+        $('#btnApprove').click(function () {
+            var TaskId = $('#TaskId').val();
+
+            var UserData = {
+                "pk_leave_taken_id": TaskId,
+                "leave_status": 1,
+            };
+            $.ajax({
+                url: '/api/Leave/LeaveApproveReject',
+                type: 'POST',
+                dataType: 'json',
+                data: UserData,
+                contentType: "application/x-www-form-urlencoded",
+                headers: {
+                    'Authorization': "bearer  " + token
+                },
+                success: function (result, textStatus, xhr) {
+                    if (result.Status == '1') {
+                        $("#myModal").modal("hide");
+                        $('#myModal').on('hidden.bs.modal', function (e) {
+                            $(this)
+                                .find("select").val('').end()
+                                .find("input[type=file]").val(null).end()
+                                .find("input[type=checkbox], input[type=radio]").prop("checked", "").end();
+                        })
+                        if ($('#ShortLeave').css("display") != 'none') {
+                            ShortLeaveList();
+                        }
+                        if ($('#HalfDay').css("display") != 'none') {
+                            HalfDayLIst();
+                        }
+                        if ($('#OtherLeave').css("display") != 'none') {
+                            OtherLeaveList();
+                        }
+                    }
+                    if (result.Status == '0') {
+                        $("#massage").text(result.Message);
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                }
+            });
+        });
+        $('#btnReject').click(function () {
+            var TaskId = $('#TaskId').val();
+
+            var UserData = {
+                "pk_leave_taken_id": TaskId,
+                "leave_status": 2,
+            };
+            $.ajax({
+                url: '/api/Leave/LeaveApproveReject',
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/x-www-form-urlencoded",
+                headers: {
+                    'Authorization': "bearer  " + token
+                },
+                data: UserData,
+                success: function (result, textStatus, xhr) {
+                    if (result.Status == '1') {
+                        $("#myModal").modal("hide");
+                        $('#myModal').on('hidden.bs.modal', function (e) {
+                            $(this)
+                                .find("select").val('').end()
+                                .find("input[type=file]").val(null).end()
+                                .find("input[type=checkbox], input[type=radio]").prop("checked", "").end();
+                        })
+                        if ($('#ShortLeave').css("display") != 'none') {
+                            ShortLeaveList();
+                        }
+                        if ($('#HalfDay').css("display") != 'none') {
+                            HalfDayLIst();
+                        }
+                        if ($('#OtherLeave').css("display") != 'none') {
+                            OtherLeaveList();
+                        }
+                    }
+                    if (result.Status == '0') {
+                        $("#massage").text(result.Message);
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                }
+            });
+        });
+    });
+</script>
+<script>
+    var leave_type = localStorage.getItem('leave_type');
+    var token = sessionStorage.getItem('access_token');
+    var RoleType = sessionStorage.getItem('RoleType');
+
+    function ShortLeave(data) {
+        var oTable = $('#ShortLeavedt').dataTable({
+            bProcessing: true,
+            iDisplayLength: 20,
+            aaData: data,
+            bDestroy: true,
+            aoColumns: [
+                { mData: "pk_leave_taken_id", sTitle: "LeaveId", visible: false },
+                { mData: "UserName", sTitle: "Employee Name" },
+                { mData: "LeaveDateFrom", sTitle: "Leave Date" },
+                { mData: "LeaveTimeFrom", sTitle: "Time From" },
+                { mData: "LeaveTimeTo", sTitle: "Time To" },
+                { mData: "TotalLeave", sTitle: "Duration(In Hrs.)" },
+                { mData: "fk_user_id", sTitle: "Manager Name" },
+                { mData: "leave_status1", sTitle: "Status" },
+                {
+                    sTitle: "Action",
+                    "data": null, render: function (data, type, row) {
+                        return "<i class='fa fa-eye' aria-hidden='true' style='font-size:22px;color:green;' data-toggle='modal' data-target='#myModal' onclick=ViewDetail('" + row.pk_leave_taken_id + "');></i>";
+                    },
+                }
+            ]
+        });
+    }
+    function Halfdaydt(data) {
+        var oTable = $('#Halfdaydt').dataTable({
+            bProcessing: true,
+            iDisplayLength: 20,
+            aaData: data,
+            bDestroy: true,
+            aoColumns: [
+                { mData: "pk_leave_taken_id", sTitle: "LeaveId", visible: false },
+                { mData: "UserName", sTitle: "Employee Name" },
+                { mData: "LeaveDateFrom", sTitle: "Date" },
+                { mData: "is_halfday", sTitle: "Day Type" },
+                { mData: "fk_user_id", sTitle: "Manager Name" },
+                { mData: "leave_status1", sTitle: "Status" },
+                {
+                    sTitle: "Action",
+                    "data": null, render: function (data, type, row) {
+                        return "<i class='fa fa-eye' aria-hidden='true' style='font-size:22px;color:green;' data-toggle='modal' data-target='#myModal' onclick=ViewDetail('" + row.pk_leave_taken_id + "');></i>";
+                    },
+                }
+            ]
+        });
+    }
+    function OtherLeavedt(data) {
+        console.log(data);
+        if (data != 1) {
+            var oTable = $('#OtherLeavedt').dataTable({
+
+                bProcessing: true,
+                iDisplayLength: 20,
+                aaData: data,
+                bDestroy: true,
+                aoColumns: [
+                    { mData: "pk_leave_taken_id", sTitle: "LeaveId", visible: false },
+                    { mData: "UserName", sTitle: "Employee Name" },
+                    { mData: "LeaveDateFrom", sTitle: "Date From" },
+                    { mData: "LeaveDateTo", sTitle: "Date To" },
+                    { mData: "TotalLeave", sTitle: "Duration(In Days)" },
+                    { mData: "leave_type", sTitle: "Leave Type" },
+                    { mData: "fk_user_id", sTitle: "Manager Name" },
+                    { mData: "leave_status1", sTitle: "Status" },
+                    {
+                        sTitle: "Action",
+                        "data": null, render: function (data, type, row) {
+                            return "<i class='fa fa-eye' aria-hidden='true' style='font-size:22px;color:green;' data-toggle='modal' data-target='#myModal' onclick=ViewDetail('" + row.pk_leave_taken_id + "');></i>";
+                        },
+                    }
+                ]
+            });
+        }
+        else {
+            var oTable = $('#OtherLeavedt').dataTable({
+
+                bProcessing: true,
+                iDisplayLength: 20,
+                bDestroy: true,
+                aoColumns: [
+                    { mData: "pk_leave_taken_id", sTitle: "LeaveId", visible: false },
+                    { mData: "UserName", sTitle: "Employee Name" },
+                    { mData: "LeaveDateFrom", sTitle: "Date From" },
+                    { mData: "LeaveDateTo", sTitle: "Date To" },
+                    { mData: "TotalLeave", sTitle: "Duration(In Days)" },
+                    { mData: "leave_type", sTitle: "Leave Type" },
+                    { mData: "fk_user_id", sTitle: "Manager Name" },
+                    { mData: "leave_status1", sTitle: "Status" },
+                    {
+                        sTitle: "Action",
+                        "data": null, render: function (data, type, row) {
+                            return "<i class='fa fa-eye' aria-hidden='true' style='font-size:22px;color:green;' data-toggle='modal' data-target='#myModal' onclick=ViewDetail('" + row.pk_leave_taken_id + "');></i>";
+                        },
+                    }
+                ]
+            });
+        }
+    }
+    $(function () {
+        ShortLeaveList();
+        var btnHeight = $('#tbDays').height(),
+            slideHeight = $('.slider').height(),
+            buffer = ((btnHeight - slideHeight) / 2);
+        $('.wrapper').height(btnHeight),
+            $('.slider').css({ 'margin-top': buffer });
+    });
+    function SortBy(prop) {
+        return function (a, b) {
+            if (a[prop] > b[prop]) {
+                return 1;
+            } else if (a[prop] < b[prop]) {
+                return -1;
+            }
+            return 0;
+        }
+    }
+    function ShortLeaveList() {
+        $.ajax({
+            type: "POST",
+            // url: '/api/leavestaken',
+            url: '/api/Leave/LeaveListWeb',
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                'Authorization': "bearer  " + token
+            },
+            data: { leave_status: "1", RoleType: RoleType },
+            success: function (data) {
+                if (data.Status == 1) {
+                    ShortLeave(data.result);
+                }
+                else {
+                    ShortLeave(1);
+                }
+            }
+        });
+    }
+    function HalfDayLIst() {
+        $.ajax({
+            type: "POST",
+            url: '/api/Leave/LeaveListWeb',
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                'Authorization': "bearer  " + token
+            },
+            data: { leave_status: "2", RoleType: RoleType },
+            success: function (data) {
+                if (data.Status == 1) {
+                    Halfdaydt(data.result);
+                }
+                else {
+                    Halfdaydt(1);
+                }
+            }
+        });
+    }
+    function OtherLeaveList() {
+        $.ajax({
+            type: "POST",
+            url: '/api/Leave/LeaveListWeb',
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+                'Authorization': "bearer  " + token
+            },
+            data: { leave_status: "3", RoleType: RoleType },
+            success: function (data) {
+                //console.log(data);
+                if (data.Status == 1) {
+                    OtherLeavedt(data.result);
+                }
+                else {
+                    OtherLeavedt(1);
+                }
+            }
+        });
+    }
+</script>
+<script>
+    function openLeave(LeaveName) {
+        var i;
+        var x = document.getElementsByClassName("LV");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        document.getElementById(LeaveName).style.display = "block";
+        if (LeaveName == "ShortLeave") {
+            ShortLeaveList();
+        }
+        else if (LeaveName == "Halfday") {
+            HalfDayLIst();
+        }
+        else if (LeaveName == "OtherLeave") {
+            OtherLeaveList();
+        }
+        else { }
+
+    }
+</script>
+
+<div class="panel-body">
+
+    <div class="w3-bar w3-black">
+        <button class="success" onclick="openLeave('ShortLeave')">Short Leave</button>
+        <button class="success" onclick="openLeave('Halfday')">Halfday</button>
+        <button class="success" onclick="openLeave('OtherLeave')">Other Leave</button>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Employee Leave Details.</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-1">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="hidden" id="TaskId" />
+                                        <label>User Name :</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input type="hidden" id="txtId" />
+                                        <label id="lblUserName" style="float: left;" name="UserName"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Manager Name :</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label id="lblManagerName" style="float: left;" name="ManagerName"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Leave Date From :</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label id="lblLeaveDateFrom" style="float: left;" name="LeaveDateFrom"></label>
+                                    </div>
+                                </div>
+                                <div id="divShortLeave">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>Leave Time From :</label>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <label id="lblLeaveTimeFrom" style="float: left;" name="LeaveTimeFrom"></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>Leave Time To :</label>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <label id="lblLeaveTimeTo" style="float: left;" name="LeaveTimeTo"></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <label>TotalLeave(In Hrs):</label>
+                                        </div>
+                                        <div class="col-md-6" style="margin-left: -2.3rem !important;">
+                                            <label id="lblTotalLeave" style="float: left;" name="TotalLeave"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="divHalfdayLeave">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <label>Leave Type :</label>
+                                        </div>
+                                        <div class="col-md-6" style="margin-left: -2.3rem !important;">
+                                            <label id="lblLeaveType" style="float: left;" name="LeaveType"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="divFullDayLv">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>Leave Date To :</label>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <label id="lblLeaveDateTo" style="float: left;" name="LeaveDateTo"></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <label>TotalLeave(In Days):</label>
+                                        </div>
+                                        <div class="col-md-6" style="margin-left: -2.3rem !important;">
+                                            <label id="lblTotalLeave" style="float: left;" name="TotalLeave"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Status :</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label id="lblStatus" style="float: left;" name="Status"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Message :</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea id="editor1" style="float: left;" name="editor1"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (User.IsInRole("Admin"))
+                {
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                }
+                @if (User.IsInRole("Manager"))
+                {
+                    <div class="modal-footer">
+                        <input type="button" style="float:left" id="btnApprove" class="btn btn-success" value="Approve">
+                        <input type="button" style="float:left" id="btnReject" class="btn btn-success" value="Reject">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div id="ShortLeave" class="LV">
+        <h2>Short Leave</h2>
+        <table id="ShortLeavedt"></table>
+    </div>
+
+    <div id="Halfday" class="LV" style="display:none">
+        <h2>Halfday Leave</h2>
+        <table id="Halfdaydt"></table>
+    </div>
+
+    <div id="OtherLeave" class="LV" style="display:none">
+        <h2>Other Leave</h2>
+        <table id="OtherLeavedt"></table>
+    </div>
+    <span id="massage" .error></span>
+    <span id="massage" style="color:red;"></span>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</div>

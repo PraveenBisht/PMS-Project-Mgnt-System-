@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <title>XBOND - Trading</title>
+    <meta name="description" content="Xbond Cryptocurrency Exchange - The Largest and Most Advanced Cryptocurrency Exchange.">
+    <meta name="keywords" content="XBOND announcement, XBOND news, XBOND feeds, XBOND coin launching, XBOND activity, main net upgrade, branches, support xbond, support bitcoin,support exchange, Support bitcoin exchange, Support litecoin, Support ethereum, Support margin,trade, Support  Cryptocurrency Exchange, Support Blockchain Crypto, Support  Trading Platform, Low Transaction Fee, Buy Ethereum, Open API, BTC to USDT, Bitcoin Price, Bitcoin Value, Bitcoin Price USD, Ethereum Price, BTC Price, BTC to USD, BTC Chart, ETH Price, ETH to USDT, XRP Price, XRP Chart, bitcoin, support cryptocurrencies, crypto, ether, zcash, buy bitcoin, buy crypto, buy bitcoin India, bitcoin wallet, buy bitcoin, buy btc, buy ripple, buy ethereum, inr to btc, inr to ripple, eth to inr, bitcoin inr conversion, btc price inr, cheap btc, cheap eth, lowest fee crypto exchange, cryptocurrency exchange rates, cryptocurrency exchange platform, opening a cryptocurrency exchange, cryptocurrency exchange best, which cryptocurrency exchange is best, which cryptocurrency exchange to use, cryptocurrency exchange top 10, Support  cryptocurrency exchange with margin trading, Blockchain Crypto Exchange, Cryptocurrency Exchange, Bitcoin Trading, Ethereum price trend, BNB, CZ, BTC price, ETH wallet registration, LTC price, Binance, Poloniex, Bittrex,">
+
+
+
+    <!-- Canonical URLs definitions -->
+    <link rel="canonical" href="https://xbond.io/exchange" />
+    <link rel="alternate" href="https://xbond.io/exchange" hreflang="x-default" />
+
+    <!-- Facebook Open Graph data -->
+    <meta property="og:title" content="XBOND - Trading" />
+    <meta property="og:url" content="https://xbond.io/exchange" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="The largest and most advanced cryptocurrency exchange" />
+    <meta property="og:image" content="https://xbond.io/skins/client/img/dashboard.png" />
+
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@XbondExchange" />
+    <meta name="twitter:title" content="XBOND - Trading" />
+    <meta name="twitter:description" content="The largest and most advanced cryptocurrency exchange" />
+    <meta name="twitter:image" content="https://xbond.io/skins/client/img/phone.png" />

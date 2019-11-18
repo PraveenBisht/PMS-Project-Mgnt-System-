@@ -1,0 +1,308 @@
+﻿@model IEnumerable<PMS.Models.AttendanceModel>
+@using PMS.Models;
+
+
+
+
+@{
+    ViewBag.Title = "UserAttandace";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+    List<AspNetUser> Employees = TempData["Employees"] as List<AspNetUser>;
+    string startDate = TempData["Start"] as string;
+    string endDate = TempData["end"] as string;
+
+
+}
+<!-- Custom bootstrap css for this website-->
+<link rel="stylesheet" href="~/Template/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/Template/vendor/datatables/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/Scripts/datetimexdsoft/build/jquery.datetimepicker.min.css">
+
+<script src="~/Template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="~/Template/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="~//Scripts/datetimexdsoft/build/jquery.datetimepicker.full.min.js"></script>
+
+<!-- Data Table javascript-->
+<div class="loading"></div>
+<div class="bread-Box">
+    <div class="container-fluid">
+        <div class="bread-Bar row">
+            <div class="bread-list col-12">
+                <div class="bread-content">
+                    <h2>My Attendance</h2>
+                    <ul>
+                        <li>
+                            <a href="dashboard.html">Dashboard</a>
+                            <span class="bread-span"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                        </li>
+                        <li class="active">
+                            <a href="javascript:void(0);">My Attendance</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-md-3">
+        <input id="start" name="start" class="form-control datapiker" placeholder="Start" value="@startDate" />
+
+    </div>
+    <div class="col-md-3">
+
+        <input class="form-control datapiker" id="end" name="end" placeholder="End" value="@endDate" />
+    </div>
+
+    <div class="col-md-3">
+
+        <input type="submit" id="Btnsearch" value="Search" class="btn btn-primary" />
+    </div>
+</div>
+<div class="myattendance-Part table-Box" id="attandance">
+    <div class="container-fluid">
+        <div class="table-Bar row">
+            <div class="table-list col-12">
+                <div class="table-head d-none">
+                    <h6>My Attendance:</h6>
+                    <a href="javascript:void(0);">My Attendance</a>
+                </div>
+                <div class="table-comman">
+                    <div class="table-responsive">
+                        <table class="table-data table table-bordered" id="AttandanceTable" width="100%" cellspacing="0">
+
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>Coming Time</th>
+                                    <th>Leave Time</th>
+                                    <th>Late Time</th>
+                                    <th>Working Hours</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="myattendance-Part table-Box" id="attandance1">
+    <div class="container-fluid">
+        <div class="table-Bar row">
+            <div class="table-list col-12">
+                <div class="table-head d-none">
+                    <h6>My Attendance:</h6>
+                    <a href="javascript:void(0);">My Attendance</a>
+                </div>
+                <div class="table-comman">
+                    <div class="table-responsive">
+                        <table class="table-data table table-bordered" id="AttandanceTable1" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>Coming Time</th>
+                                    <th>Leave Time</th>
+                                    <th>Late Time</th>
+                                    <th>Working Hours</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+       $('.loading').hide();
+    $(function () {
+        $(".datapiker").datetimepicker({
+            format: 'm/d/Y'
+        });
+    });
+
+</script>
+<script>
+
+     var data;
+    data =@Html.Raw(Json.Encode(Model));
+        $('.loading').show();
+    SetUserAttandance(data);
+
+    function SetUserAttandance(data) {
+            $('.loading').hide();
+        $("#attandance1").show();
+        $("#attandance").hide();
+          var data = data;
+        table = $('#AttandanceTable1').dataTable({
+            processing: true,
+            paging: true,
+            sort: true,
+            searching: true,
+            lengthMenu: [[5, 10, 25, 50], [5, 10, 25, 50]],
+            //scrollY: 200,
+            data: data,
+            bDestroy: true,
+            columns: [
+              { "data": "ID", "autoWidth": true, "visible": false },
+                { "data": "EmpName", "autoWidth": true },
+                   { "data": "dateofday", "autoWidth": true
+                },
+                { "data": "comingtime", "autoWidth": true
+                },
+                { "data": "leavetime", "autoWidth": true
+                },
+                { "data": "LateTime", "autoWidth": true,"render":function (data, type, row) {
+                                    var date ="<span style='color:red;font-size:14px;'>"+ data+"</span>";
+                                    return date;
+                } },
+                { "data": "WorkingHours", "autoWidth": true },
+
+                {
+                    "data": "AttandanceStatus", "autoWidth": true,"render":
+                                    function (data, type, row) {
+
+                              if (row.AttandanceStatus == "A") {
+                                    var Att = "<span style='color:red;font-size:14px;'>" +data + "</span>";
+                                    return Att;
+                                }
+                                else if (row.AttandanceStatus == "P") {
+                                    var Att = "<span style='color:green;font-size:14px;'>" + data + "</span>";
+                                    return Att;
+                                }
+                                else if (row.AttandanceStatus == "L") {
+                                    var Att = "<span style='color:red;font-size:14px;'>" + data + "</span>";
+                                    return Att;
+                                }
+
+                                    }
+
+                }
+
+
+            ]
+        });
+    }
+
+    function SetUserAttandanceTable(data) {
+        var data = data;
+         $('.loading').hide();
+           $("#attandance1").hide();
+            $("#attandance").show();
+        table = $('#AttandanceTable').dataTable({
+            processing: true,
+            paging: true,
+            sort: true,
+            searching: true,
+            lengthMenu: [[5, 10, 25, 50], [5, 10, 25, 50]],
+            //scrollY: 200,
+            data: data,
+            bDestroy: true,
+            columns: [
+              { "data": "ID", "autoWidth": true, "visible": false },
+                { "data": "EmpName", "autoWidth": true },
+                   { "data": "dateofday", "autoWidth": true
+                },
+                { "data": "comingtime", "autoWidth": true
+                },
+                { "data": "leavetime", "autoWidth": true
+                },
+                { "data": "LateTime", "autoWidth": true,"render":function (data, type, row) {
+                                    var date ="<span style='color:red;font-size:14px;'>"+ data+"</span>";
+                                    return date;
+                } },
+                { "data": "WorkingHours", "autoWidth": true },
+
+                {
+                    "data": "AttandanceStatus", "autoWidth": true,"render":
+                                    function (data, type, row) {
+
+                              if (row.AttandanceStatus == "A") {
+                                    var Att = "<span style='color:red;font-size:14px;'>" +data + "</span>";
+                                    return Att;
+                                }
+                                else if (row.AttandanceStatus == "P") {
+                                    var Att = "<span style='color:green;font-size:14px;'>" + data + "</span>";
+                                    return Att;
+                                }
+                                else if (row.AttandanceStatus == "L") {
+                                    var Att = "<span style='color:red;font-size:14px;'>" + data + "</span>";
+                                    return Att;
+                                }
+
+                                    }
+
+                }
+
+
+            ]
+        });
+    }
+
+      $('#Btnsearch').click(function () {
+           var token=sessionStorage.getItem('access_token')
+            var StartDate =$('#start').val();
+            var EndDate = $('#end').val();
+
+          if (StartDate == '') {
+                $("#start").focus();
+                $("#start").after('<span class="error-div row">*Please Enter Start Date!</span>');
+                return false;
+            }
+                else if (EndDate == '') {
+                $("#end").focus();
+                $("#end").after('<span class="error-div row">*Please Enter End Date!</span>');
+                return false;
+            }
+            else if (StartDate != '') {
+
+                var UserFilterData = {
+                    "start": StartDate,
+                    "end": EndDate
+              };
+                $.ajax({
+                    url: '/api/EmployeeAttandance/UserAttandanceByDate',
+                    type: 'POST',
+                    contentType: "application/x-www-form-urlencoded",
+                    dataType: 'json',
+                    data: UserFilterData,
+                           beforeSend: function () {
+                        $('.loading').show();
+                    },
+               
+                    headers: {
+                             'Authorization': "bearer  " +token
+                      },
+
+                    success: function (result, textStatus, xhr) {
+                        console.log(result);
+                        if (result.Status == '1') {
+                            SetUserAttandanceTable(result.result);
+                        }
+
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log('Error in Operation');
+                    }
+                });
+            }
+          });
+
+
+
+
+</script>
+
+
+
+

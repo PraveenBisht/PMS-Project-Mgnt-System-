@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2ed657af25e5446b94df221c3db03b54" Name="Diagram1">
+        <EntityTypeShape EntityType="PMSModel.AspNetRole" Width="1.5" PointX="8.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.AspNetUserClaim" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.AspNetUserLogin" Width="1.5" PointX="13.25" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.AspNetUser" Width="1.5" PointX="11" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.AssignTask" Width="1.5" PointX="5.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.Attendance" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.ChangeIssueDetail" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.ChatMessageDetail" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.ChatPrivateMessageDetail" Width="1.5" PointX="11.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.ChatPrivateMessageMaster" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.ChatUserDetail" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.Expense_tbl" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.Filedetail" Width="1.5" PointX="4.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.Innovation_Management_User" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.Leave_Management_Approval_Matrix" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.Leave_Management_Leave_Allowance" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.Leave_Management_Leave_Taken" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.Leave_Management_Leave_Type" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.Notification" Width="1.5" PointX="6.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.Tag_tbl" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.tbl_Task" Width="1.5" PointX="8.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMSModel.UserRole" Width="1.5" PointX="10.75" PointY="12.75" IsExpanded="true" />
+        <AssociationConnector Association="PMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="PMSModel.FK_Expense_tbl_Tag_tbl" ManuallyRouted="false" />
+        <AssociationConnector Association="PMSModel.FK_Leave_Management_Approval_Matrix_Innovation_Management_User2" ManuallyRouted="false" />
+        <AssociationConnector Association="PMSModel.FK_Leave_Management_Approval_Matrix_Innovation_Management_User3" ManuallyRouted="false" />
+        <AssociationConnector Association="PMSModel.FK_Leave_Management_Leave_Allowance_Innovation_Management_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PMSModel.FK_Leave_Management_Leave_Taken_Innovation_Management_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PMSModel.FK_Leave_Management_Leave_Taken_Innovation_Management_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="PMSModel.FK_Leave_Management_Leave_Allowance_Leave_Management_Leave_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="PMSModel.FK_Leave_Management_Leave_Taken_Leave_Management_Leave_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="PMSModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PMSModel.C__MigrationHistory" Width="1.5" PointX="14.375" PointY="9.75" />
+        <EntityTypeShape EntityType="PMSModel.Department" Width="1.5" PointX="15.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PMSModel.ProjectMaster" Width="1.5" PointX="13.375" PointY="4.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

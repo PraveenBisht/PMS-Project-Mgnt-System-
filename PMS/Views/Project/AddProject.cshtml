@@ -1,0 +1,103 @@
+﻿@using PMS.Models
+@model ProjectViewModel
+@{
+    ViewBag.Title = "AddProject";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+
+
+<script>
+    if ('@TempData["ProjectMessage"]' != '') {
+        alert('@TempData["ProjectMessage"]');
+    }
+</script>
+<div class="addpro-head title-Box">
+    <div class="container-fluid">
+        <div class="title-Bar row">
+            <div class="title-list col-12">
+                <div class="title-txt">
+                    <div class="title-txt-left">
+                        <label for="">Add Project</label>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-lg-6">
+        @using (Html.BeginForm("AddProject", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="panel panel-default">
+
+                <div class="panel-body">
+
+                    <div class="form-group">
+                        <label>Project Name</label>
+                        @Html.TextAreaFor(model => model.ProjectName, new { @class = "form-control", @maxlength = "90" })
+                        @Html.ValidationMessageFor(model => model.ProjectName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Project Description</label>
+                        @Html.TextAreaFor(model => model.Projectdescription, new { @class = "form-control", @maxlength = "90" })
+                        @Html.ValidationMessageFor(model => model.Projectdescription, "", new { @class = "text-danger" })
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-offset-0 col-md-12">
+                                <input type="submit" onclick="return ValidateData();" value="Save Details" class="btn btn-success" />
+
+
+
+                                @Html.ActionLink("All Projects", "ProjectList", "Project", null, new { @class = "btn btn-info" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script type="text/javascript">
+
+        function CheckProjectCode() {
+            var url = '@Url.Content("~/")' + "Project/CheckProjectCodeExists";
+            var source = "#ProjectCode";
+            $.post(url, { ProjectCode: $(source).val() }, function (data) {
+                if (data) {
+                    $(source).val('');
+                    alert("ProjectCode Already Used try unique one!");
+                }
+                else {
+
+                }
+            });
+        }
+
+        function CheckProjectName() {
+            var url = '@Url.Content("~/")' + "Project/CheckProjectNameExists";
+            var source = "#ProjectName";
+            $.post(url, { ProjectName: $(source).val() }, function (data) {
+                if (data) {
+                    $(source).val('');
+                    alert("ProjectName Already Used try unique one!");
+                }
+                else {
+
+                }
+            });
+        }
+
+</script>
+
+

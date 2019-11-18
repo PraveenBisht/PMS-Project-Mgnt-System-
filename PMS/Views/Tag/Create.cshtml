@@ -1,0 +1,32 @@
+﻿@model PMS.Models.Tag.TagModel
+
+@{
+    ViewBag.Title = "Create New Tag";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+
+}
+
+<h2>Add Tag </h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <div class="form-group">
+        @Html.LabelFor(model => model.TagDescription)
+        @Html.EditorFor(model => model.TagDescription)
+        @Html.ValidationMessageFor(model => model.TagDescription)
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-offset-0 col-md-12">
+                <input type="submit" class="btn btn-primary btn-round waves-effect waves-light" value="Create" />
+
+                @Html.ActionLink("All Tag", "Index", "Tag", null, new { @class = "btn btn-info" })
+            </div>
+        </div>
+    </div>
+
+
+
+}
+
+

@@ -1,0 +1,31 @@
+﻿@model PMS.Models.Tag.TagModel
+
+@{
+    ViewBag.Title = "Delete Tag";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <div class="display-label">Tag Description</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TagDescription)
+    </div>
+</fieldset>
+
+
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-offset-0 col-md-12">
+                <input type="submit" class="btn btn-danger btn-round waves-effect waves-light" value="Delete" />
+
+                @Html.ActionLink("All Tag", "Index", "Tag", null, new { @class = "btn btn-info" })
+            </div>
+        </div>
+    </div>
+}
