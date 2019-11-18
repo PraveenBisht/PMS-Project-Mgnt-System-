@@ -1,0 +1,1662 @@
+
+USE [PMSDATA]
+GO
+/****** Object:  Table [dbo].[__MigrationHistory]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[__MigrationHistory](
+	[MigrationId] [nvarchar](150) NOT NULL,
+	[ContextKey] [nvarchar](300) NOT NULL,
+	[Model] [varbinary](max) NOT NULL,
+	[ProductVersion] [nvarchar](32) NOT NULL,
+ CONSTRAINT [PK___MigrationHistory1] PRIMARY KEY CLUSTERED 
+(
+	[MigrationId] ASC,
+	[ContextKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetRoles](
+	[Id] [nvarchar](128) NOT NULL,
+	[Name] [nvarchar](256) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetRoles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserClaims](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [nvarchar](128) NOT NULL,
+	[ClaimType] [nvarchar](max) NULL,
+	[ClaimValue] [nvarchar](max) NULL,
+ CONSTRAINT [PK_dbo.AspNetUserClaims] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserLogins](
+	[LoginProvider] [nvarchar](128) NOT NULL,
+	[ProviderKey] [nvarchar](128) NOT NULL,
+	[UserId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetUserLogins] PRIMARY KEY CLUSTERED 
+(
+	[LoginProvider] ASC,
+	[ProviderKey] ASC,
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserRoles](
+	[UserId] [nvarchar](128) NOT NULL,
+	[RoleId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetUserRoles] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC,
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUsers](
+	[Id] [nvarchar](128) NOT NULL,
+	[Email] [nvarchar](256) NULL,
+	[EmailConfirmed] [bit] NOT NULL,
+	[PasswordHash] [nvarchar](max) NULL,
+	[SecurityStamp] [nvarchar](max) NULL,
+	[PhoneNumber] [nvarchar](max) NULL,
+	[PhoneNumberConfirmed] [bit] NOT NULL,
+	[TwoFactorEnabled] [bit] NOT NULL,
+	[LockoutEndDateUtc] [datetime] NULL,
+	[LockoutEnabled] [bit] NOT NULL,
+	[AccessFailedCount] [int] NOT NULL,
+	[UserName] [nvarchar](256) NOT NULL,
+	[Discriminator] [nvarchar](128) NULL,
+	[Name] [varchar](100) NULL,
+	[DepartMentId] [int] NULL,
+	[Designation] [varchar](200) NULL,
+	[Address] [varchar](500) NULL,
+	[MobileNumber] [varchar](15) NULL,
+	[Qualification] [varchar](500) NULL,
+	[JoiningDate] [date] NULL,
+	[RegineDate] [date] NULL,
+	[ProfilePic] [varchar](100) NULL,
+	[Last_Online_Seen] [datetime] NULL,
+ CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AssignTask]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AssignTask](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[TaskId] [varchar](100) NULL,
+	[FromassignId] [varchar](500) NULL,
+	[ToAssignId] [varchar](100) NULL,
+	[Status] [int] NULL,
+	[Description] [varchar](800) NULL,
+	[CreatedOn] [datetime] NULL,
+ CONSTRAINT [PK_AssignTask] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Attendance]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Attendance](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[ComingTime] [datetime] NULL,
+	[DateOfDay] [datetime] NULL,
+	[LeaveTime] [datetime] NULL,
+	[EmployeeID] [varchar](50) NULL,
+ CONSTRAINT [PK_Attendance] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ChangeIssueDetails]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ChangeIssueDetails](
+	[EfollowId] [int] IDENTITY(1,1) NOT NULL,
+	[statusid] [int] NULL,
+	[Remark] [varchar](1000) NULL,
+	[Createdby] [varchar](100) NULL,
+	[CreatedOn] [datetime] NULL,
+	[issueid] [varchar](100) NULL,
+ CONSTRAINT [PK_ChangeIssueDetails] PRIMARY KEY CLUSTERED 
+(
+	[EfollowId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ChatMessageDetail]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ChatMessageDetail](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [nvarchar](100) NULL,
+	[Message] [nvarchar](max) NULL,
+	[EmailID] [nvarchar](50) NULL,
+	[CreatedDateTime] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ChatPrivateMessageDetails]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ChatPrivateMessageDetails](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MasterEmailID] [nvarchar](50) NOT NULL,
+	[ChatToEmailID] [nvarchar](50) NOT NULL,
+	[Message] [nvarchar](max) NULL,
+	[ChatDateTime] [datetime] NULL,
+	[IsRead] [bit] NULL,
+	[IsDeleted] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ChatPrivateMessageMaster]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ChatPrivateMessageMaster](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [nvarchar](100) NULL,
+	[EmailID] [nvarchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ChatUserDetail]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ChatUserDetail](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[ConnectionId] [nvarchar](100) NULL,
+	[UserName] [nvarchar](100) NULL,
+	[EmailID] [nvarchar](50) NULL,
+	[UserId] [nvarchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Department]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Department](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[DepartmentName] [varchar](200) NULL,
+ CONSTRAINT [PK_Department] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Expense_tbl]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Expense_tbl](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[ExpenseDate] [smalldatetime] NULL,
+	[Description] [varchar](50) NULL,
+	[Amount] [money] NULL,
+	[TagID] [int] NULL,
+	[UserID] [varchar](80) NULL,
+ CONSTRAINT [PK_Expense_tbl] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Filedetails]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Filedetails](
+	[imageid] [int] IDENTITY(1,1) NOT NULL,
+	[TaskId] [varchar](500) NULL,
+	[Extension] [varchar](500) NULL,
+	[imageName] [varchar](100) NULL,
+	[Status] [int] NULL,
+ CONSTRAINT [PK_IssueScreenShotDetails] PRIMARY KEY CLUSTERED 
+(
+	[imageid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Innovation_Management_User]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Innovation_Management_User](
+	[pk_user_id] [nvarchar](128) NOT NULL,
+	[user_firstname] [nvarchar](255) NULL,
+	[user_lastname] [nvarchar](255) NULL,
+	[user_name] [nvarchar](50) NULL,
+	[user_email] [nvarchar](50) NULL,
+	[user_picture] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Innovation_Management_User] PRIMARY KEY CLUSTERED 
+(
+	[pk_user_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Leave_Management_Approval_Matrix]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Leave_Management_Approval_Matrix](
+	[pk_approval_id] [int] IDENTITY(1,1) NOT NULL,
+	[fk_requestor_id] [nvarchar](128) NULL,
+	[fk_approver_id] [nvarchar](128) NULL,
+ CONSTRAINT [PK_Leave_Management_Approval_Matrix] PRIMARY KEY CLUSTERED 
+(
+	[pk_approval_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Leave_Management_Leave_Allowance]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Leave_Management_Leave_Allowance](
+	[pk_leave_allowance_id] [int] IDENTITY(1,1) NOT NULL,
+	[fk_user_id] [nvarchar](128) NULL,
+	[fk_leave_type_id] [int] NULL,
+	[allowance_year] [nvarchar](50) NULL,
+	[allowance_entitlement] [int] NULL,
+	[allowance_taken] [float] NULL,
+ CONSTRAINT [PK_Leave_Management_Leave_Allowance] PRIMARY KEY CLUSTERED 
+(
+	[pk_leave_allowance_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Leave_Management_Leave_Taken]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Leave_Management_Leave_Taken](
+	[pk_leave_taken_id] [int] IDENTITY(1,1) NOT NULL,
+	[fk_user_id] [nvarchar](128) NULL,
+	[fk_leave_type] [int] NULL,
+	[leave_days] [date] NULL,
+	[LeaveDateFrom] [datetime] NULL,
+	[LeaveDateTo] [datetime] NULL,
+	[TotalLeave] [int] NULL,
+	[is_halfday] [bit] NULL,
+	[is_afternoon] [bit] NULL,
+	[leave_status] [int] NULL,
+	[fk_approved_user_id] [nvarchar](128) NULL,
+	[Remark] [varchar](800) NULL,
+ CONSTRAINT [PK_Leave_Management_Leave_Taken] PRIMARY KEY CLUSTERED 
+(
+	[pk_leave_taken_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Leave_Management_Leave_Type]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Leave_Management_Leave_Type](
+	[pk_leave_type_id] [int] IDENTITY(1,1) NOT NULL,
+	[leave_type] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Leave_Management_Leave_Type] PRIMARY KEY CLUSTERED 
+(
+	[pk_leave_type_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Notification]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Notification](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Type] [int] NULL,
+	[Details] [nvarchar](500) NULL,
+	[Title] [nvarchar](50) NULL,
+	[DetailsURL] [nvarchar](500) NULL,
+	[SentTo] [nvarchar](50) NULL,
+	[Date] [date] NULL,
+	[IsRead] [bit] NULL,
+	[IsDeleted] [bit] NULL,
+	[IsReminder] [bit] NULL,
+	[Code] [nvarchar](100) NULL,
+	[NotificationType] [nvarchar](100) NULL,
+ CONSTRAINT [PK_Notification] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ProjectMaster]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProjectMaster](
+	[ProjectID] [int] IDENTITY(1,1) NOT NULL,
+	[ProjectName] [varchar](100) NULL,
+	[Projectdescription] [varchar](500) NULL,
+	[startingdate] [date] NULL,
+	[status] [bit] NULL,
+	[createdDate] [date] NULL,
+ CONSTRAINT [PK_ProjectMaster] PRIMARY KEY CLUSTERED 
+(
+	[ProjectID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Tag_tbl]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tag_tbl](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Description] [varchar](50) NULL,
+ CONSTRAINT [PK_Tag_tbl] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Task]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Task](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[TaskId] [varchar](500) NOT NULL,
+	[Status] [int] NULL,
+	[Description] [varchar](1000) NULL,
+	[Createdon] [datetime] NULL,
+	[Createdby] [varchar](100) NULL,
+	[CreatedTo] [varchar](100) NULL,
+	[SummaryName] [varchar](500) NULL,
+	[projectid] [int] NULL,
+	[logintype] [varchar](50) NULL,
+	[devicetype] [varchar](100) NULL,
+ CONSTRAINT [PK_Task_1] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UserRole]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserRole](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[UserID] [varchar](50) NULL,
+	[RoleId] [varchar](50) NULL,
+ CONSTRAINT [PK_UserRole] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'05d9e6f5-f63b-4375-b08a-9966a652490a', N'Manager')
+INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'0ed7b6b0-3ba6-441b-871b-5da8eaf4b9bc', N'User')
+INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'3fc8517d-8b6c-496c-88c2-713e3c961155', N'Admin')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'2fdeb06d-d6db-4098-9604-f2e2ead9734a', N'05d9e6f5-f63b-4375-b08a-9966a652490a')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'8024262d-0e83-4b15-a170-dd490e3205bd', N'0ed7b6b0-3ba6-441b-871b-5da8eaf4b9bc')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'a412a892-da5e-43b7-bea9-5ca054163d00', N'0ed7b6b0-3ba6-441b-871b-5da8eaf4b9bc')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'b15974e6-ebec-4485-87aa-5794d9381751', N'3fc8517d-8b6c-496c-88c2-713e3c961155')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'c23019a2-5142-4ed7-9a65-8782f4d90d3d', N'0ed7b6b0-3ba6-441b-871b-5da8eaf4b9bc')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'c669ed90-b567-48f0-909a-fba491b95519', N'05d9e6f5-f63b-4375-b08a-9966a652490a')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'cf2e0013-2a9f-4623-ba2b-6231483a0aa0', N'0ed7b6b0-3ba6-441b-871b-5da8eaf4b9bc')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', N'0ed7b6b0-3ba6-441b-871b-5da8eaf4b9bc')
+INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName], [Discriminator], [Name], [DepartMentId], [Designation], [Address], [MobileNumber], [Qualification], [JoiningDate], [RegineDate], [ProfilePic], [Last_Online_Seen]) VALUES (N'2fdeb06d-d6db-4098-9604-f2e2ead9734a', N'praveenbisht2@yahoo.co.in', 0, N'AFqDjbJCl8VkIGzFKtwER8aRiHqOalApIrXxGJv8EBT/xrUg5QM4KOi+6433bFY7+Q==', N'725a61c8-27f1-4436-9f16-8ba36afe0b4c', NULL, 0, 0, NULL, 0, 0, N'praveenbisht2@yahoo.co.in', NULL, N'praveenbisht2', 1, N'Employee', N'delhi', N'9917744024', NULL, CAST(N'2019-11-08' AS Date), NULL, NULL, NULL)
+INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName], [Discriminator], [Name], [DepartMentId], [Designation], [Address], [MobileNumber], [Qualification], [JoiningDate], [RegineDate], [ProfilePic], [Last_Online_Seen]) VALUES (N'8024262d-0e83-4b15-a170-dd490e3205bd', N'workongit@gmail.com', 0, N'AAEluiSLMInHcng3QiruiaA7C6FAUXsSAwNBQK6boerBelR6ygkay+Xf0S6hJahBLQ==', N'64b7a438-bf33-4929-a26c-8fef74a59f97', NULL, 0, 0, NULL, 0, 0, N'workongit@gmail.com', NULL, N'Atul Rawat', 1, N'Employee', N'Ghitorni New Delhi', N'9654462759', NULL, CAST(N'2019-10-24' AS Date), NULL, NULL, NULL)
+INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName], [Discriminator], [Name], [DepartMentId], [Designation], [Address], [MobileNumber], [Qualification], [JoiningDate], [RegineDate], [ProfilePic], [Last_Online_Seen]) VALUES (N'a412a892-da5e-43b7-bea9-5ca054163d00', N'kaushik.kisna2788@gmail.com', 0, N'AJ8ktpu0z7/PLLhcWg+hsMELfduAixofbZ4qqSVmUqQlx2JU5PSRykjzXjMq/bPncQ==', N'a503e280-e6e6-4806-ba3f-a7a52f56a3e4', NULL, 0, 0, NULL, 0, 0, N'kaushik.kisna2788@gmail.com', NULL, N'Kaushik pokal', 1, N'Employee', N'Surat', N'7818010016', NULL, CAST(N'2019-10-24' AS Date), NULL, NULL, CAST(N'2019-10-24T10:00:15.607' AS DateTime))
+INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName], [Discriminator], [Name], [DepartMentId], [Designation], [Address], [MobileNumber], [Qualification], [JoiningDate], [RegineDate], [ProfilePic], [Last_Online_Seen]) VALUES (N'b15974e6-ebec-4485-87aa-5794d9381751', N'admin@gmail.com', 0, N'AMUZOUsBj+7PxnvV4CSBYEZrIiRe6D4jBKyq77QSvdZMWeqB1EWtM7udZ2YefdL/ww==', N'6b232bbb-6223-45d6-933f-c18491ded8fc', NULL, 0, 0, NULL, 0, 0, N'admin@gmail.com', NULL, N'Admin', 1, N'Admin', N'hi', N'7416153425', N'NA', CAST(N'2019-10-23' AS Date), NULL, NULL, CAST(N'2019-11-01T10:39:43.160' AS DateTime))
+INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName], [Discriminator], [Name], [DepartMentId], [Designation], [Address], [MobileNumber], [Qualification], [JoiningDate], [RegineDate], [ProfilePic], [Last_Online_Seen]) VALUES (N'c23019a2-5142-4ed7-9a65-8782f4d90d3d', N'mathewtherijo004@gmail.com', 0, N'AK34hbWKnJOVi2/SLLDdP9TsXXwGzzZOS2eAf6RvQyrbgbIa7QsPdl6EZZ8JyFdX7g==', N'aa72c13e-540b-42c2-a56f-c29fcc9e7718', NULL, 0, 0, NULL, 0, 0, N'mathewtherijo004@gmail.com', NULL, N'RIJO MATHEW', 1, N'Employee', N'New Delhi', N'9818235890', NULL, CAST(N'2019-10-24' AS Date), NULL, NULL, CAST(N'2019-10-24T10:15:08.800' AS DateTime))
+INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName], [Discriminator], [Name], [DepartMentId], [Designation], [Address], [MobileNumber], [Qualification], [JoiningDate], [RegineDate], [ProfilePic], [Last_Online_Seen]) VALUES (N'c669ed90-b567-48f0-909a-fba491b95519', N'sitaram@anandtechs.com', 0, N'AOXR1/Dmf8q040XSuBei5v40vMNgQyol/4zqAcfx29Zzj3x0IR4agrEQoOQvbnzEEQ==', N'69ebfe6a-c2e4-4884-84b1-fbf54309f73f', NULL, 0, 0, NULL, 0, 0, N'sitaram@anandtechs.com', NULL, N'Sitaram Lodhi', 1, N'Employee', N'Damoh mp', N'7974272853', NULL, CAST(N'2019-10-23' AS Date), NULL, NULL, CAST(N'2019-10-23T18:28:21.050' AS DateTime))
+INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName], [Discriminator], [Name], [DepartMentId], [Designation], [Address], [MobileNumber], [Qualification], [JoiningDate], [RegineDate], [ProfilePic], [Last_Online_Seen]) VALUES (N'cf2e0013-2a9f-4623-ba2b-6231483a0aa0', N'dhorajiyamohil143@gmail.com', 0, N'AJVeWVd+blkXGQJU+oWcAxdEpENQ0FTrrhlpjXEyJxvqMMkizD0nHgGX+QdCeC9h+Q==', N'4faa0a1f-3458-4a99-aafc-715d7e64e0b0', NULL, 0, 0, NULL, 0, 0, N'dhorajiyamohil143@gmail.com', NULL, N'Mohil Dhorajiya', 1, N'Employee', NULL, NULL, NULL, CAST(N'2019-10-24' AS Date), NULL, NULL, CAST(N'2019-10-24T10:14:28.347' AS DateTime))
+INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName], [Discriminator], [Name], [DepartMentId], [Designation], [Address], [MobileNumber], [Qualification], [JoiningDate], [RegineDate], [ProfilePic], [Last_Online_Seen]) VALUES (N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', N'praveenbisht1@yahoo.co.in', 0, N'AJ0fsFQuzVLe17I0pGEI/7YwA1ZaqBJFRJ+Ukik27Ng/LfSW9qsFzQjR36+HzCDjvw==', N'f8c7aaa0-8bb8-448a-8553-81e40dbd9110', NULL, 0, 0, NULL, 0, 0, N'praveenbisht1@yahoo.co.in', NULL, N'Praveen Bisht', 1, N'Employee', N'Ghitoni, Delhi.', N'9917744024', NULL, CAST(N'2019-10-24' AS Date), NULL, NULL, CAST(N'2019-11-02T16:41:18.557' AS DateTime))
+SET IDENTITY_INSERT [dbo].[Attendance] ON 
+
+INSERT [dbo].[Attendance] ([ID], [ComingTime], [DateOfDay], [LeaveTime], [EmployeeID]) VALUES (1, NULL, CAST(N'2019-10-23T00:00:00.000' AS DateTime), NULL, N'b15974e6-ebec-4485-87aa-5794d9381751')
+INSERT [dbo].[Attendance] ([ID], [ComingTime], [DateOfDay], [LeaveTime], [EmployeeID]) VALUES (2, NULL, CAST(N'2019-10-23T00:00:00.000' AS DateTime), NULL, N'c669ed90-b567-48f0-909a-fba491b95519')
+INSERT [dbo].[Attendance] ([ID], [ComingTime], [DateOfDay], [LeaveTime], [EmployeeID]) VALUES (3, CAST(N'2019-10-24T09:53:30.793' AS DateTime), CAST(N'2019-10-24T00:00:00.000' AS DateTime), NULL, N'e192c539-9b6a-47a4-aa62-55fe9bdd0511')
+INSERT [dbo].[Attendance] ([ID], [ComingTime], [DateOfDay], [LeaveTime], [EmployeeID]) VALUES (4, CAST(N'2019-10-24T09:56:26.380' AS DateTime), CAST(N'2019-10-24T00:00:00.000' AS DateTime), NULL, N'a412a892-da5e-43b7-bea9-5ca054163d00')
+INSERT [dbo].[Attendance] ([ID], [ComingTime], [DateOfDay], [LeaveTime], [EmployeeID]) VALUES (5, CAST(N'2019-10-24T09:58:23.063' AS DateTime), CAST(N'2019-10-24T00:00:00.000' AS DateTime), NULL, N'c669ed90-b567-48f0-909a-fba491b95519')
+INSERT [dbo].[Attendance] ([ID], [ComingTime], [DateOfDay], [LeaveTime], [EmployeeID]) VALUES (6, CAST(N'2019-10-24T10:10:28.107' AS DateTime), CAST(N'2019-10-24T00:00:00.000' AS DateTime), NULL, N'cf2e0013-2a9f-4623-ba2b-6231483a0aa0')
+INSERT [dbo].[Attendance] ([ID], [ComingTime], [DateOfDay], [LeaveTime], [EmployeeID]) VALUES (7, CAST(N'2019-10-24T10:10:50.200' AS DateTime), CAST(N'2019-10-24T00:00:00.000' AS DateTime), NULL, N'c23019a2-5142-4ed7-9a65-8782f4d90d3d')
+INSERT [dbo].[Attendance] ([ID], [ComingTime], [DateOfDay], [LeaveTime], [EmployeeID]) VALUES (8, CAST(N'2019-10-24T10:11:00.000' AS DateTime), CAST(N'2019-10-24T00:00:00.000' AS DateTime), NULL, N'8024262d-0e83-4b15-a170-dd490e3205bd')
+INSERT [dbo].[Attendance] ([ID], [ComingTime], [DateOfDay], [LeaveTime], [EmployeeID]) VALUES (9, CAST(N'2019-10-25T10:24:45.583' AS DateTime), CAST(N'2019-10-25T00:00:00.000' AS DateTime), NULL, N'e192c539-9b6a-47a4-aa62-55fe9bdd0511')
+SET IDENTITY_INSERT [dbo].[Attendance] OFF
+SET IDENTITY_INSERT [dbo].[ChatPrivateMessageDetails] ON 
+
+INSERT [dbo].[ChatPrivateMessageDetails] ([ID], [MasterEmailID], [ChatToEmailID], [Message], [ChatDateTime], [IsRead], [IsDeleted]) VALUES (1, N'praveenbisht1@yahoo.co.in', N'kaushik.kisna2788@gmail.com', N'hello kaushik.. 
+How r u?', CAST(N'2019-10-24T09:55:17.243' AS DateTime), 1, NULL)
+INSERT [dbo].[ChatPrivateMessageDetails] ([ID], [MasterEmailID], [ChatToEmailID], [Message], [ChatDateTime], [IsRead], [IsDeleted]) VALUES (2, N'sitaram@anandtechs.com', N'praveenbisht1@yahoo.co.in', N'hi', CAST(N'2019-10-24T09:59:11.377' AS DateTime), 1, NULL)
+INSERT [dbo].[ChatPrivateMessageDetails] ([ID], [MasterEmailID], [ChatToEmailID], [Message], [ChatDateTime], [IsRead], [IsDeleted]) VALUES (3, N'sitaram@anandtechs.com', N'praveenbisht1@yahoo.co.in', N'praveen', CAST(N'2019-10-24T09:59:16.533' AS DateTime), 1, NULL)
+INSERT [dbo].[ChatPrivateMessageDetails] ([ID], [MasterEmailID], [ChatToEmailID], [Message], [ChatDateTime], [IsRead], [IsDeleted]) VALUES (4, N'sitaram@anandtechs.com', N'praveenbisht1@yahoo.co.in', N'hi praveen', CAST(N'2019-10-24T10:00:52.107' AS DateTime), 0, NULL)
+INSERT [dbo].[ChatPrivateMessageDetails] ([ID], [MasterEmailID], [ChatToEmailID], [Message], [ChatDateTime], [IsRead], [IsDeleted]) VALUES (5, N'mathewtherijo004@gmail.com', N'workongit@gmail.com', N'hi', CAST(N'2019-10-24T10:12:57.210' AS DateTime), 1, NULL)
+INSERT [dbo].[ChatPrivateMessageDetails] ([ID], [MasterEmailID], [ChatToEmailID], [Message], [ChatDateTime], [IsRead], [IsDeleted]) VALUES (6, N'workongit@gmail.com', N'mathewtherijo004@gmail.com', N'hi', CAST(N'2019-10-24T10:13:01.977' AS DateTime), 1, NULL)
+INSERT [dbo].[ChatPrivateMessageDetails] ([ID], [MasterEmailID], [ChatToEmailID], [Message], [ChatDateTime], [IsRead], [IsDeleted]) VALUES (7, N'workongit@gmail.com', N'mathewtherijo004@gmail.com', N'how are u', CAST(N'2019-10-24T10:13:07.320' AS DateTime), 1, NULL)
+INSERT [dbo].[ChatPrivateMessageDetails] ([ID], [MasterEmailID], [ChatToEmailID], [Message], [ChatDateTime], [IsRead], [IsDeleted]) VALUES (8, N'mathewtherijo004@gmail.com', N'workongit@gmail.com', N'great', CAST(N'2019-10-24T10:13:27.927' AS DateTime), 1, NULL)
+INSERT [dbo].[ChatPrivateMessageDetails] ([ID], [MasterEmailID], [ChatToEmailID], [Message], [ChatDateTime], [IsRead], [IsDeleted]) VALUES (9, N'mathewtherijo004@gmail.com', N'workongit@gmail.com', N'how are you', CAST(N'2019-10-24T10:13:35.490' AS DateTime), 1, NULL)
+INSERT [dbo].[ChatPrivateMessageDetails] ([ID], [MasterEmailID], [ChatToEmailID], [Message], [ChatDateTime], [IsRead], [IsDeleted]) VALUES (10, N'workongit@gmail.com', N'mathewtherijo004@gmail.com', N'so what are u doing?', CAST(N'2019-10-24T10:13:37.223' AS DateTime), 1, NULL)
+INSERT [dbo].[ChatPrivateMessageDetails] ([ID], [MasterEmailID], [ChatToEmailID], [Message], [ChatDateTime], [IsRead], [IsDeleted]) VALUES (11, N'workongit@gmail.com', N'mathewtherijo004@gmail.com', N'I''m fine', CAST(N'2019-10-24T10:13:40.473' AS DateTime), 1, NULL)
+INSERT [dbo].[ChatPrivateMessageDetails] ([ID], [MasterEmailID], [ChatToEmailID], [Message], [ChatDateTime], [IsRead], [IsDeleted]) VALUES (12, N'mathewtherijo004@gmail.com', N'workongit@gmail.com', N'nothing just', CAST(N'2019-10-24T10:14:05.787' AS DateTime), 1, NULL)
+INSERT [dbo].[ChatPrivateMessageDetails] ([ID], [MasterEmailID], [ChatToEmailID], [Message], [ChatDateTime], [IsRead], [IsDeleted]) VALUES (13, N'mathewtherijo004@gmail.com', N'workongit@gmail.com', N'messaging', CAST(N'2019-10-24T10:14:11.990' AS DateTime), 1, NULL)
+SET IDENTITY_INSERT [dbo].[ChatPrivateMessageDetails] OFF
+SET IDENTITY_INSERT [dbo].[ChatPrivateMessageMaster] ON 
+
+INSERT [dbo].[ChatPrivateMessageMaster] ([ID], [UserName], [EmailID]) VALUES (1, N'Praveen Bisht', N'praveenbisht1@yahoo.co.in')
+INSERT [dbo].[ChatPrivateMessageMaster] ([ID], [UserName], [EmailID]) VALUES (2, N'Sitaram Lodhi', N'sitaram@anandtechs.com')
+INSERT [dbo].[ChatPrivateMessageMaster] ([ID], [UserName], [EmailID]) VALUES (3, N'RIJO MATHEW', N'mathewtherijo004@gmail.com')
+INSERT [dbo].[ChatPrivateMessageMaster] ([ID], [UserName], [EmailID]) VALUES (4, N'Atul Rawat', N'workongit@gmail.com')
+SET IDENTITY_INSERT [dbo].[ChatPrivateMessageMaster] OFF
+SET IDENTITY_INSERT [dbo].[ChatUserDetail] ON 
+
+INSERT [dbo].[ChatUserDetail] ([ID], [ConnectionId], [UserName], [EmailID], [UserId]) VALUES (14, N'f87e0230-6fb2-4a56-b0bb-da671f6600f1', N'Sitaram Lodhi', N'sitaram@anandtechs.com', NULL)
+INSERT [dbo].[ChatUserDetail] ([ID], [ConnectionId], [UserName], [EmailID], [UserId]) VALUES (21, N'7d253a74-cbe6-4452-9def-2416dfbfbc96', N'Atul Rawat', N'workongit@gmail.com', NULL)
+INSERT [dbo].[ChatUserDetail] ([ID], [ConnectionId], [UserName], [EmailID], [UserId]) VALUES (43, N'9dd2db54-6c5b-4975-ad91-59dda3617633', N'Mohil Dhorajiya', N'dhorajiyamohil143@gmail.com', NULL)
+INSERT [dbo].[ChatUserDetail] ([ID], [ConnectionId], [UserName], [EmailID], [UserId]) VALUES (494, N'752832d4-9a69-4947-85b4-e0f472fe3d54', N'Praveen Bisht', N'praveenbisht1@yahoo.co.in', NULL)
+SET IDENTITY_INSERT [dbo].[ChatUserDetail] OFF
+SET IDENTITY_INSERT [dbo].[Department] ON 
+
+INSERT [dbo].[Department] ([Id], [DepartmentName]) VALUES (1, N'IT')
+INSERT [dbo].[Department] ([Id], [DepartmentName]) VALUES (2, N'HR')
+INSERT [dbo].[Department] ([Id], [DepartmentName]) VALUES (3, N'Administrator')
+INSERT [dbo].[Department] ([Id], [DepartmentName]) VALUES (4, N'Sales')
+INSERT [dbo].[Department] ([Id], [DepartmentName]) VALUES (5, N'Marketing')
+SET IDENTITY_INSERT [dbo].[Department] OFF
+INSERT [dbo].[Innovation_Management_User] ([pk_user_id], [user_firstname], [user_lastname], [user_name], [user_email], [user_picture]) VALUES (N'2fdeb06d-d6db-4098-9604-f2e2ead9734a', N'praveenbisht2', NULL, NULL, N'praveenbisht2@yahoo.co.in', NULL)
+INSERT [dbo].[Innovation_Management_User] ([pk_user_id], [user_firstname], [user_lastname], [user_name], [user_email], [user_picture]) VALUES (N'8024262d-0e83-4b15-a170-dd490e3205bd', N'Atul Rawat', NULL, NULL, N'workongit@gmail.com', NULL)
+INSERT [dbo].[Innovation_Management_User] ([pk_user_id], [user_firstname], [user_lastname], [user_name], [user_email], [user_picture]) VALUES (N'a412a892-da5e-43b7-bea9-5ca054163d00', N'Kaushik pokal', NULL, NULL, N'kaushik.kisna2788@gmail.com', NULL)
+INSERT [dbo].[Innovation_Management_User] ([pk_user_id], [user_firstname], [user_lastname], [user_name], [user_email], [user_picture]) VALUES (N'b15974e6-ebec-4485-87aa-5794d9381751', N'Admin', NULL, NULL, N'admin@gmail.com', NULL)
+INSERT [dbo].[Innovation_Management_User] ([pk_user_id], [user_firstname], [user_lastname], [user_name], [user_email], [user_picture]) VALUES (N'c23019a2-5142-4ed7-9a65-8782f4d90d3d', N'RIJO MATHEW', NULL, NULL, N'mathewtherijo004@gmail.com', NULL)
+INSERT [dbo].[Innovation_Management_User] ([pk_user_id], [user_firstname], [user_lastname], [user_name], [user_email], [user_picture]) VALUES (N'c669ed90-b567-48f0-909a-fba491b95519', N'Sitaram Lodhi', NULL, NULL, N'sitaram@anandtechs.com', NULL)
+INSERT [dbo].[Innovation_Management_User] ([pk_user_id], [user_firstname], [user_lastname], [user_name], [user_email], [user_picture]) VALUES (N'cf2e0013-2a9f-4623-ba2b-6231483a0aa0', N'Mohil Dhorajiya', NULL, NULL, N'dhorajiyamohil143@gmail.com', NULL)
+INSERT [dbo].[Innovation_Management_User] ([pk_user_id], [user_firstname], [user_lastname], [user_name], [user_email], [user_picture]) VALUES (N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', N'Praveen Bisht', NULL, NULL, N'praveenbisht1@yahoo.co.in', NULL)
+SET IDENTITY_INSERT [dbo].[Leave_Management_Leave_Taken] ON 
+
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (70, N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', 1, CAST(N'2019-11-05' AS Date), CAST(N'2019-11-04T13:00:00.000' AS DateTime), CAST(N'2019-11-04T15:00:00.000' AS DateTime), 2, 0, NULL, 0, N'c669ed90-b567-48f0-909a-fba491b95519', N'<p>aaa</p>
+')
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (71, N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', 2, CAST(N'2019-11-05' AS Date), CAST(N'2019-11-06T00:00:00.000' AS DateTime), CAST(N'2019-11-06T00:00:00.000' AS DateTime), 1, 0, 0, 0, N'c669ed90-b567-48f0-909a-fba491b95519', N'<p>hl</p>
+')
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (72, N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', 4, CAST(N'2019-11-05' AS Date), CAST(N'2019-11-10T00:00:00.000' AS DateTime), CAST(N'2019-11-12T00:00:00.000' AS DateTime), 3, 0, 0, 0, N'c669ed90-b567-48f0-909a-fba491b95519', N'<p>sss</p>
+')
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (73, N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', 1, CAST(N'2019-11-05' AS Date), CAST(N'2019-11-08T14:00:00.000' AS DateTime), CAST(N'2019-11-08T16:00:00.000' AS DateTime), 2, 0, 0, 0, N'c669ed90-b567-48f0-909a-fba491b95519', N'<p>ddd</p>
+')
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (75, N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', 6, CAST(N'2019-11-05' AS Date), CAST(N'2019-11-13T00:00:00.000' AS DateTime), CAST(N'2019-11-19T00:00:00.000' AS DateTime), 7, 0, 0, 0, N'c669ed90-b567-48f0-909a-fba491b95519', N'<p>ggg</p>
+')
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (76, N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', 2, CAST(N'2019-11-05' AS Date), CAST(N'2019-11-11T00:00:00.000' AS DateTime), CAST(N'2019-11-11T00:00:00.000' AS DateTime), 1, 0, 0, 0, N'c669ed90-b567-48f0-909a-fba491b95519', N'<p>ssssss</p>
+')
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (77, N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', 2, CAST(N'2019-11-05' AS Date), CAST(N'2019-11-15T00:00:00.000' AS DateTime), CAST(N'2019-11-15T00:00:00.000' AS DateTime), 1, 0, 1, 0, N'c669ed90-b567-48f0-909a-fba491b95519', N'<p>dddddd</p>
+')
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (78, N'b15974e6-ebec-4485-87aa-5794d9381751', 1, CAST(N'2019-11-05' AS Date), CAST(N'2019-11-11T14:00:00.000' AS DateTime), CAST(N'2019-11-11T16:00:00.000' AS DateTime), 2, 0, NULL, 0, N'c669ed90-b567-48f0-909a-fba491b95519', N'<p>Admin Sl</p>
+')
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (80, N'b15974e6-ebec-4485-87aa-5794d9381751', 2, CAST(N'2019-11-05' AS Date), CAST(N'2019-11-12T00:00:00.000' AS DateTime), CAST(N'2019-11-12T00:00:00.000' AS DateTime), 1, 0, 1, 0, N'c669ed90-b567-48f0-909a-fba491b95519', N'<p>sh admin</p>
+')
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (81, N'b15974e6-ebec-4485-87aa-5794d9381751', 5, CAST(N'2019-11-05' AS Date), CAST(N'2019-11-12T00:00:00.000' AS DateTime), CAST(N'2019-11-14T00:00:00.000' AS DateTime), 3, 0, 1, 0, N'c669ed90-b567-48f0-909a-fba491b95519', N'<p>ck admin</p>
+')
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (82, N'c669ed90-b567-48f0-909a-fba491b95519', 1, CAST(N'2019-11-06' AS Date), CAST(N'2019-11-12T13:00:00.000' AS DateTime), CAST(N'2019-11-12T14:00:00.000' AS DateTime), 1, 0, NULL, 0, N'c669ed90-b567-48f0-909a-fba491b95519', N'<p>sl on 12 by manager</p>
+')
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (83, N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', 1, CAST(N'2019-11-08' AS Date), CAST(N'2019-11-25T20:00:00.000' AS DateTime), CAST(N'2019-11-25T22:00:00.000' AS DateTime), 2, 0, NULL, 2, N'2fdeb06d-d6db-4098-9604-f2e2ead9734a', N'<p>Mr PraveenBisht2,</p>
+
+<p>This is to inform u, that i am not comming today..</p>
+
+<p>Thanks.</p>
+')
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (84, N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', 1, CAST(N'2019-11-08' AS Date), CAST(N'2019-11-13T19:00:00.000' AS DateTime), CAST(N'2019-11-13T21:00:00.000' AS DateTime), 2, 0, NULL, 2, N'2fdeb06d-d6db-4098-9604-f2e2ead9734a', N'<p>ddddddddddd</p>
+
+<p>dddddddddd</p>
+
+<p>ddddddddd</p>
+
+<p>dddddddddd ddddd dddddddd dddddd ddddddddd</p>
+')
+INSERT [dbo].[Leave_Management_Leave_Taken] ([pk_leave_taken_id], [fk_user_id], [fk_leave_type], [leave_days], [LeaveDateFrom], [LeaveDateTo], [TotalLeave], [is_halfday], [is_afternoon], [leave_status], [fk_approved_user_id], [Remark]) VALUES (85, N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', 2, CAST(N'2019-11-09' AS Date), CAST(N'2019-11-12T00:00:00.000' AS DateTime), CAST(N'2019-11-12T00:00:00.000' AS DateTime), 1, 0, 1, 2, N'2fdeb06d-d6db-4098-9604-f2e2ead9734a', N'<p>Mr. Praveenbisht2,</p>
+
+<p>I am not comming today..</p>
+
+<p>Thanks.</p>
+')
+SET IDENTITY_INSERT [dbo].[Leave_Management_Leave_Taken] OFF
+SET IDENTITY_INSERT [dbo].[Leave_Management_Leave_Type] ON 
+
+INSERT [dbo].[Leave_Management_Leave_Type] ([pk_leave_type_id], [leave_type]) VALUES (1, N'Short Leave')
+INSERT [dbo].[Leave_Management_Leave_Type] ([pk_leave_type_id], [leave_type]) VALUES (2, N'Half Day')
+INSERT [dbo].[Leave_Management_Leave_Type] ([pk_leave_type_id], [leave_type]) VALUES (3, N'Casual')
+INSERT [dbo].[Leave_Management_Leave_Type] ([pk_leave_type_id], [leave_type]) VALUES (4, N'Medical')
+INSERT [dbo].[Leave_Management_Leave_Type] ([pk_leave_type_id], [leave_type]) VALUES (5, N'ChildCare')
+INSERT [dbo].[Leave_Management_Leave_Type] ([pk_leave_type_id], [leave_type]) VALUES (6, N'LOP')
+SET IDENTITY_INSERT [dbo].[Leave_Management_Leave_Type] OFF
+SET IDENTITY_INSERT [dbo].[Notification] ON 
+
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (1, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (2, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (3, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (4, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (5, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (6, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (7, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (8, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (9, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (10, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (11, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (12, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (13, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (14, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (15, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (16, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (17, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (18, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (19, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (20, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (21, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (22, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (23, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (24, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (25, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (26, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (27, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (28, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (29, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (30, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (31, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (32, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (33, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (34, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (35, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (36, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (37, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (38, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (39, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (40, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (41, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (42, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (43, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (44, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (45, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (46, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (47, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (48, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (49, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (50, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (51, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (52, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (53, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (54, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (55, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (56, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (57, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (58, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (59, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (60, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (61, NULL, NULL, NULL, NULL, N'494cf511-690d-43f6-9e3d-ca46dcb9d29b', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (62, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (63, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (64, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (65, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (66, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (67, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (68, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (69, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (70, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (71, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (72, NULL, NULL, NULL, NULL, N'sitaram@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (73, NULL, NULL, NULL, NULL, N'veeranji@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (74, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (75, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (76, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (77, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (78, NULL, NULL, NULL, NULL, N'288aef33-a1a2-47c8-9767-be231969d129', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (79, NULL, NULL, NULL, NULL, N'56771d91-1431-4f13-b597-a9f739afe441', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (80, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (81, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (82, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (83, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (84, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (85, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (86, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (87, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (88, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (89, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (90, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (91, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (92, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (93, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (94, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (95, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (96, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (97, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (98, NULL, NULL, NULL, NULL, N'e22ccceb-75eb-45e6-9172-65d1e4068cdf', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (99, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (100, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (101, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (102, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (103, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (104, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (105, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (106, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (107, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (108, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (109, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (110, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (111, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (112, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (113, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (114, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (115, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (116, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (117, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (118, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (119, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (120, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (121, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (122, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (123, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (124, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (125, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (126, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (127, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (128, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (129, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (130, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (131, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (132, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (133, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (134, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (135, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (136, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (137, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (138, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (139, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (140, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (141, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (142, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (143, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (144, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (145, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (146, NULL, NULL, NULL, NULL, N'c92d1253-9e5b-4b49-aeb3-c6609ff0482a', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (147, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (148, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (149, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (150, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (151, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (152, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (153, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (154, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (155, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (156, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (157, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (158, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (159, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (160, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (161, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (162, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (163, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (164, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (165, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (166, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (167, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (168, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (169, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (170, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (171, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (172, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (173, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (174, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (175, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (176, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (177, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (178, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (179, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (180, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (181, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (182, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (183, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (184, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (185, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (186, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (187, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (188, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (189, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (190, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (191, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (192, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (193, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (194, NULL, NULL, NULL, NULL, N'prvnbisht18@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (195, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (196, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (197, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (198, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (199, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (200, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (201, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (202, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (203, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (204, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (205, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (206, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (207, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (208, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (209, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (210, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (211, NULL, NULL, NULL, NULL, N'workongit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (212, NULL, NULL, NULL, NULL, N'workongit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (213, NULL, NULL, NULL, NULL, N'workongit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (214, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (215, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (216, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (217, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (218, NULL, NULL, NULL, NULL, N'rohit@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (219, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (220, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (221, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (222, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (223, NULL, NULL, NULL, NULL, N'atul@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (224, NULL, NULL, NULL, NULL, N'kaushik.kisna2788@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Notification] ([Id], [Type], [Details], [Title], [DetailsURL], [SentTo], [Date], [IsRead], [IsDeleted], [IsReminder], [Code], [NotificationType]) VALUES (225, NULL, NULL, NULL, NULL, N'praveenbisht1@yahoo.co.in', NULL, NULL, NULL, NULL, NULL, NULL)
+SET IDENTITY_INSERT [dbo].[Notification] OFF
+SET IDENTITY_INSERT [dbo].[Tag_tbl] ON 
+
+INSERT [dbo].[Tag_tbl] ([ID], [Description]) VALUES (2, N'lunch')
+INSERT [dbo].[Tag_tbl] ([ID], [Description]) VALUES (1005, N'rayta')
+INSERT [dbo].[Tag_tbl] ([ID], [Description]) VALUES (1006, N'sweaper')
+INSERT [dbo].[Tag_tbl] ([ID], [Description]) VALUES (2002, N'ddd')
+SET IDENTITY_INSERT [dbo].[Tag_tbl] OFF
+SET IDENTITY_INSERT [dbo].[UserRole] ON 
+
+INSERT [dbo].[UserRole] ([id], [UserID], [RoleId]) VALUES (1, N'b15974e6-ebec-4485-87aa-5794d9381751', N'3fc8517d-8b6c-496c-88c2-713e3c961155')
+INSERT [dbo].[UserRole] ([id], [UserID], [RoleId]) VALUES (2, N'c669ed90-b567-48f0-909a-fba491b95519', N'3')
+INSERT [dbo].[UserRole] ([id], [UserID], [RoleId]) VALUES (3, N'e192c539-9b6a-47a4-aa62-55fe9bdd0511', N'0ed7b6b0-3ba6-441b-871b-5da8eaf4b9bc')
+INSERT [dbo].[UserRole] ([id], [UserID], [RoleId]) VALUES (4, N'a412a892-da5e-43b7-bea9-5ca054163d00', N'0ed7b6b0-3ba6-441b-871b-5da8eaf4b9bc')
+INSERT [dbo].[UserRole] ([id], [UserID], [RoleId]) VALUES (5, N'cf2e0013-2a9f-4623-ba2b-6231483a0aa0', N'0ed7b6b0-3ba6-441b-871b-5da8eaf4b9bc')
+INSERT [dbo].[UserRole] ([id], [UserID], [RoleId]) VALUES (6, N'8024262d-0e83-4b15-a170-dd490e3205bd', N'0ed7b6b0-3ba6-441b-871b-5da8eaf4b9bc')
+INSERT [dbo].[UserRole] ([id], [UserID], [RoleId]) VALUES (7, N'c23019a2-5142-4ed7-9a65-8782f4d90d3d', N'0ed7b6b0-3ba6-441b-871b-5da8eaf4b9bc')
+INSERT [dbo].[UserRole] ([id], [UserID], [RoleId]) VALUES (8, N'2fdeb06d-d6db-4098-9604-f2e2ead9734a', N'05d9e6f5-f63b-4375-b08a-9966a652490a')
+SET IDENTITY_INSERT [dbo].[UserRole] OFF
+ALTER TABLE [dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[AspNetRoles] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId]
+GO
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[Expense_tbl]  WITH CHECK ADD  CONSTRAINT [FK_Expense_tbl_Tag_tbl] FOREIGN KEY([TagID])
+REFERENCES [dbo].[Tag_tbl] ([ID])
+GO
+ALTER TABLE [dbo].[Expense_tbl] CHECK CONSTRAINT [FK_Expense_tbl_Tag_tbl]
+GO
+ALTER TABLE [dbo].[Leave_Management_Approval_Matrix]  WITH CHECK ADD  CONSTRAINT [FK_Leave_Management_Approval_Matrix_Innovation_Management_User2] FOREIGN KEY([fk_requestor_id])
+REFERENCES [dbo].[Innovation_Management_User] ([pk_user_id])
+GO
+ALTER TABLE [dbo].[Leave_Management_Approval_Matrix] CHECK CONSTRAINT [FK_Leave_Management_Approval_Matrix_Innovation_Management_User2]
+GO
+ALTER TABLE [dbo].[Leave_Management_Approval_Matrix]  WITH CHECK ADD  CONSTRAINT [FK_Leave_Management_Approval_Matrix_Innovation_Management_User3] FOREIGN KEY([fk_approver_id])
+REFERENCES [dbo].[Innovation_Management_User] ([pk_user_id])
+GO
+ALTER TABLE [dbo].[Leave_Management_Approval_Matrix] CHECK CONSTRAINT [FK_Leave_Management_Approval_Matrix_Innovation_Management_User3]
+GO
+ALTER TABLE [dbo].[Leave_Management_Leave_Allowance]  WITH CHECK ADD  CONSTRAINT [FK_Leave_Management_Leave_Allowance_Innovation_Management_User] FOREIGN KEY([fk_user_id])
+REFERENCES [dbo].[Innovation_Management_User] ([pk_user_id])
+GO
+ALTER TABLE [dbo].[Leave_Management_Leave_Allowance] CHECK CONSTRAINT [FK_Leave_Management_Leave_Allowance_Innovation_Management_User]
+GO
+ALTER TABLE [dbo].[Leave_Management_Leave_Allowance]  WITH CHECK ADD  CONSTRAINT [FK_Leave_Management_Leave_Allowance_Leave_Management_Leave_Type] FOREIGN KEY([fk_leave_type_id])
+REFERENCES [dbo].[Leave_Management_Leave_Type] ([pk_leave_type_id])
+GO
+ALTER TABLE [dbo].[Leave_Management_Leave_Allowance] CHECK CONSTRAINT [FK_Leave_Management_Leave_Allowance_Leave_Management_Leave_Type]
+GO
+ALTER TABLE [dbo].[Leave_Management_Leave_Taken]  WITH CHECK ADD  CONSTRAINT [FK_Leave_Management_Leave_Taken_Innovation_Management_User] FOREIGN KEY([fk_user_id])
+REFERENCES [dbo].[Innovation_Management_User] ([pk_user_id])
+GO
+ALTER TABLE [dbo].[Leave_Management_Leave_Taken] CHECK CONSTRAINT [FK_Leave_Management_Leave_Taken_Innovation_Management_User]
+GO
+ALTER TABLE [dbo].[Leave_Management_Leave_Taken]  WITH CHECK ADD  CONSTRAINT [FK_Leave_Management_Leave_Taken_Innovation_Management_User1] FOREIGN KEY([fk_approved_user_id])
+REFERENCES [dbo].[Innovation_Management_User] ([pk_user_id])
+GO
+ALTER TABLE [dbo].[Leave_Management_Leave_Taken] CHECK CONSTRAINT [FK_Leave_Management_Leave_Taken_Innovation_Management_User1]
+GO
+ALTER TABLE [dbo].[Leave_Management_Leave_Taken]  WITH CHECK ADD  CONSTRAINT [FK_Leave_Management_Leave_Taken_Leave_Management_Leave_Type] FOREIGN KEY([fk_leave_type])
+REFERENCES [dbo].[Leave_Management_Leave_Type] ([pk_leave_type_id])
+GO
+ALTER TABLE [dbo].[Leave_Management_Leave_Taken] CHECK CONSTRAINT [FK_Leave_Management_Leave_Taken_Leave_Management_Leave_Type]
+GO
+/****** Object:  StoredProcedure [dbo].[DashboardDetails]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[DashboardDetails]     
+	@EmpId varchar(100),
+	@Role varchar(100)   
+AS    
+BEGIN    
+select count(id)TotalTask, sum(case when Status = 1 then 1 else 0 end) OpenTask,sum(case when Status = 2 then 1 else 0 end) ReOpenTask,
+sum(case when Status = 3 then 1 else 0 end) CompletedTask from tbl_Task where CreatedTo = 'a1a9e1b0-2567-4e85-af74-821d57fbc7ea'
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpCompletedTaskDetail]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpCompletedTaskDetail]     
+	@userId varchar(100),
+	@TaskId varchar(100) 
+AS    
+BEGIN    
+  select uu.TaskId,uu.SummaryName as TaskName, CASE WHEN uu.Status =1 THEN 'Open' WHEN uu.Status =2 THEN 'Re-open' WHEN uu.Status =3 THEN 'Completed' END Status  
+  ,uu.Description,CONVERT(VARCHAR(11),FORMAT (uu.Createdon, 'yyyy MMM dd'))Createdon,j.ProjectName,isnull(RTRIM(usr.Name),'')Createdby,isnull(RTRIM(usr1.Name),'')CreatedTo 
+  from [tbl_Task] uu join ProjectMaster j on j.ProjectID=uu.projectid left join AspNetUsers usr on usr.Id=uu.Createdby left join AspNetUsers usr1 on usr1.Id=uu.CreatedTo 
+  where (uu.CreatedTo =@userId) and uu.Status=3 and TaskId=@TaskId
+  select imageid, isnull(imageName,'')imageName from Filedetails where TaskId=@TaskId
+ END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpCompletedTaskList]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpCompletedTaskList]     
+    @FromRow int,
+	@userId varchar(100)
+    --@PgSize int    
+AS    
+BEGIN    
+declare @FromRow1 int;  
+declare @TotalUser int=0;  
+declare @PgSize int;  
+declare @PgSize1 int; 
+set @PgSize=100
+set @TotalUser = (select count(TaskId) from [tbl_Task]where (CreatedTo =@userId) and (Createdon= CONVERT(VARCHAR(10), getdate(), 111))  and Status=3) 
+set @FromRow = @TotalUser-@FromRow+1;  
+  ;WITH RecordsRN AS  
+  ( 
+  select uu.TaskId,uu.SummaryName as TaskName, CASE WHEN uu.Status =1 THEN 'Open' WHEN uu.Status =2 THEN 'Re-open' WHEN uu.Status =3 THEN 'Completed' END Status  
+  ,uu.Description,CONVERT(VARCHAR(11),FORMAT (uu.Createdon, 'yyyy MMM dd'))Createdon,j.ProjectName,usr.Name as Createdby,usr1.Name as CreatedTo,
+  ROW_NUMBER() over(order by uu.TaskId) as Num  
+  from [tbl_Task] uu join ProjectMaster j on j.ProjectID=uu.projectid left join AspNetUsers usr on usr.Id=uu.Createdby left join AspNetUsers usr1 on usr1.Id=uu.CreatedTo 
+  where (uu.CreatedTo =@userId) and uu.Createdon=CONVERT(VARCHAR(10), getdate(), 111) and uu.Status=3
+  ) 
+  select TaskId,ProjectName,TaskName,isnull(RTRIM(Createdby),'')Createdby,isnull(RTRIM(CreatedTo),'')CreatedTo,Status,Createdon from RecordsRN WHERE Num between (@FromRow-@PgSize+1)AND @FromRow  order by Createdon
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpCompletedTaskList_ByTwoDate]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpCompletedTaskList_ByTwoDate]     
+    @FromRow int,
+	@userId varchar(100),
+    @Fromdate varchar(100),
+	@Todate varchar(100)
+    --@PgSize int    
+AS    
+BEGIN    
+declare @FromRow1 int;  
+declare @TotalUser int=0;  
+declare @PgSize int;  
+declare @PgSize1 int; 
+set @PgSize=100
+set @TotalUser = (select count(TaskId) from [tbl_Task]where (CreatedTo =@userId) and Createdon BETWEEN @Fromdate AND @Todate and Status=3) 
+set @FromRow = @TotalUser-@FromRow+1;  
+  ;WITH RecordsRN AS  
+  ( 
+  select uu.TaskId,uu.SummaryName as TaskName, CASE WHEN uu.Status =1 THEN 'Open' WHEN uu.Status =2 THEN 'Re-open' WHEN uu.Status =3 THEN 'Completed' END Status  
+  ,uu.Description,CONVERT(VARCHAR(11),FORMAT (uu.Createdon, 'yyyy MMM dd'))Createdon,j.ProjectName,usr.Name as Createdby,usr1.Name as CreatedTo,
+  ROW_NUMBER() over(order by uu.TaskId) as Num  
+  from [tbl_Task] uu join ProjectMaster j on j.ProjectID=uu.projectid left join AspNetUsers usr on usr.Id=uu.Createdby left join AspNetUsers usr1 on usr1.Id=uu.CreatedTo 
+  where (uu.CreatedTo =@userId) and (uu.Createdon BETWEEN @Fromdate AND @Todate) and uu.Status=3
+  ) 
+  select TaskId,ProjectName,TaskName,isnull(RTRIM(Createdby),'')Createdby,isnull(RTRIM(CreatedTo),'')CreatedTo,Status,Createdon from RecordsRN WHERE Num between (@FromRow-@PgSize+1)AND @FromRow  order by Createdon
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpLeaveApproveReject]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpLeaveApproveReject] 
+	@LeaveId int,
+	@leave_status int
+AS    
+BEGIN 
+SET NOCOUNT ON;
+ if(@LeaveId in(select pk_leave_taken_id from Leave_Management_Leave_Taken))
+	 Begin
+		update Leave_Management_Leave_Taken set leave_status = @leave_status where pk_leave_taken_id =@LeaveId 
+	 End
+ else 
+	 Begin
+		RAISERROR('Fail to Upadte the Record. ',16,1);
+	 End
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpLeaveDetailByIdWeb]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[EmpLeaveDetailByIdWeb] 
+	@LeaveId int
+AS    
+BEGIN 
+	select lt.pk_leave_taken_id,lt.fk_user_id,nu.Name UserName
+	,ll.leave_type,nu1.Name  ManagerName
+	,FORMAT (lt.LeaveDateFrom, 'yyyy MMM dd')LeaveDateFrom
+	,FORMAT (lt.LeaveDateTo, 'yyyy MMM dd')LeaveDateTo
+	,case when (lt.fk_leave_type =1) then FORMAT (lt.LeaveDateFrom, 'hh:mm tt') else '' end LeaveTimeFrom
+	,case when (lt.fk_leave_type =1) then FORMAT (lt.LeaveDateTo, 'hh:mm tt') else '' end LeaveTimeTo
+	,isnull(lt.TotalLeave,0)TotalLeave
+	,case when (lt.is_afternoon = 0) then 'First Half'
+	when (lt.is_afternoon = 1) then 'Second Half' else '' end as is_halfday
+	,case when(lt.leave_status = 0) then 'Pending' when(lt.leave_status = 1) then 'Approved' when(lt.leave_status = 2) then 'Rejected' end as leave_status1
+	,lt.Remark
+		from Leave_Management_Leave_Taken lt left join Leave_Management_Leave_Type ll on 
+	lt.fk_leave_type=ll.pk_leave_type_id left join AspNetUsers nu on nu.Id=lt.fk_user_id left join AspNetUsers nu1 on nu1.Id=lt.fk_approved_user_id  
+	where lt.pk_leave_taken_id =@LeaveId 
+END
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[EmpLeaveList]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[EmpLeaveList]     
+    @FromRow int,
+	@userId varchar(100),
+    @leave_status int
+AS    
+BEGIN    
+declare @FromRow1 int;  
+declare @TotalUser int=0;  
+declare @PgSize int;  
+declare @PgSize1 int; 
+set @PgSize=10
+set @TotalUser = (select count(pk_leave_taken_id) from Leave_Management_Leave_Taken where leave_status=@leave_status) 
+set @FromRow = @TotalUser-@FromRow+1;  
+  ;WITH RecordsRN AS  
+  ( 
+  select lt.pk_leave_taken_id
+,nu.Name  fk_user_id,
+lt.fk_user_id id
+,lt.fk_leave_type
+,ll.leave_type
+,FORMAT (lt.LeaveDateFrom, 'yyyy MMM dd')LeaveDateFrom
+,FORMAT (lt.LeaveDateTo, 'yyyy MMM dd')LeaveDateTo
+,case when (lt.fk_leave_type =1) then FORMAT (lt.LeaveDateFrom, 'hh:mm tt') else '' end LeaveTimeFrom
+,case when (lt.fk_leave_type =1) then FORMAT (lt.LeaveDateTo, 'hh:mm tt') else '' end LeaveTimeTo
+,isnull(lt.TotalLeave,1)TotalLeave
+,case when (lt.is_afternoon = 0) then 'First Half'
+when (lt.is_afternoon = 1) then 'Second Half' else '' end as is_halfday
+,lt.leave_status
+,nu1.Name
+,lt.Remark,
+ROW_NUMBER() over(order by lt.pk_leave_taken_id) as Num  from Leave_Management_Leave_Taken lt left join Leave_Management_Leave_Type ll on 
+lt.fk_leave_type=ll.pk_leave_type_id left join AspNetUsers nu on nu.Id=lt.fk_user_id left join AspNetUsers nu1 on nu1.Id=lt.fk_approved_user_id  
+where lt.leave_status=@leave_status and lt.fk_user_id=@userId 
+) 
+  select * from RecordsRN 
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpLeaveList_ByTwoDate]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpLeaveList_ByTwoDate]     
+    @FromRow int,
+	@userId varchar(100),
+    @leave_status int,
+	@Fromdate varchar(100),
+	@Todate varchar(100)
+AS    
+BEGIN       
+declare @FromRow1 int;  
+declare @TotalUser int=0;  
+declare @PgSize int;  
+declare @PgSize1 int; 
+set @PgSize=10
+set @TotalUser = (select count(pk_leave_taken_id) from Leave_Management_Leave_Taken where leave_status=@leave_status) 
+set @FromRow = @TotalUser-@FromRow+1;  
+  ;WITH RecordsRN AS  
+  ( 
+  select lt.pk_leave_taken_id
+,nu.Name  fk_user_id,
+lt.leave_days daydate,
+lt.fk_user_id id
+,lt.fk_leave_type
+,ll.leave_type
+,FORMAT (lt.LeaveDateFrom, 'yyyy MMM dd')LeaveDateFrom
+,FORMAT (lt.LeaveDateTo, 'yyyy MMM dd')LeaveDateTo
+,case when (lt.fk_leave_type =1) then FORMAT (lt.LeaveDateFrom, 'hh:mm tt') else '' end LeaveTimeFrom
+,case when (lt.fk_leave_type =1) then FORMAT (lt.LeaveDateTo, 'hh:mm tt') else '' end LeaveTimeTo
+,isnull(lt.TotalLeave,1)TotalLeave
+,case when (lt.is_afternoon = 0) then 'First Half'
+when (lt.is_afternoon = 1) then 'Second Half' else '' end as is_halfday
+,lt.leave_status
+,nu1.Name
+,lt.Remark,
+ROW_NUMBER() over(order by lt.pk_leave_taken_id) as Num  from Leave_Management_Leave_Taken lt left join Leave_Management_Leave_Type ll on 
+lt.fk_leave_type=ll.pk_leave_type_id left join AspNetUsers nu on nu.Id=lt.fk_user_id left join AspNetUsers nu1 on nu1.Id=lt.fk_approved_user_id  
+where lt.leave_status=@leave_status and lt.fk_user_id=@userId and (lt.leave_days between @Fromdate and @todate)  
+)
+  select * from RecordsRN 
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpLeaveListWeb]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpLeaveListWeb]     
+	@userId varchar(100),
+    @leave_type int,
+	@RoleType varchar(10)
+AS    
+BEGIN 
+	if(@RoleType = 'User' or @RoleType = 'AdminUser')
+	Begin
+		if(@leave_type>2)
+			Begin
+			select lt.pk_leave_taken_id
+			,ll.leave_type,nu1.Name  fk_user_id
+			,FORMAT (lt.LeaveDateFrom, 'yyyy MMM dd')LeaveDateFrom
+			,FORMAT (lt.LeaveDateTo, 'yyyy MMM dd')LeaveDateTo
+			,isnull(lt.TotalLeave,1)TotalLeave
+			,case when(lt.leave_status = 0) then 'Pending' when(lt.leave_status = 1) then 'Approved' when(lt.leave_status = 2) then 'Rejected' end as leave_status1
+			from Leave_Management_Leave_Taken lt left join Leave_Management_Leave_Type ll on 
+			lt.fk_leave_type=ll.pk_leave_type_id left join AspNetUsers nu on nu.Id=lt.fk_user_id left join AspNetUsers nu1 on nu1.Id=lt.fk_approved_user_id  
+			where lt.fk_leave_type in (3,4,5,6) and lt.fk_user_id =@userId order by lt.LeaveDateFrom desc
+			End
+			else
+			Begin
+			select lt.pk_leave_taken_id
+			,ll.leave_type,nu1.Name  fk_user_id
+			,FORMAT (lt.LeaveDateFrom, 'yyyy MMM dd')LeaveDateFrom
+			,case when (lt.fk_leave_type =1) then FORMAT (lt.LeaveDateFrom, 'hh:mm tt') else '' end LeaveTimeFrom
+			,case when (lt.fk_leave_type =1) then FORMAT (lt.LeaveDateTo, 'hh:mm tt') else '' end LeaveTimeTo
+			,isnull(lt.TotalLeave,1)TotalLeave
+			,case when (lt.is_afternoon = 0) then 'First Half'
+			when (lt.is_afternoon = 1) then 'Second Half' else '' end as is_halfday
+			,case when(lt.leave_status = 0) then 'Pending' when(lt.leave_status = 1) then 'Approved' when(lt.leave_status = 2) then 'Rejected' end as leave_status1
+			 from Leave_Management_Leave_Taken lt left join Leave_Management_Leave_Type ll on 
+			lt.fk_leave_type=ll.pk_leave_type_id left join AspNetUsers nu on nu.Id=lt.fk_user_id left join AspNetUsers nu1 on nu1.Id=lt.fk_approved_user_id  
+			where lt.fk_leave_type=@leave_type and lt.fk_user_id=@userId order by lt.LeaveDateFrom desc
+		End
+	End
+	if(@RoleType='Admin')
+	Begin
+		if(@leave_type>2)
+			Begin
+			select lt.pk_leave_taken_id
+			,nu.Name UserName
+			,ll.leave_type,nu1.Name  fk_user_id
+			,FORMAT (lt.LeaveDateFrom, 'yyyy MMM dd')LeaveDateFrom
+			,FORMAT (lt.LeaveDateTo, 'yyyy MMM dd')LeaveDateTo
+			,isnull(lt.TotalLeave,1)TotalLeave
+			,case when(lt.leave_status = 0) then 'Pending' when(lt.leave_status = 1) then 'Approved' when(lt.leave_status = 2) then 'Rejected' end as leave_status1
+			 from Leave_Management_Leave_Taken lt left join Leave_Management_Leave_Type ll on 
+			lt.fk_leave_type=ll.pk_leave_type_id left join AspNetUsers nu on nu.Id=lt.fk_user_id left join AspNetUsers nu1 on nu1.Id=lt.fk_approved_user_id  
+			where lt.fk_leave_type in (3,4,5,6) order by lt.LeaveDateFrom desc
+			End
+			else
+			Begin
+			select lt.pk_leave_taken_id
+			,nu.Name UserName
+			,ll.leave_type,nu1.Name  fk_user_id
+			,FORMAT (lt.LeaveDateFrom, 'yyyy MMM dd')LeaveDateFrom
+			,case when (lt.fk_leave_type =1) then FORMAT (lt.LeaveDateFrom, 'hh:mm tt') else '' end LeaveTimeFrom
+			,case when (lt.fk_leave_type =1) then FORMAT (lt.LeaveDateTo, 'hh:mm tt') else '' end LeaveTimeTo
+			,isnull(lt.TotalLeave,1)TotalLeave
+			,case when (lt.is_afternoon = 0) then 'First Half'
+			when (lt.is_afternoon = 1) then 'Second Half' else '' end as is_halfday
+			,case when(lt.leave_status = 0) then 'Pending' when(lt.leave_status = 1) then 'Approved' when(lt.leave_status = 2) then 'Rejected' end as leave_status1
+			 from Leave_Management_Leave_Taken lt left join Leave_Management_Leave_Type ll on 
+			lt.fk_leave_type=ll.pk_leave_type_id left join AspNetUsers nu on nu.Id=lt.fk_user_id left join AspNetUsers nu1 on nu1.Id=lt.fk_approved_user_id  
+			where lt.fk_leave_type=@leave_type order by lt.LeaveDateFrom desc
+		End
+	End
+	if(@RoleType='Manager')
+	Begin
+		if(@leave_type>2)
+			Begin
+			select lt.pk_leave_taken_id
+			,nu.Name UserName
+			,ll.leave_type,nu1.Name  fk_user_id
+			,FORMAT (lt.LeaveDateFrom, 'yyyy MMM dd')LeaveDateFrom
+			,FORMAT (lt.LeaveDateTo, 'yyyy MMM dd')LeaveDateTo
+			,isnull(lt.TotalLeave,1)TotalLeave
+			,case when(lt.leave_status = 0) then 'Pending' when(lt.leave_status = 1) then 'Approved' when(lt.leave_status = 2) then 'Rejected' end as leave_status1
+			 from Leave_Management_Leave_Taken lt left join Leave_Management_Leave_Type ll on 
+			lt.fk_leave_type=ll.pk_leave_type_id left join AspNetUsers nu on nu.Id=lt.fk_user_id left join AspNetUsers nu1 on nu1.Id=lt.fk_approved_user_id  
+			where (lt.fk_leave_type in (3,4,5,6)) and (lt.leave_status !=2) and (lt.fk_approved_user_id=@userId) order by lt.LeaveDateFrom desc
+			End
+			else
+			Begin
+			select lt.pk_leave_taken_id
+			,nu.Name UserName
+			,ll.leave_type,nu1.Name  fk_user_id
+			,FORMAT (lt.LeaveDateFrom, 'yyyy MMM dd')LeaveDateFrom
+			,case when (lt.fk_leave_type =1) then FORMAT (lt.LeaveDateFrom, 'hh:mm tt') else '' end LeaveTimeFrom
+			,case when (lt.fk_leave_type =1) then FORMAT (lt.LeaveDateTo, 'hh:mm tt') else '' end LeaveTimeTo
+			,isnull(lt.TotalLeave,1)TotalLeave
+			,case when (lt.is_afternoon = 0) then 'First Half'
+			when (lt.is_afternoon = 1) then 'Second Half' else '' end as is_halfday
+			,case when(lt.leave_status = 0) then 'Pending' when(lt.leave_status = 1) then 'Approved' when(lt.leave_status = 2) then 'Rejected' end as leave_status1
+			 from Leave_Management_Leave_Taken lt left join Leave_Management_Leave_Type ll on 
+			lt.fk_leave_type=ll.pk_leave_type_id left join AspNetUsers nu on nu.Id=lt.fk_user_id left join AspNetUsers nu1 on nu1.Id=lt.fk_approved_user_id  
+			where lt.fk_leave_type=@leave_type and (lt.leave_status !=2)and (lt.fk_approved_user_id=@userId) order by lt.LeaveDateFrom desc
+		End
+	End
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpListForDDL]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpListForDDL]     
+	@EmpId varchar(100),
+	@Role varchar(15)
+AS    
+BEGIN    
+--Only Employee List
+select usr.Id,usr.Name from AspNetUsers usr join  AspNetUserRoles Rol on usr.Id=Rol.UserId left join AspNetRoles RR on Rol.RoleId=RR.Id
+where RR.Name=@Role and usr.Id<>@EmpId
+--Only Employee List
+--select usr.Id,usr.Name from AspNetUsers usr join  AspNetUserRoles Rol on usr.Id=Rol.UserId left join AspNetRoles RR on Rol.RoleId=RR.Id
+--where RR.Name='User'
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpOpenTaskDetail]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpOpenTaskDetail]     
+	@userId varchar(100),
+	@TaskId varchar(100)   
+AS    
+BEGIN    
+  select uu.TaskId,uu.SummaryName as TaskName, CASE WHEN uu.Status =1 THEN 'Open' WHEN uu.Status =2 THEN 'Re-open' WHEN uu.Status =3 THEN 'Completed' END Status  
+  ,uu.Description,CONVERT(VARCHAR(11),FORMAT (uu.Createdon, 'yyyy MMM dd'))Createdon,j.ProjectName,isnull(RTRIM(usr.Name),'')Createdby,isnull(RTRIM(usr1.Name),'')CreatedTo 
+  from [tbl_Task] uu join ProjectMaster j on j.ProjectID=uu.projectid left join AspNetUsers usr on usr.Id=uu.Createdby left join AspNetUsers usr1 on usr1.Id=uu.CreatedTo 
+  where (uu.CreatedTo =@userId) and uu.Status=1 and TaskId=@TaskId
+   select imageid, isnull(imageName,'')imageName from Filedetails where TaskId=@TaskId
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpOpenTaskList]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpOpenTaskList]     
+    @FromRow int,
+	@userId varchar(100)
+
+    --@PgSize int    
+AS    
+BEGIN    
+declare @FromRow1 int;  
+declare @TotalUser int=0;  
+declare @PgSize int;  
+declare @PgSize1 int; 
+set @PgSize=100
+set @TotalUser = (select count(TaskId) from [tbl_Task]where CreatedTo=@userId and (Createdon= CONVERT(VARCHAR(10), getdate(), 111)) and Status=1) 
+set @FromRow = @TotalUser-@FromRow+1;  
+  ;WITH RecordsRN AS  
+  ( 
+  select uu.CreatedTo as userID, uu.TaskId,uu.SummaryName as TaskName, CASE WHEN uu.Status =1 THEN 'Open' WHEN uu.Status =2 THEN 'Re-open' WHEN uu.Status =3 THEN 'Completed' END Status  
+  ,uu.Description,CONVERT(VARCHAR(11),FORMAT (uu.Createdon, 'yyyy MMM dd'))Createdon,j.ProjectName,usr.Name as Createdby,usr1.Name as CreatedTo,
+  ROW_NUMBER() over(order by uu.TaskId) as Num  
+  from [tbl_Task] uu join ProjectMaster j on j.ProjectID=uu.projectid left join AspNetUsers usr on usr.Id=uu.Createdby left join AspNetUsers usr1 on usr1.Id=uu.CreatedTo 
+  where (uu.CreatedTo =@userId) and (uu.Createdon = CONVERT(VARCHAR(10), getdate(), 111)) and uu.Status=1
+  ) 
+  select TaskId,ProjectName,TaskName,isnull(RTRIM(Createdby),'')Createdby,isnull(RTRIM(CreatedTo),'')CreatedTo,Status,Createdon from RecordsRN WHERE Num between (@FromRow-@PgSize+1)AND @FromRow  order by Createdon
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpOpenTaskList_ByTwoDate]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpOpenTaskList_ByTwoDate]     
+    @FromRow int,
+	@userId varchar(100),
+    @Fromdate varchar(100),
+	@Todate varchar(100)
+    --@PgSize int    
+AS    
+BEGIN  
+
+  
+declare @FromRow1 int;  
+declare @TotalUser int=0;  
+declare @PgSize int;  
+declare @PgSize1 int; 
+  set @PgSize=100
+  set @TotalUser = (select count(TaskId) from [tbl_Task]where CreatedTo=@userId and Createdon BETWEEN @Fromdate AND @Todate and Status=1) 
+  set @FromRow = @TotalUser-@FromRow+1;  
+  ;WITH RecordsRN AS  
+  ( 
+  select uu.TaskId,uu.SummaryName as TaskName, CASE WHEN uu.Status =1 THEN 'Open' WHEN uu.Status =2 THEN 'Re-open' WHEN uu.Status =3 THEN 'Completed' END Status  
+  ,uu.Description,CONVERT(VARCHAR(11),FORMAT (uu.Createdon, 'yyyy MMM dd'))Createdon,j.ProjectName,usr.Name as Createdby,usr1.Name as CreatedTo,
+  ROW_NUMBER() over(order by uu.TaskId) as Num  
+  from [tbl_Task] uu join ProjectMaster j on j.ProjectID=uu.projectid left join AspNetUsers usr on usr.Id=uu.Createdby left join AspNetUsers usr1 on usr1.Id=uu.CreatedTo 
+  where (uu.CreatedTo =@userId) and Createdon BETWEEN @Fromdate AND @Todate  and uu.Status=1
+  ) 
+  select TaskId,ProjectName,TaskName,isnull(RTRIM(Createdby),'')Createdby,isnull(RTRIM(CreatedTo),'')CreatedTo,Status,Createdon from RecordsRN WHERE Num between (@FromRow-@PgSize+1)AND @FromRow  order by Createdon
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpReOpenTaskDetail]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpReOpenTaskDetail]     
+	@userId varchar(100),	
+	@TaskId varchar(100)
+    --@PgSize int    
+AS    
+BEGIN    
+  select uu.TaskId,uu.SummaryName as TaskName, CASE WHEN uu.Status =1 THEN 'Open' WHEN uu.Status =2 THEN 'Re-open' WHEN uu.Status =3 THEN 'Completed' END Status  
+  ,uu.Description,CONVERT(VARCHAR(11),FORMAT (uu.Createdon, 'yyyy MMM dd'))Createdon,j.ProjectName,isnull(RTRIM(usr.Name),'')Createdby,isnull(RTRIM(usr1.Name),'')CreatedTo 
+  from [tbl_Task] uu join ProjectMaster j on j.ProjectID=uu.projectid left join AspNetUsers usr on usr.Id=uu.Createdby left join AspNetUsers usr1 on usr1.Id=uu.CreatedTo 
+  where (uu.CreatedTo =@userId) and TaskId=@TaskId and uu.Status=2
+   select imageid, isnull(imageName,'')imageName from Filedetails where TaskId=@TaskId
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpReOpenTaskList]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpReOpenTaskList]     
+    @FromRow int,
+	@userId varchar(100)
+    --@PgSize int    
+AS    
+BEGIN    
+declare @FromRow1 int;  
+declare @TotalUser int=0;  
+declare @PgSize int;  
+declare @PgSize1 int; 
+set @PgSize=100
+set @TotalUser = (select count(TaskId) from [tbl_Task]where (CreatedTo =@userId) and (Createdon =CONVERT(VARCHAR(10), getdate(), 111)) and Status=2) 
+set @FromRow = @TotalUser-@FromRow+1;  
+  ;WITH RecordsRN AS  
+  ( 
+  select uu.TaskId,uu.SummaryName as TaskName, CASE WHEN uu.Status =1 THEN 'Open' WHEN uu.Status =2 THEN 'Re-open' WHEN uu.Status =3 THEN 'Completed' END Status  
+  ,uu.Description,CONVERT(VARCHAR(11),FORMAT (uu.Createdon, 'yyyy MMM dd'))Createdon,j.ProjectName,usr.Name as Createdby,usr1.Name as CreatedTo,
+  ROW_NUMBER() over(order by uu.TaskId) as Num  
+  from [tbl_Task] uu join ProjectMaster j on j.ProjectID=uu.projectid left join AspNetUsers usr on usr.Id=uu.Createdby left join AspNetUsers usr1 on usr1.Id=uu.CreatedTo 
+  where (uu.CreatedTo =@userId) and (uu.Createdon = CONVERT(VARCHAR(10), getdate(), 111)) and uu.Status=2
+  ) 
+  select TaskId,ProjectName,TaskName,isnull(RTRIM(Createdby),'')Createdby,isnull(RTRIM(CreatedTo),'')CreatedTo,Status,Createdon from RecordsRN WHERE Num between (@FromRow-@PgSize+1)AND @FromRow  order by Createdon
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpReOpenTaskList_ByTwoDate]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpReOpenTaskList_ByTwoDate]     
+    @FromRow int,
+	@userId varchar(100),
+	@Fromdate varchar(100),
+	@Todate varchar(100)
+    --@PgSize int    
+AS    
+BEGIN    
+declare @FromRow1 int;  
+declare @TotalUser int=0;  
+declare @PgSize int;  
+declare @PgSize1 int; 
+set @PgSize=100
+set @TotalUser = (select count(TaskId) from [tbl_Task]where (CreatedTo =@userId) and Createdon BETWEEN @Fromdate AND @Todate  and Status=2) 
+set @FromRow = @TotalUser-@FromRow+1;  
+  ;WITH RecordsRN AS  
+  ( 
+  select uu.TaskId,uu.SummaryName as TaskName, CASE WHEN uu.Status =1 THEN 'Open' WHEN uu.Status =2 THEN 'Re-open' WHEN uu.Status =3 THEN 'Completed' END Status  
+  ,uu.Description,CONVERT(VARCHAR(11),FORMAT (uu.Createdon, 'yyyy MMM dd'))Createdon,j.ProjectName,usr.Name as Createdby,usr1.Name as CreatedTo,
+  ROW_NUMBER() over(order by uu.TaskId) as Num  
+  from [tbl_Task] uu join ProjectMaster j on j.ProjectID=uu.projectid left join AspNetUsers usr on usr.Id=uu.Createdby left join AspNetUsers usr1 on usr1.Id=uu.CreatedTo 
+  where (uu.CreatedTo =@userId) and (uu.Createdon BETWEEN @Fromdate AND @Todate)  and uu.Status=2
+  ) 
+  select TaskId,ProjectName,TaskName,isnull(RTRIM(Createdby),'')Createdby,isnull(RTRIM(CreatedTo),'')CreatedTo,Status,Createdon from RecordsRN WHERE Num between (@FromRow-@PgSize+1)AND @FromRow  order by Createdon
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EmpTaskDetail]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpTaskDetail]     
+	@userId varchar(100),
+	@TaskId varchar(100)
+    --@PgSize int    
+AS    
+BEGIN    
+  select uu.TaskId,uu.SummaryName as TaskName, CASE WHEN uu.Status =1 THEN 'Open' WHEN uu.Status =2 THEN 'Re-open' WHEN uu.Status =3 
+  THEN 'Completed' END Status  
+  ,uu.Description,CONVERT(VARCHAR(11),FORMAT (uu.Createdon, 'yyyy MMM dd'))Createdon,j.ProjectName,isnull(RTRIM(usr.Name),'')Createdby,
+  isnull(RTRIM(usr1.Name),'')CreatedTo 
+  from [tbl_Task] uu join ProjectMaster j on j.ProjectID=uu.projectid left join AspNetUsers usr on usr.Id=uu.Createdby left join AspNetUsers usr1 on usr1.Id=uu.CreatedTo 
+  where ((uu.CreatedTo =@userId) and (uu.TaskId=@TaskId))
+  select imageid, isnull(imageName,'')imageName from Filedetails where TaskId=@TaskId
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[EmpTaskList]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpTaskList]     
+    @FromRow int,
+	@userId varchar(100)
+    --@PgSize int    
+AS    
+BEGIN    
+declare @FromRow1 int;  
+declare @TotalUser int=0;  
+declare @PgSize int;  
+declare @PgSize1 int; 
+set @PgSize=10
+set @TotalUser = (select count(TaskId) from [tbl_Task]where CreatedTo =@userId) 
+set @FromRow = @TotalUser-@FromRow+1;  
+  ;WITH RecordsRN AS  
+  ( 
+  select uu.TaskId,uu.SummaryName as TaskName, CASE WHEN uu.Status =1 THEN 'Open' WHEN uu.Status =2 THEN 'Re-open' WHEN uu.Status =3 THEN 'Completed' END Status  
+  ,uu.Description,CONVERT(VARCHAR(11),FORMAT (uu.Createdon, 'yyyy MMM dd'))Createdon,j.ProjectName,usr.Name as Createdby,usr1.Name as CreatedTo,
+  ROW_NUMBER() over(order by uu.TaskId) as Num  
+  from [tbl_Task] uu join ProjectMaster j on j.ProjectID=uu.projectid left join AspNetUsers usr on usr.Id=uu.Createdby left join AspNetUsers usr1 on usr1.Id=uu.CreatedTo 
+  where (uu.CreatedTo =@userId)
+  ) 
+  select TaskId,ProjectName,TaskName,isnull(RTRIM(Createdby),'')Createdby,isnull(RTRIM(CreatedTo),'')CreatedTo,Status,Createdon from RecordsRN WHERE Num between (@FromRow-@PgSize+1)AND @FromRow  order by Createdon
+END
+
+
+
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[EmpTaskList1]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EmpTaskList1]     
+    @FromRow int,
+	@userId varchar(100)
+    --@PgSize int    
+AS    
+BEGIN    
+declare @FromRow1 int;  
+declare @TotalUser int=0;  
+declare @PgSize int;  
+declare @PgSize1 int; 
+set @PgSize=10
+set @TotalUser = (select count(TaskId) from [tbl_Task]where CreatedTo =@userId) 
+set @FromRow = @TotalUser-@FromRow+1;  
+  ;WITH RecordsRN AS  
+  ( 
+  select uu.TaskId,uu.SummaryName as TaskName, 
+  
+  CASE WHEN uu.Status =1 THEN 'Open' WHEN uu.Status =2 THEN 'Re-open' WHEN uu.Status =3 THEN 'Completed' END Status ,
+  CASE WHEN asst.Status =1 THEN 'Open' WHEN asst.Status =2 THEN 'Re-open' WHEN asst.Status =3 THEN 'Completed' END LastStatus ,uu.Description as Description,asst.Description as LastDescription,
+  
+  CONVERT(VARCHAR(11),FORMAT (getdate(), 'yyyy MMM dd'))Createdon,j.ProjectName,usr.Name as Createdby,usr1.Name as CreatedTo,
+  ROW_NUMBER() over(order by uu.TaskId) as Num  
+  from [tbl_Task] uu join ProjectMaster j on j.ProjectID=uu.projectid left join AspNetUsers usr on usr.Id=uu.Createdby left join AspNetUsers usr1 on usr1.Id=uu.CreatedTo 
+  left join AssignTask asst on uu.TaskId=asst.TaskId where (uu.CreatedTo = @userId)
+  ) 
+  select TaskId,ProjectName,TaskName,isnull(RTRIM(Createdby),'')Createdby,isnull(RTRIM(CreatedTo),'')CreatedTo,Status,Createdon from RecordsRN WHERE Num between (@FromRow-@PgSize+1)AND @FromRow order by CreatedOn desc
+END
+select * from tbl_Task tt join AssignTask asst on tt.TaskId=asst.TaskId where tt.TaskId='2a53af45-3a88-4858-af29-90aab01ada07' order by asst.CreatedOn desc
+
+
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[ManagerListForDDL]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[ManagerListForDDL]     
+
+AS    
+BEGIN    
+select usr.Id,usr.Name from AspNetUsers usr join  AspNetUserRoles Rol on usr.Id=Rol.UserId left join AspNetRoles RR on Rol.RoleId=RR.Id
+where RR.Name='Manager' 
+END
+GO
+/****** Object:  StoredProcedure [dbo].[TaskListForDDL]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[TaskListForDDL]     
+
+AS    
+BEGIN    
+select CAST(pk_leave_type_id AS varchar(10)) as [Id], leave_type as [Name] from Leave_Management_Leave_Type
+END
+GO
+/****** Object:  StoredProcedure [dbo].[TaskListForDDL1]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+Create PROCEDURE [dbo].[TaskListForDDL1]     
+
+AS    
+BEGIN    
+select CAST(pk_leave_type_id AS varchar(10)) as [Value], leave_type as [Text] from Leave_Management_Leave_Type
+END
+GO
+/****** Object:  StoredProcedure [dbo].[Update_Chat_Message_IsRead_Status]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[Update_Chat_Message_IsRead_Status]
+        @FromEmailId VARCHAR(50),
+	    @ToEmailId VARCHAR(50)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	UPDATE ChatPrivateMessageDetails SET IsRead = 1
+    WHERE MasterEmailID=@ToEmailId and ChatToEmailID=@FromEmailId and IsRead=0	 
+END
+GO
+/****** Object:  StoredProcedure [dbo].[uspAssignTask]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[uspAssignTask]
+(
+@TaskId varchar(70),
+@FromassignId varchar(70),
+@ToAssignId varchar(70), 
+@Status int,
+@Description varchar(800),
+@CreatedOn varchar(20)
+)
+AS
+BEGIN
+SET NOCOUNT OFF
+insert into AssignTask(TaskId,FromassignId,ToAssignId,Status,Description,CreatedOn)
+values(@TaskId,@FromassignId,@ToAssignId,@Status,@Description,Cast(@CreatedOn as datetime))
+END
+GO
+/****** Object:  StoredProcedure [dbo].[uspComment]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[uspComment]
+(
+@TaskId varchar(100),
+@ToAssignId varchar(100), 
+@Status int,
+@Description varchar(800),
+@CreatedOn varchar(20)
+)
+AS
+BEGIN
+declare @FromassignId varchar(100)
+Select @FromassignId = (select top 1 (FromassignId) from AssignTask where ToAssignId=@ToAssignId and TaskId=@TaskId)
+if( @FromassignId is null) 
+BEGIN Select @FromassignId = (select top 1 (Createdby) from tbl_Task where CreatedTo=@ToAssignId and TaskId=@TaskId) END
+
+insert into AssignTask(TaskId,FromassignId,ToAssignId,Status,Description,CreatedOn)
+values(@TaskId,@FromassignId,@ToAssignId,@Status,@Description,Cast(@CreatedOn as datetime))
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[uspReAssignTask]    Script Date: 11-11-2019 18:17:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[uspReAssignTask]
+(
+@TaskId varchar(70),
+@FromassignId varchar(70),
+@ToAssignId varchar(70), 
+@Status int,
+@Description varchar(800),
+@CreatedOn varchar(20)
+)
+AS
+BEGIN
+insert into AssignTask(TaskId,FromassignId,ToAssignId,Status,Description,CreatedOn)
+values(@TaskId,@FromassignId,@ToAssignId,@Status,@Description,Cast(@CreatedOn as datetime))
+END
+GO
+USE [master]
+GO
+ALTER DATABASE [PMSDATA] SET  READ_WRITE 
+GO
